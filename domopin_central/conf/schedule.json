@@ -1,0 +1,30 @@
+{
+"task": [
+	{
+		"id": 0,
+		"title": "",
+		"enable": "true",
+		"condition": [{"type":"variable", "name":"time","value":1000}],
+		"action": [{
+		"nameroom": "room_1",
+		"namedev": "blind_1",
+		"nameaction": "position_2",
+		"enable": "false"}
+		]
+		
+	},
+	{
+		"id": 1,
+		"title": "",
+		"enable": "true",
+		"condition": [{"type":"variable", "name":"time","value":1000}],
+		"action": [{
+		"nameroom": "room_1",
+		"namedev": "blind_1",
+		"nameaction": "position_1",
+		"enable": "false"}
+		]
+		
+	}
+]
+}
