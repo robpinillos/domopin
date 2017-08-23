@@ -1,0 +1,8 @@
+<launch>
+
+
+  <node pkg="domopin_room" type="domopin_room_main.py" name="domopin_room_1" respawn="true" cwd="node" output="screen"> 
+</node> 
+
+
+</launch>

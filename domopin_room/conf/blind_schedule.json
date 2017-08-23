@@ -1,0 +1,20 @@
+{
+"action": [
+	{
+		"time": "1000",
+		"nameroom": "room_3",
+		"namedev": "blind_1",
+		"nameaction": "subir",
+		"enable": "false"
+	},
+	{
+		"time": "1200",
+		"nameroom": "room_1",
+		"namedev": "blind_1",
+		"nameaction": "bajar",
+		"enable": "false"
+	}
+]
+}
+	
+
