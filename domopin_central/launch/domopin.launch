@@ -1,13 +1,10 @@
 <launch>
 
 
-  <node pkg="domopin_central" type="domopin_main.py" name="domopin_central" respawn="true" cwd="node" output="screen"> 
+  <node pkg="domopin_central" type="domopin_central_main.py" name="domopin_central" respawn="true" cwd="node" output="screen"> 
 </node>
 
 <!--
-  <node pkg="domopin" type="domopin_room.py" name="domopin_room_1" respawn="true" cwd="node" output="screen"> 
-</node> 
-
 
 <node pkg="rosbridge_server" type="rosbridge_websocket" name="rosbridge_websocket" output="screen">
 </node>

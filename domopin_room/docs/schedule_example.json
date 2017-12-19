@@ -1,0 +1,45 @@
+{
+  "task": [
+    {
+      "action": [
+        {
+          "namedev": "blind_1", 
+          "enable": "false", 
+          "nameroom": "room_1", 
+          "nameaction": "position_2"
+        }
+      ], 
+      "enable": "true", 
+      "id": 0, 
+      "condition": [
+        {
+          "type": "variable", 
+          "name": "time", 
+          "value": 1000
+        }
+      ], 
+      "title": ""
+    }, 
+    {
+      "action": [
+        {
+          "namedev": "blind_1", 
+          "enable": "false", 
+          "nameroom": "room_1", 
+          "nameaction": "position_1"
+        }
+      ], 
+      "enable": "true", 
+      "id": 1, 
+      "condition": [
+        {
+          "type": "variable", 
+          "name": "time", 
+          "value": 1100
+        }
+      ], 
+      "title": ""
+    }
+  ]
+}
+

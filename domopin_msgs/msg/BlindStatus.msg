@@ -1,4 +1,4 @@
-string id
+int32 id
 bool up
 bool down
 bool push_up

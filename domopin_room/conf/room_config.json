@@ -1,0 +1,26 @@
+{
+	"roomid": 2,
+	"title": "Dormitorio",
+	"device":{
+		"blind": [
+			{
+			"id": 1,
+			"title": "persiana 1",
+			"positions": [
+				{"name":"position_1", "value": 0},
+				{"name":"position_2", "value": 100},
+				{"name":"position_3", "value": 200},
+				{"name":"position_4", "value": 300},
+				{"name":"position_5", "value": 400}
+			]
+			}
+		],
+		"radiator": [
+			{
+			"id": 1,
+			"title": "radiador 1"
+			}
+		]		
+	}
+	
+}
