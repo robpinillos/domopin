@@ -1,0 +1,8 @@
+<launch>
+
+
+  <node pkg="domopin_riego" type="domopin_riego_main.py" name="domopin_riego" respawn="true" cwd="node" output="screen"> 
+</node> 
+
+
+</launch>

@@ -3,8 +3,8 @@ Global constants
 """
 IDROOM=2
 #screen dimensions
-DISPLAY_WIDTH = 320
-DISPLAY_HEIGHT = 240
+DISPLAY_WIDTH = 480
+DISPLAY_HEIGHT = 360
 
 DISPLAY_INFO= {'x': 410, 'y': 20, 'w': 220, 'h': 180}
 DISPLAY_BUTTONS= {'x': 2, 'y': 2, 'w': 100, 'h': 500}

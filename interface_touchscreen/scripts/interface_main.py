@@ -50,13 +50,15 @@ def publicar_comando(data):
     #"action": [{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":1 }]
     if data=='setpoint170':
         
-        value=170
+        #value=170
+        value="position_1"
     elif data=='setpoint210':
         
-        value=210        
+        #value=210 
+        value="position_2"
         
-    cmd={"action": [{"roomid": IDROOM,"device":"radiator", "id": 1,"command":"setpoint" , "value":value }]}
-    
+    #cmd={"action": [{"roomid": IDROOM,"device":"radiator", "id": 1,"command":"setpoint" , "value":value }]}
+    cmd={"action": [{"roomid": 4,"device":"blind", "id": 1,"command":"setposition" , "value":value }]}    
     pub_command.publish(json.dumps(cmd))
 
 

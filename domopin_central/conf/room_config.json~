@@ -1,0 +1,15 @@
+{
+	"roomid": 1,
+	"title": "Cocina",
+	"devices":{
+		"blind": [
+		],
+		"radiator": [
+			{
+			"id": 1,
+			"title": "caldera"
+			}
+		]		
+	}
+	
+}

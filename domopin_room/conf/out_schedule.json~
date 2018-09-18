@@ -1,0 +1,38 @@
+	{
+		"id": "room_1",
+		"title": "Salón",
+		"devices":{
+			"blind": [
+				{
+				"id": "blind_1",
+				"title": "persiana 1",
+				"positions": [
+					{"name":"posistion_1", "value": 0},
+					{"name":"posistion_2", "value": 100},
+					{"name":"posistion_3", "value": 200},
+					{"name":"posistion_4", "value": 300},
+					{"name":"posistion_5", "value": 400}
+	
+				]
+				},
+				{
+				"id": "blind_2",
+				"title": "persiana 2",
+				"map_pose": {
+							"x": "5",
+							"y": "15",
+							"with": "5",
+							"heigth": "5"
+					}
+				}
+			],
+			"radiator": [
+				{
+				"id": "rad_1",
+				"title": "radiador 1"
+				}
+				
+			]		
+		}
+		
+	}

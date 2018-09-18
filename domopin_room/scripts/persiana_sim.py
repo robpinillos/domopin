@@ -7,41 +7,75 @@ import sys
 # Variables
 
 
-actual=[0,0,2,0,0,0,0]   #[0]Subiendo;[1] Bajando; [2]posicion; [3]pulsador arriba;[4]pulsador abajo; [5]error; [6]temperatura
-anterior=[0,0,0,0,0,0,0]
-web=['000','0','0','000'] #0-POSICION,1-subir,2-bajar,3-temperatura
+PERSIANA=[0,0,0,0,0,0]   #[0]Subiendo;[1] Bajando; [2]posicion; [3]pulsador arriba;[4]pulsador abajo; [5]error;
+ANT_PERSIANA=[0,0,0,0,0,0]
+
+SENSORES=[0,0]                  # [0] vENTANA;[1] PUERTA
+
+
 
 #########################
 # COMUNICACION#
 
+global configuracion_hab
 global EJECUTANDO
+global estado_habitacion
 
-def Publicar_estado_actual():
+def Publicar_estado_actual_persiana():
 
 
-    return actual
+    return PERSIANA
+
+def Publicar_estado_actual_ventana():
+
+
+    return SENSORES
+
+def Actualizar_estado_habitacion(estado):
+
+    global estado_habitacion
+    estado_habitacion=estado
+    print 'puerta abierta=',estado_habitacion.array_window[0].door_opened
+    print 'ventana abierta=',estado_habitacion.array_window[0].window_opened
+
 
 
 def Actualizar_valores(datacmd,datavalue):
     
 #    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
 
-    if datacmd=='setpoint':
-        TERMOSTATO[2]=datavalue
+    if datacmd=='setposition':
+        
+        blind=configuracion_hab['device']['blind']['positions']
+        pos_deseada=[]
+        for pose in blind:
+            if pose['name']==datavalue:
+                pos_deseada=pose['value']
+        #parsear de position_1 > int
+        sentido=0
+        if AUX_SUBIR is True:
+            sentido=0
+        else:
+            sentido=1
+            
+            
+        POS_DESEADA_WEB=int(pos_deseada[sentido])
+        print 'POS_DESEADA_WEB=',POS_DESEADA_WEB
 
-    elif datacmd=='temp_agua':
-        TAGUA=datavalue
+    elif datacmd=='push_up':
+        PERSIANA[3]=1
         
 
 # Programa principal
 
-def Inicio(configuracion_hab):
+def Inicio(config_hab):
     
     # En configuracion_hab    se tinenen los datos de configuracion por si se quiere iniciar alguna variable
     ## Ejemplo posiciones de persiana
 
-    print "Persiana Inicio"
+    global configuracion_hab
 
+    configuracion_hab=config_hab
     
     global EJECUTANDO
     EJECUTANDO=True
@@ -51,7 +85,7 @@ def Cerrar_programa():
 
     global EJECUTANDO
     EJECUTANDO=False
-    print "Cerrando radiador.py"
+    print "Cerrando persiana.py"
 
 #
 #########################
@@ -70,8 +104,3 @@ def Bucle_principal():
     print "Cerrado"
     sys.exit(0)
     
-def Cerrar_programa():
-
-    global EJECUTANDO
-    EJECUTANDO=False
-    print "Cerrando persiana.py"

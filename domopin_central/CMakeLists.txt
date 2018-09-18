@@ -16,9 +16,9 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs std_srvs domopin_m
 
 catkin_package(
 
-DEPENDS std_msgs 
+DEPENDS std_msgs domopin_msgs
 )
 
-#catkin_install_python(PROGRAMS scripts/domopin_main.py
-#         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-#)
+catkin_install_python(PROGRAMS scripts/domopin_central_main.py
+         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

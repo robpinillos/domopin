@@ -17,7 +17,7 @@ from array import *
 import threading
 
 import persiana_sim as blind
-
+#import persiana_mcp as blind
 import radiador_sim as radiator
 
 import time_alert 
@@ -61,19 +61,19 @@ def publish_room_state():
 
     #print 'room_config=',room_config
     try:
-        datablind=blind.Publicar_estado_actual()
+        datablind=blind.Publicar_estado_actual_persiana()
     except:
         datablind=[0,0,0,0,0,0,0]
     current_status=RoomStatus()
     current_status.roomid=room_config['roomid']
     current_blind_status=BlindStatus()
     current_blind_status.id=1
-    current_blind_status.up=datablind[0]
-    current_blind_status.down=datablind[1] 
-    current_blind_status.position=datablind[2] 
-    current_blind_status.push_up=datablind[3] 
-    current_blind_status.push_down=datablind[4] 
-    current_blind_status.error=datablind[5]
+    current_blind_status.up=bool(datablind[0])
+    current_blind_status.down=bool(datablind[1] )
+    current_blind_status.position=int(datablind[2] )
+    current_blind_status.push_up=bool(datablind[3]) 
+    current_blind_status.push_down=bool(datablind[4]) 
+    current_blind_status.error=int(datablind[5])
     current_status.array_blind.append(current_blind_status)
     
     try:
@@ -93,17 +93,24 @@ def publish_room_state():
     current_radiator_status.error=int(dataradiator[5])
     current_status.array_rad.append(current_radiator_status)
     
-
+    try:
+        datawindow=blind.Publicar_estado_actual_ventana()
+    except:
+        datawindow=[0,0]
     current_window_status=WindowStatus()
     current_window_status.id=1
-    current_window_status.outside_temp=0
-    current_window_status.window_opened=False
-    current_window_status.door_opened=False
+    current_window_status.outside_temp=int(0)
+    current_window_status.window_opened=bool(datawindow[0])
+    current_window_status.door_opened=bool(datawindow[1])
     current_window_status.error=-1
     current_status.array_window.append(current_window_status)
     
    
     pub_msg_room_status.publish(current_status)
+    
+    blind.Actualizar_estado_habitacion(current_status)
+    #radiator.Actualizar_estado_habitacion(current_status)
+        
 #    print "Published pub_msg_room_status"
 
 
@@ -140,7 +147,8 @@ def update():
             print 'task_command=',task_alarm
             parse_command(task_alarm)
             
-            
+        
+
         publish_room_state()
         
         time.sleep(stepDelay)                   # Wait between steps

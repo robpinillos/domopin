@@ -1,0 +1,17 @@
+{
+  "task": [
+		{ "timealert": 0002, "action": [
+			{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":1 }
+			]
+		},
+		{ "timealert": 0024, "action": [
+			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":220 }
+			]
+		},
+		{ "timealert": 0012, "action": [
+			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":240 }
+			]
+		}
+	]
+}
+

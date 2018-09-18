@@ -1,0 +1,35 @@
+{
+  "task": [
+    {
+      "action": [
+				{"roomid": 1,"device":"blind", "id": 1,"command":"position" , "value":1 }
+      ], 
+      "enable": "true", 
+      "id": 0, 
+      "condition": [
+        {
+          "type": "variable", 
+          "name": "time", 
+          "value": 1000
+        }
+      ], 
+      "title": ""
+    }, 
+    {
+      "action": [
+				{"roomid": 1,"device":"radiator", "id": 1,"command":"setpoint" , "value":270 }
+      ], 
+      "enable": "true", 
+      "id": 1, 
+      "condition": [
+        {
+          "type": "variable", 
+          "name": "time", 
+          "value": 1100
+        }
+      ], 
+      "title": ""
+    }
+  ]
+}
+

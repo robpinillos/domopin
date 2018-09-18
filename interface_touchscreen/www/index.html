@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>DOMO</title> 	
+	<meta charset="utf-8">	
+<!--<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<script src="js/jquery-1.9.1.js"></script>
+
+<script src="./js/jquery-ui-1.11.4.min.js"></script>
+<script src="./js/jquery.ui.touch-punch.min.js"></script>
+
+<script src="./js/jquery.mobile-1.4.5.min.js"></script>
+
+<link rel="stylesheet" href="./css/jquery.mobile-1.4.5.min.css" />
+
+  <!-- clock -->
+  <script type="text/javascript" src="clock/clock.js"></script>
+   <link rel="stylesheet" href="clock/clock.css">
+  
+  <!-- clock picker-->
+<link rel="stylesheet" type="text/css" href="./datetimepicker/DateTimePicker.css" />
+
+<script type="text/javascript" src="./datetimepicker/DateTimePicker.js"></script>
+
+  <!-- datebox -->
+ <script type="text/javascript" src="./datebox/datebox.js"></script>
+ <link rel="stylesheet" href="./datebox/datebox.css" />
+
+  
+<!-- rosbridge -->
+  <script type="text/javascript" src="js/WebSocketTest.js"></script>
+	<script src="js/eventemitter2.js"></script>
+	<script src="js/roslib.js"></script>
+
+
+<style type="text/css">
+
+body{
+
+	 margin:0;
+	 padding:0;
+
+}
+
+  
+.ui-header .ui-title, .ui-footer .ui-title{
+padding: 2px 2px;
+}
+.ui-header  .ui-content {
+padding: 4px 4px;
+}
+.ui-listview > .ui-li-static {
+    padding: 0px 0px;
+
+}
+.ui-content .ui-listview-inset{
+	margin: 0px 0px
+}
+
+#list_events{
+  padding: 0px 0px;
+}
+
+#list_new{
+  padding: 5px 0px;
+}
+
+
+.ui-grid-a > .ui-block-b{
+    width: 30%;
+}
+
+.img-status, .img-schedule{
+height: 30px;
+}
+
+.img-button{
+	border-radius: 4px;
+	background: #333333;
+    margin: 0px 20px;
+	padding: 5px;
+}
+
+
+
+</style>
+
+</head>
+
+
+
+
+<body onload="start_ros();" >
+
+<!--
+<body>
+-->
+<!-- Home -->
+
+<div data-role="page" id="page_home" data-theme="b">
+
+ <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:40px" >
+        <div class="ui-block-a" style="width: 30%" >
+          <div data-role="content">
+                <a href="#page_radiator">
+                <img src="./images/radiador_32.png" alt="radiator" />
+                </a>
+            </div>
+        </div>
+        <div class="ui-block-b" style="width: 38%" >
+            <div id="title_page" style="margin-top:8px">
+              <div class="clock">
+                <div id="Date"></div>
+
+                <ul>
+                    <li id="hours"> </li>
+                    <li id="point">:</li>
+                    <li id="min"> </li>
+                    <li id="point">:</li>
+                    <li id="sec"> </li>
+                </ul>
+
+              </div>
+            </div>
+        </div>
+				
+        <div class="ui-block-c" style="width: 30%">
+						
+            
+                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b"  >Persiana</a>
+
+            
+
+      </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+	
+  <div data-role="content" >
+
+    <div class="ui-grid-b" style="height:60px" >
+        <div class="ui-block-a" >
+          <div class="ui-grid-b" style="height:60px" >
+            <div class="ui-block-a" >
+
+                <img src="./images/termometro.png" alt="temp" /> 
+            </div>
+          <div class="ui-block-b" >
+            <div id="t_int" class="icon-">--.-</div>
+          </div>
+          </div>
+        </div>
+          <div class="ui-block-b" >
+          <div class="ui-grid-b" style="height:60px" >
+            <div class="ui-block-a" >
+
+                <img src="./images/temp_agua.png" alt="temp" /> 
+            </div>
+          <div class="ui-block-b" >
+            <div id="t_water" class="icon-">--.-</div>
+          </div>
+          </div>
+        </div>
+    </div>
+    <div class="ui-grid-c" style="height:60px" >
+        <div class="ui-block-a" >
+        
+          <img id="boiler_st" src="./images/fuego_off.png" alt="boiler" />
+
+        </div>
+          <div class="ui-block-b" >
+            <img id="valve_st" src="./images/radiador_on.png" alt="valve" />
+          </div>
+          <div class="ui-block-c" >
+            <img id="relay_st" src="./images/caldera_on.png" alt="relay" />
+          </div>
+    </div>
+  </div><!-- /content -->
+  
+</div><!-- /page -->
+
+<div data-role="page" id="page_radiator" data-theme="b">
+
+ <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:40px" >
+        <div class="ui-block-a" style="width: 20%" >
+          
+        </div>
+        <div class="ui-block-b" style="width: 50%" >
+            <div id="title_page">
+                <h3>RADIADOR</h3>
+            </div>
+        </div>
+				
+        <div class="ui-block-c" style="width: 20%">
+
+                <a id="home_button" href="#page_home"  class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left ui-btn-b"  ></a>
+
+      </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+	
+  <div data-role="content" >
+
+      <div class="ui-grid-c" style="height:60px" >
+        <div class="ui-block-a" >
+        
+<input type="text" data-field="time" id="horario_riego" data-mini="true" data-theme="a">
+        </div>
+          <div class="ui-block-b" >
+
+          </div>
+          <div class="ui-block-c" >
+            <input type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' data-theme="a">
+          </div>
+    </div>
+    
+
+
+  </div><!-- /content -->
+  
+</div><!-- /page -->
+  
+<div data-role="page" id="page_blind" data-theme="b">
+
+ <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:40px">
+        <div class="ui-block-a" style="width: 20%" >
+          
+        </div>
+        <div class="ui-block-b" style="width: 50%" >
+            <div id="title_page">
+                <h3>PERSIANA</h3>
+            </div>
+        </div>
+				
+        <div class="ui-block-c" style="width: 20%">
+
+                <a id="home_button" href="#page_home"  class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-top ui-btn-b"  >Home</a>
+
+
+      </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+	
+  <div data-role="content" >
+
+
+
+  </div><!-- /content -->
+  
+</div><!-- /page -->
+
+  
+<script type="text/javascript">
+  
+
+var cmd_action=null;
+var ID_ROOM=2;
+var global_room_status=null;
+
+
+
+
+function start_ros(){
+
+
+  // Connecting to ROS
+  // -----------------
+  ros = new ROSLIB.Ros();
+
+  // If there is an error on the backend, an 'error' emit will be emitted.
+  ros.on('error', function(error) {
+    //console.log(error);
+    $('#console_html').html('</br>Rosbridge:Error  Connection!<br>');
+  });
+
+  // Find out exactly when we made a connection.
+  ros.on('connection', function() {
+    //console.log('Connection made!');
+    //log_html('Connection made!');
+    $('#console_html').html('</br>Rosbridge: Connection made!<br>');
+  });
+
+  // Create a connection to the rosbridge WebSocket server.
+  //ros.connect('ws://192.168.2.29:9090');
+
+  ros.connect('ws://localhost:9090');
+  // Publishing a Topic
+  // ------------------
+
+/*  cmd_action = new ROSLIB.Topic({
+    ros : ros,
+    name : 'domopin/set_array_actions',
+    serviceType : 'domopin/ServActions'
+
+  });
+*/
+    cmd_action = new ROSLIB.Topic({
+    ros : ros,
+    name : 'domopin/array_action',
+    messageType : 'domopin/ArrayAction'
+  });
+
+
+Subscribe();
+}
+ 
+function Subscribe(){
+
+listener_status_room = new ROSLIB.Topic({
+    ros : ros,
+    name : 'domopin/room_status',
+    messageType : 'domopin_msgs/RoomStatus'
+  });
+
+listener_status_room.subscribe(function(msg) {
+
+  if (msg.roomid==ID_ROOM){
+      global_room_status=msg
+    
+  
+    // PARSEAR VARIABLES
+      var Tint=parseFloat(global_room_status.array_rad[0].current_temp/10.0);
+      var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
+      var Twater=parseFloat(global_room_status.array_rad[0].water_temp/10.0);
+    console.log(Tint);
+      if (global_room_status.array_rad[0].relay_opened ==true){
+        $("#boiler_st").attr("src","./images/fuego.gif");
+      }else if (global_room_status.array_rad[0].relay_opened == false){
+        
+        $("#boiler_st").attr("src","./images/fuego_off.png");
+      }
+
+      if (global_room_status.array_rad[0].valve_opened ==true){
+        
+
+      }else if (global_room_status.array_rad[0].valve_opened == false){
+        
+      }              
+
+      
+      $("#t_int").html(Tint.toFixed(1));
+      $("#t_water").html(Twater.toFixed(1));
+  }
+        
+});
+
+}
+function Command_Manual(id_room,id_dev,action){
+
+var str_nameroom=id_room;
+var str_namedev=id_dev;
+var str_action=action;
+
+
+var array_action=new Array();
+var act = Object.seal({
+    nameroom: str_nameroom,
+	namedev: str_namedev,
+	action: str_action
+	
+});
+array_action.push(act);
+
+ goal = new ROSLIB.Message({
+    array_actions: array_action
+  });
+ // Then we create the payload to be published. The object we pass in to ros.Message matches the 
+
+  // And finally, publish.
+  cmd_action.publish(goal);
+
+	//log_html('Published message ' + goal.pregunta);	
+}
+
+
+
+
+
+var StatusDefault = [
+    {
+        id: 0,
+        temp: "?",
+        blindid: 0,
+		blindup: false,
+		blinddown: false,
+		blindpush_up:false,
+		blindpush_down:false,
+		blindposition: 'null',
+		blinderror: 0
+			
+    }
+];
+
+
+var global_data=null;
+var global_data_schedule=null;
+var selected_room=null;
+
+function Read_file(name_file) {
+console.log('Read_file');
+
+    $.ajax({
+    	url: name_file,
+    	async: false,
+		cache:false,
+    	dataType: 'json',
+    	success: function(data) {
+    		temp_data = data;
+			
+    	}
+    });
+
+return temp_data
+}
+
+
+$(document).on("pageshow","#page_main",function(){
+
+
+
+});
+
+
+
+function Create_list_schedule(){
+
+
+}
+
+
+
+
+
+</script>
+
+</body>
+</html>

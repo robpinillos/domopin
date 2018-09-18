@@ -14,8 +14,8 @@ PinPS=Button(6)         # Pulsador Subir
 PinPB=Button(13)        # Pulsador Bajar
 PinCRS=Button(21)       # Confirmar Rele Subir
 PinCRB=Button(20)       # Confirmar Rele Bajar	
-PinCRR=Button(25)       # Confirmar Rele Radiador
-PinVC=Button(11)        # Confirmar Valvula Abierta
+##PinCRR=Button(25)       # Confirmar Rele Radiador
+##PinVC=Button(11)        # Confirmar Valvula Abierta
 PinSV=Button(12)        # Sensor Ventana
 PinSP=Button(5)         # Sensor Puerta
 PinP1=Button(19)        # Pulsador 1
@@ -26,16 +26,16 @@ PinP3=Button(26)        # Pulsador 3
 #Salidas
 PinRSP=LED(4)           # Rele Subir Persiana
 PinRBP=LED(17)  	# Rele Bajar Persiana
-PinTCR=LED(18)          # Telerruptor Cerrar Radiador
-PinTAR=LED(27)	        # Telerruptor Abrir Radiador
+##PinTCR=LED(18)          # Telerruptor Cerrar Radiador
+##PinTAR=LED(27)	        # Telerruptor Abrir Radiador
 
 #Inicialiazamos Salidas
 PinRSP.off()
 PinRBP.off()
-PinTCR.on()
-time.sleep(0.3)
-PinTCR.off()
-PinTAR.off()
+##PinTCR.on()
+##time.sleep(0.3)
+##PinTCR.off()
+##PinTAR.off()
 
 
 
@@ -93,7 +93,7 @@ TCRB=[False,0,False]		# Temporizador Confirmar Rele Bajada
 T_POSICION_PERSIANA=29500 # MILISEGUNDOS Tiempo que tarda en subir persiana (segundos)
 T_10_VERANO=5000                 # Posicion Verano desde cerrado
 T_11_VERANO=6500                 # Posicion Verano desde abierto
-T_20_DESPERTAR=6800             # Posicion Despertar desde cerrado
+T_20_DESPERTAR=7000             # Posicion Despertar desde cerrado
 T_21_DESPERTAR=8800             # Posicion Despertar desde abierto
 T_50_TRESCUARTO=26000           # Posicion 3/4 desde cerrado
 T_51_TRESCUARTO=27000           # Posicion 3/4 desde abierto
@@ -496,8 +496,8 @@ while True:
 
         if (P[8]==1):
                 POS_ACTUAL=POS_DESEADA
-##	print "actual  ="+str(actual)
-##	print "anterior="+str(anterior)
+##	print "actual  ="+str(PERSIANA)
+##	print "anterior="+str(ANT_PERSIANA)
 ##	print "POS_ACTUAL="+str(POS_ACTUAL)
 ##	print "POS_DESEADA="+str(POS_DESEADA)	
 ##	print "PA="+str(PA)
@@ -508,7 +508,7 @@ while True:
 	#print "Confirmar Rele Radiador  ="+str(wiringpi.digitalRead(PinCRR))
 	#print "Ventana  ="+str(wiringpi.digitalRead(PinVA))
 ##	print "Puerta  ="+str(wiringpi.digitalRead(PinPA))
-##        print "Valvula Radiador  ="+str(wiringpi.digitalRead(PinVC))
+##      print "Valvula Radiador  ="+str(wiringpi.digitalRead(PinVC))
 ##	print "Pulsador Subir  ="+str(wiringpi.digitalRead(PinPS))
 ##	print "Pulsador Bajar ="+str(wiringpi.digitalRead(PinPB))
 ##	print "Pulsador_1  ="+str(wiringpi.digitalRead(PinP1))

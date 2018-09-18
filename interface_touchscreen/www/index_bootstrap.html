@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sacarino interface</title> 	
+  <meta charset="utf-8">	
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+  <script src="js/bootstrap.min.js"></script>
+  
+<!-- display numbers -->
+<link rel="stylesheet" href="css/style_numbers.css" />
+  
+<!-- rosbridge -->
+
+  <script type="text/javascript" src="js/WebSocketTest.js"></script>
+  <script src="js/eventemitter2.js"></script>
+  <script type="text/javascript" src="./js/mjpegcanvas.js"></script>
+  <script src="js/roslib.js"></script>
+
+<style type="text/css">
+
+  body{
+    background-color: white
+  }
+
+</style>
+  </head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-light bg-light ">
+
+  <button type="button" class="btn btn-primary ">Volver</button>
+  </nav>
+<main role="main" class="container">
+  <div class="row">
+    <div class="border border-primary rounded" style="padding:2 px;">
+      <label style="margin-bottom:1 px;">Tª interior:</label>
+      <div id="t_indoor" class="icon-" style="font-size:32px;">21.2 ºC</div>
+      <div id="t_setpoint" class="icon-">16.0</div>
+    
+    </div>
+          <div class="col">Column</div>
+    <div class="w-100"></div>
+    <div class="col">Column</div>
+    <div class="col-5 ">Column</div>
+    <div class="col">Column</div>
+  </div>
+</main>
+</body>
+</html>

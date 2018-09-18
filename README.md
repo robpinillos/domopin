@@ -1,7 +1,72 @@
 # domopin
 Home automation under ROS with raspberry pi
 
+##TODO
 
+### ROBERTO
+* Apagar luz pantalla
+* Interfaz pantalla táctil web
+* Comprobar pérdida comunicación > T agua
+
+# PERSIANA
+* Leer config_room (path)
+
+# INTERFAZ
+* PRINCIPAL
+	> T actual grande
+	> T consigna y próxima cambio
+	> Estado caldera
+	> Estado relé
+	> Estado persiana y próximo cambio
+* RADIADOR
+	> Ajuste temporal
+
+
+
+
+
+##MULTIMASTER
+
+
+* en ~/.bashrc:
+	export ROS_MASTER_URI=http://<hostname or IP local>:11311
+
+*  Activar multicast:
+ > Para cada PC comprobar si está activado el multicast:
+ ```
+ cat /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts 
+ ```
+ Si devuelve 0 está activado.
+ Si no:
+  > en /etc/sysctl.conf añadir:
+ ```
+ net.ipv4.icmp_echo_ignore_broadcasts=0
+ ```
+  > PAra reiniciar el servicio:
+ ```
+ sudo service procps restart
+ ```
+* PAra comprobar que interfaz multicast está activa (defecto 224.0.0.1):
+ ```
+ netstat -g
+ ```
+* Si todo está bien configurado con el siguiente comando debería responder cada una de las IPs presentes en multicast
+ ```
+ ping 224.0.0.1
+ ```
+
+* En cada PC exportar ROS_MASTER_URI con su propia IP:
+
+export ROS_MASTER_URI=http://<hostname or IP local>:11311
+
+* En cada PC en /etc/hosts añadir los hostname de cada PC (todos en todos)
+
+
+05/07/2018
+
+* room status data is full available now in termostato.py and persiana.py
+* Multimaster
+* Added ping to google in start launcher
 
 
 29/08/2017
@@ -27,14 +92,8 @@ rostopic pub -1 domopin/command std_msgs/String '{ "type":"COMMAND", "roomid": 1
 
 rostopic pub -1 domopin/command std_msgs/String '{"action":[{"room":2,"device":"radiator", "id": 1,"command":"setpoint" , "value":270 }]}' 
 
- 
+rostopic pub -1 domopin/command std_msgs/String '{"action":[{"room":4,"device":"blind", "id": 1,"command":"setposition" , "value":"position_1" }]}'
 
-TODO:
-
-* Read the schedule and and check the conditions to launch the tasks
-* Publish command to enable/disable the termostat
-
-* Pygame interface LCD32 inchs
 
 
 

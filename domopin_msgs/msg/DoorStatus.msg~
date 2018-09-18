@@ -1,0 +1,3 @@
+string id
+bool opened
+int32 error

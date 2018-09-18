@@ -1,0 +1,9 @@
+<launch>
+
+  <node pkg="domopin_room" type="domopin_room_main.py" name="domopin_room_2" respawn="true" cwd="node" output="screen">
+
+	<param name="config_file" type="string" value="$(find pkg-name)/conf/room_config_2.json" /> 
+</node> 
+
+
+</launch>
