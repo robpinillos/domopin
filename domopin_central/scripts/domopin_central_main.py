@@ -17,7 +17,7 @@ from array import *
 import threading
 
 
-import caldera as boiler
+import caldera_sim as boiler
 
 
 global room_config
@@ -59,21 +59,22 @@ def callback_status(msg):
 
 def callback_command(req):
     
-    jreq = json.loads(req.data)
-    #action=Action()
-    for iaction in jreq['action']:
-        if iaction['roomid']==room_config['roomid']:
-
-            if iaction['type']=='CONFIG':
-            
-                print 'CONFIG::',iaction
+    data = json.loads(req.data)
+ 
+                
+    if data['type']=="action":
         
-            if iaction['type']=='COMMAND':
+        for iaction in data['action']:
             
+            if iaction['roomid']==room_config['roomid']:
+                
+                print 'PARSE COMMAND  iaction=',iaction
+                 
+                
                 if  iaction['device']=='boiler':
     
                     boiler.Recibir_comando_web(iaction['command'],iaction['value'])
-                
+                    
 
     
 def publish_room_state():

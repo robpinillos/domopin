@@ -46,12 +46,14 @@ def Actualizar_valores(datacmd,datavalue):
 
     if datacmd=='setposition':
         
-        blind=configuracion_hab['device']['blind']['positions']
+        print configuracion_hab['device']['blind'][0]['positions']
         pos_deseada=[]
-        for pose in blind:
+        for pose in configuracion_hab['device']['blind'][0]['positions']:
             if pose['name']==datavalue:
                 pos_deseada=pose['value']
+
         #parsear de position_1 > int
+
         sentido=0
         if AUX_SUBIR is True:
             sentido=0
@@ -76,6 +78,8 @@ def Inicio(config_hab):
     global configuracion_hab
 
     configuracion_hab=config_hab
+
+
     
     global EJECUTANDO
     EJECUTANDO=True

@@ -117,25 +117,70 @@ def publish_room_state():
 
 
 def parse_command(data):
-    #print 'Recibido command room=',data['name],' dev=',msg.namedev,' action=',msg.action
-    for iaction in data['action']:
-        if iaction['roomid']==room_config['roomid']:
+    
+    #{"type":"action","action": [{"roomid": room_config['roomid'],"device":"blind", "id": 1,"command":"position" , "value":value }]}  
+    #{"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+
+    if data['type']=="action":
+        
+        for iaction in data['action']:
             
-            print 'PARSE COMMAND  iaction=',iaction
-            if  iaction['device']=='CONFIG':  
-            
+            if iaction['roomid']==room_config['roomid']:
+                
+                print 'PARSE COMMAND  iaction=',iaction
+                 
+                
+     
+                if  iaction['device']=='blind':
+                    
+                        
+                    blind.Actualizar_valores(iaction['command'],iaction['value'])
+    
+    
+                elif  iaction['device']=='radiator':
+                    
+    
+                    radiator.Actualizar_valores(iaction['command'],iaction['value'])
+                    
+                    
+    elif data['type']=='config': 
+        
+        if data['roomid']==room_config['roomid']:
+    
+            if data['action']=='refresh_schedule':
+                    
                 pass
-
-            elif  iaction['device']=='blind':       
-
-                blind.Actualizar_valores(iaction['command'],iaction['value'])
-
-
-            elif  iaction['device']=='radiator':
-
-                radiator.Actualizar_valores(iaction['command'],iaction['value'])
+        
+            elif data['action']=='get_schedule':
+                    
+                value=timealert.schedule
+                
+                cmd={"type":"config","roomid": room_config['roomid'],"action":"current_schedule","value": value}
+                
+                time.sleep(0.2) 
+                pub_command.publish(json.dumps(cmd))
+        
+                
+            elif data['action']=='get_next_tasks':
+                    
+                value=timealert.list_tasks
+                time.sleep(0.2) 
+                cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+                  
+                pub_command.publish(json.dumps(cmd))
             
-
+def get_next_tasks(device):
+    
+    
+    next_tasks=[]
+    
+    for task in timealert.list_tasks:
+        
+        print 'task=',task
+        if  task['action'][0]["device"]==device:
+            next_tasks.append(task)
+    return next_tasks
+    
 def update():
     
 #    print 'update'
@@ -175,6 +220,7 @@ if __name__ == "__main__":
     rospy.on_shutdown(shutdown)
 
     pub_msg_room_status=rospy.Publisher('domopin/room_status', RoomStatus, queue_size=1)
+    pub_command=rospy.Publisher("domopin/command", String, queue_size=1)
     
 #    rospy.Service('domopin/set_action',ServAction,srv_callback_set_action)
     

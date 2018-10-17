@@ -27,6 +27,7 @@ class TimeAlarm:
         self.update_worker = Thread(target=self.waiting_run)
         
         self.list_tasks=[]
+        self.schedule=[]
 
         self.next_task=None
         self.previous_task=None
@@ -165,6 +166,8 @@ class TimeAlarm:
         #current_task=list_tasks.pop([0])
             
         events.sort(key=operator.itemgetter('timealert'))
+        
+        self.schedule=events
 
 
         for i,ievent in  reversed(list(enumerate(events))):

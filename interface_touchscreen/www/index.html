@@ -22,14 +22,17 @@
   <script type="text/javascript" src="clock/clock.js"></script>
    <link rel="stylesheet" href="clock/clock.css">
   
-  <!-- clock picker-->
+  <!-- clock picker
 <link rel="stylesheet" type="text/css" href="./datetimepicker/DateTimePicker.css" />
 
 <script type="text/javascript" src="./datetimepicker/DateTimePicker.js"></script>
-
+-->
   <!-- datebox -->
  <script type="text/javascript" src="./datebox/datebox.js"></script>
  <link rel="stylesheet" href="./datebox/datebox.css" />
+  <!-- clockpicker -->
+ <script type="text/javascript" src="./clockpicker/clockpicker.js"></script>
+ <link rel="stylesheet" href="./clockpicker/clockpicker.css" />
 
   
 <!-- rosbridge -->
@@ -47,7 +50,15 @@ body{
 
 }
 
-  
+ .ui-mobile .ui-page {
+    height: 200px;
+    min-height: 200px;
+}
+
+.ui-content{
+  height: 115px;
+padding: 2px 2px;
+}
 .ui-header .ui-title, .ui-footer .ui-title{
 padding: 2px 2px;
 }
@@ -62,6 +73,35 @@ padding: 4px 4px;
 	margin: 0px 0px
 }
 
+
+
+.img-status, .img-schedule{
+height: 30px;
+}
+
+.img-mini{
+height: 25px;
+}
+
+ .button-blind {
+    
+  padding: 5px;
+  padding-top: 5px;
+   margin: 2px;
+    
+  }
+.img-button{
+	border-radius: 4px;
+	background: #333333;
+    margin: 0px 20px;
+	padding: 5px;
+}
+
+.img-but{
+height: 45px;
+  padding-top: 5px;
+}
+  
 #list_events{
   padding: 0px 0px;
 }
@@ -70,23 +110,11 @@ padding: 4px 4px;
   padding: 5px 0px;
 }
 
-
-.ui-grid-a > .ui-block-b{
-    width: 30%;
-}
-
-.img-status, .img-schedule{
-height: 30px;
-}
-
-.img-button{
-	border-radius: 4px;
-	background: #333333;
-    margin: 0px 20px;
-	padding: 5px;
-}
-
-
+  .list-schedule{
+    padding-top: 0px;
+    padding-bottom: 0px;
+    margin-right: 0px;
+  }
 
 </style>
 
@@ -108,11 +136,7 @@ height: 30px;
 
     <div id="header" class="ui-grid-b" style="height:40px" >
         <div class="ui-block-a" style="width: 30%" >
-          <div data-role="content">
-                <a href="#page_radiator">
-                <img src="./images/radiador_32.png" alt="radiator" />
-                </a>
-            </div>
+          <a id="rad_button" href="#page_radiator"  class="ui-btn ui-corner-all ui-shadow ui-btn-b" style="margin-top:2px;"  >Radiador</a>
         </div>
         <div class="ui-block-b" style="width: 38%" >
             <div id="title_page" style="margin-top:8px">
@@ -134,7 +158,7 @@ height: 30px;
         <div class="ui-block-c" style="width: 30%">
 						
             
-                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b"  >Persiana</a>
+                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b" style="margin-left:10px;margin-top:2px;"  >Persiana</a>
 
             
 
@@ -145,20 +169,104 @@ height: 30px;
 	
   <div data-role="content" >
 
-    <div class="ui-grid-b" style="height:60px" >
+    <div class="ui-grid-b"  >
         <div class="ui-block-a" >
-          <div class="ui-grid-b" style="height:60px" >
-            <div class="ui-block-a" >
-
-                <img src="./images/termometro.png" alt="temp" /> 
-            </div>
-          <div class="ui-block-b" >
-            <div id="t_int" class="icon-">--.-</div>
-          </div>
-          </div>
+            <ul data-role="listview" data-inset="true">
+              <li >
+                <div class="ui-grid-a" style="height:60px" >
+                  <div class="ui-block-a" >
+                    <img src="./images/termometro.png" alt="temp" /> 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="t_setpoint" class="icon-">--.-</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
+                  <div class="ui-block-a" >
+                    <div id="next_1_time_rad" class="icon-">20:00</div> 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="next_1_temp_rad" class="icon-">--.-</div>
+                  </div>
+                </div>
+                
+              </li>
+              <li>
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;">
+                  <div class="ui-block-a" >
+                    <div id="next_2_time_rad" class="icon-">--:--</div> 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="next_2_temp_rad" class="icon-">--.-</div>
+                  </div>
+                </div>
+                
+              </li>
+            </ul>
         </div>
           <div class="ui-block-b" >
-          <div class="ui-grid-b" style="height:60px" >
+            <ul data-role="listview" data-inset="true">
+              <li >
+              </li>
+              <li>
+                <div id="t_int" style="font-size:50px;text-align: center;">--.-</div>
+              </li>
+            </ul>
+        </div>
+       <div class="ui-block-c" >
+            <ul data-role="listview" data-inset="true">
+              <li >
+                <div style="height:50px">
+                  <img src="./images/persiana_3.png" class="img-but" style="padding-left: 20px;"/>
+                </div>
+                  
+              </li>
+              <li>
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
+                  <div class="ui-block-a" >
+                    <div id="next_1_time_blind" >--:--</div> 
+                  </div>
+                  <div class="ui-block-b" >
+                    
+                      <img id="next_1_pose_blind" src="" class="img-mini" />
+                    
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
+                  <div class="ui-block-a" >
+                    <div id="next_2_time_blind" >--:--</div> 
+                  </div>
+                  <div class="ui-block-b" >
+                    
+                      <img id="next_2_pose_blind" src="" class="img-mini" />
+                    
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </div>
+    </div>
+    </div><!-- /content -->
+  
+    <div data-role="footer" style="height:30px;padding: 4px;"> 
+    <div class="ui-grid-c" >
+        <div class="ui-block-a" >
+        
+          <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
+
+        </div>
+          <div class="ui-block-b" >
+            <img id="valve_st" src="./images/radiador_on.gif" class="img-mini" alt="valve" />
+          </div>
+          <div class="ui-block-c" >
+            <img id="relay_st" src="./images/caldera_on.png" class="img-mini" alt="relay" />
+          </div>
+             <div class="ui-block-d" >
+          <div class="ui-grid-a" style="height:60px" >
             <div class="ui-block-a" >
 
                 <img src="./images/temp_agua.png" alt="temp" /> 
@@ -169,20 +277,7 @@ height: 30px;
           </div>
         </div>
     </div>
-    <div class="ui-grid-c" style="height:60px" >
-        <div class="ui-block-a" >
-        
-          <img id="boiler_st" src="./images/fuego_off.png" alt="boiler" />
-
-        </div>
-          <div class="ui-block-b" >
-            <img id="valve_st" src="./images/radiador_on.png" alt="valve" />
-          </div>
-          <div class="ui-block-c" >
-            <img id="relay_st" src="./images/caldera_on.png" alt="relay" />
-          </div>
-    </div>
-  </div><!-- /content -->
+  </div><!-- /footer -->
   
 </div><!-- /page -->
 
@@ -191,19 +286,18 @@ height: 30px;
  <div data-role="header" >   
 
     <div id="header" class="ui-grid-b" style="height:40px" >
-        <div class="ui-block-a" style="width: 20%" >
-          
+        <div class="ui-block-a"  >
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
         </div>
-        <div class="ui-block-b" style="width: 50%" >
+        <div class="ui-block-b" >
             <div id="title_page">
-                <h3>RADIADOR</h3>
+                <h3  style="margin-top:5px;">RADIADOR</h3>
             </div>
         </div>
 				
-        <div class="ui-block-c" style="width: 20%">
+        <div class="ui-block-c" >
 
-                <a id="home_button" href="#page_home"  class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-left ui-btn-b"  ></a>
-
+            <a id="blind_button" href="#page_rad_schedule"  class="ui-btn ui-corner-all ui-btn-b" style="margin-left:18px;margin-top:2px;" >Agenda</a> 
       </div>
 					
     </div><!-- /grid-b -->
@@ -214,13 +308,20 @@ height: 30px;
       <div class="ui-grid-c" style="height:60px" >
         <div class="ui-block-a" >
         
-<input type="text" data-field="time" id="horario_riego" data-mini="true" data-theme="a">
+          <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+            <input type="text" class="form-control" value="13:14">
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+          </div>
         </div>
+
+
           <div class="ui-block-b" >
 
           </div>
           <div class="ui-block-c" >
-            <input type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' data-theme="a">
+            <input type="text" data-role="datebox" data-options='{"mode":"timebox"}' >
           </div>
     </div>
     
@@ -232,47 +333,187 @@ height: 30px;
   
 <div data-role="page" id="page_blind" data-theme="b">
 
- <div data-role="header" >   
+  <div data-role="header" >   
 
     <div id="header" class="ui-grid-b" style="height:40px">
-        <div class="ui-block-a" style="width: 20%" >
-          
+        <div class="ui-block-a" >
+
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
+
         </div>
-        <div class="ui-block-b" style="width: 50%" >
-            <div id="title_page">
-                <h3>PERSIANA</h3>
+        <div class="ui-block-b"  >
+            <div id="title_page" >
+                <h3 style="margin-top:5px;">PERSIANA</h3>
             </div>
+        </div>	
+        <div class="ui-block-c" >
+          <a id="blind_button" href="#page_blind_schedule"  class="ui-btn ui-corner-all ui-btn-b" style="margin-left:18px;margin-top:2px;" onclick="Publish_config_command('get_schedule','')" >Agenda</a>         
         </div>
-				
-        <div class="ui-block-c" style="width: 20%">
-
-                <a id="home_button" href="#page_home"  class="ui-btn ui-corner-all ui-shadow ui-icon-home ui-btn-icon-top ui-btn-b"  >Home</a>
-
-
-      </div>
 					
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" >
+  <div data-role="content" style ="height:150px;">
+    
+    <ul data-role="listview" data-inset="true">
+      <li>
+        <!--<div  style="font-size:20px;text-align: center;">MANUAL</div>-->
+      </li>
+      <li style="padding-left: 0px;">
+        <div class="ui-grid-d" >
+          <div class="ui-block-a" >
+            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','1')">
+            <img src="./images/persiana_1.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+          <div class="ui-block-b" >
+            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','2')">
+            <img src="./images/persiana_2.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+          <div class="ui-block-c" >
+            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','3')">
+            <img src="./images/persiana_3.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+          <div class="ui-block-d" >
+            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','4')">
+            <img src="./images/persiana_4.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+          <div class="ui-block-e" >
+            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','5')">
+            <img src="./images/persiana_5.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+        </div>
+      </li>
 
+      <li style="padding-left: 0px;">
+        <div class="ui-grid-b" >
+          <div class="ui-block-a" >
+             <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','up')">
+            <img src="./images/flecha_arriba.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+          <div class="ui-block-b" >
+
+          </div>
+          <div class="ui-block-c" >
+             <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','down')">
+            <img src="./images/flecha_abajo.png" class=" ui-corner-all img-but" />
+            </button>
+          </div>
+        </div>
+      </li>
+    </ul>
 
 
   </div><!-- /content -->
   
 </div><!-- /page -->
 
+  <div data-role="page" id="page_blind_schedule" data-theme="b">
+
+<!-- popup Edittask 
+<div data-role="popup" id="Edittask_popup_blind" data-overlay-theme="a" data-theme="a" data-dismissible="false" style="width:90%;height:80%">
+
+  <div data-role="header" data-theme="a">
+  <h1>Editar</h1>
+  </div>
+    <div data-role="content" data-theme="d" data-mini="true" class="ui-corner-bottom ui-content"> 
+      <ul id="list_edittask_blind_content" data-role="listview" data-inset="true">
+
+      </ul>
+      <ul id ="list_edittask_blind_buttons" data-role="listview" data-split-theme="a" data-inset="true">
+      </ul>
+
+    </div>
+</div>-->
+
+<!-- /popup Edittask -->
+
+  <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:40px">
+        <div class="ui-block-a" >
+
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
+
+        </div>
+        <div class="ui-block-b"  >
+            <div id="title_page" >
+                <h3 style="margin-top:5px;">AGENDA</h3>
+            </div>
+        </div>	
+        <div class="ui-block-c" >
+          <a id="blind_button" href="#page_blind_schedule"  class="ui-btn ui-corner-all ui-btn-a" style="margin-left:18px;margin-top:2px;" onclick="Publish_config_command('save_schedule','')" >Guardar</a>         
+        </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+	
+  <div data-role="content" style ="height:110px;">
+    <ul id="schedule_blind" data-role="listview" data-inset="true">
+      
+    </ul>
+    
+  </div><!-- /content -->
+  
+  <div data-role="footer" style="height:30px;padding: 4px;"> 
+    <!--<div>
+          <a class="ui-btn ui-icon-plus ui-btn-icon-notext ui-corner-all" style="margin-top:6px;" onclick="New_event_blind()">No text</a>
+      </div>-->
+    <div  >
+            <input type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}' >
+          </div>
+
+  </div>
+
+</div><!-- /page -->
+  
+  
+  
+<div data-role="page" id="page_edit_blind_schedule" data-theme="a">
+  
+  
+    <div data-role="content" data-theme="a" > 
+      <ul id="list_edittask_blind_content" data-role="listview" data-inset="true">
+
+      </ul>
+      <ul id ="list_edittask_blind_buttons" data-role="listview" data-split-theme="a" data-inset="true">
+      </ul>
+
+    </div>
+    
+  </div><!-- /content -->
+</div><!-- /page -->
   
 <script type="text/javascript">
   
 
 var cmd_action=null;
 var ID_ROOM=2;
-var global_room_status=null;
+var global_room_status=
+{
+roomid: 2,
+array_window:[
+{id: 0, window_opened: false, door_opened: false, outside_temp: 0, error: 0}
+  ],
+array_blind: [
+ {id: 0, up: false, down: false, push_up: false, push_down: false, position: 0, error: 0}
+  ],
+array_rad:[
+{id: 0, on_off: false, relay_opened: false, valve_opened: false, boiler_on: false,
+  current_temp: 0, setpoint_temp: 0, water_temp: 0, error: 0}
+  ],
+error: 0
+  
+  };
 
-
-
-
+var schedule=null;
+var temp_schedule=null;
+  
 function start_ros(){
 
 
@@ -288,7 +529,7 @@ function start_ros(){
 
   // Find out exactly when we made a connection.
   ros.on('connection', function() {
-    //console.log('Connection made!');
+    console.log('Connection made!');
     //log_html('Connection made!');
     $('#console_html').html('</br>Rosbridge: Connection made!<br>');
   });
@@ -309,12 +550,15 @@ function start_ros(){
 */
     cmd_action = new ROSLIB.Topic({
     ros : ros,
-    name : 'domopin/array_action',
-    messageType : 'domopin/ArrayAction'
+    name : 'domopin/command',
+    messageType : 'std_msgs/String'
   });
 
 
 Subscribe();
+  
+
+Publish_config_command('get_next_tasks','');
 }
  
 function Subscribe(){
@@ -325,89 +569,171 @@ listener_status_room = new ROSLIB.Topic({
     messageType : 'domopin_msgs/RoomStatus'
   });
 
+  listener_cmd_room = new ROSLIB.Topic({
+    ros : ros,
+    name : 'domopin/command',
+    messageType : 'std_msgs/String'
+  });
+
+  
 listener_status_room.subscribe(function(msg) {
 
   if (msg.roomid==ID_ROOM){
-      global_room_status=msg
     
   
     // PARSEAR VARIABLES
-      var Tint=parseFloat(global_room_status.array_rad[0].current_temp/10.0);
-      var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
-      var Twater=parseFloat(global_room_status.array_rad[0].water_temp/10.0);
-    console.log(Tint);
-      if (global_room_status.array_rad[0].relay_opened ==true){
-        $("#boiler_st").attr("src","./images/fuego.gif");
-      }else if (global_room_status.array_rad[0].relay_opened == false){
+      
+      
+      
+      //console.log('Tint='+Tint);
+      if (msg.array_rad[0].relay_opened ==true && global_room_status.array_rad[0].relay_opened ==false ){
+        $("#relay_st").attr("src","./images/caldera_on.gif");
+      }else if (msg.array_rad[0].relay_opened == false){
         
-        $("#boiler_st").attr("src","./images/fuego_off.png");
+        $("#relay_st").attr("src","./images/caldera_off.png");
       }
 
-      if (global_room_status.array_rad[0].valve_opened ==true){
+      if (msg.array_rad[0].valve_opened ==true){
         
-
-      }else if (global_room_status.array_rad[0].valve_opened == false){
-        
+        $("#valve_st").attr("src","./images/radiador_on.gif");
+      }else if (msg.array_rad[0].valve_opened == false){
+        $("#valve_st").attr("src","./images/radiador_off.png");
       }              
-
+      if (msg.array_rad[0].boiler_on ==true && global_room_status.array_rad[0].boiler_on ==false){
       
-      $("#t_int").html(Tint.toFixed(1));
-      $("#t_water").html(Twater.toFixed(1));
+        $("#boiler_st").attr("src","./images/fuego.gif");
+      }else if (msg.array_rad[0].boiler_on == false){
+        $("#boiler_st").attr("src","./images/fuego_off.png");
+      }      
+      
+      if (msg.array_rad[0].current_temp != global_room_status.array_rad[0].current_temp ){
+        var Tint=parseFloat(msg.array_rad[0].current_temp/10.0);
+        $("#t_int").html(Tint.toFixed(1));
+      }
+      if (msg.array_rad[0].setpoint_temp != global_room_status.array_rad[0].setpoint_temp ){
+        var Tsetpoint=parseFloat(msg.array_rad[0].setpoint_temp/10.0);
+        $("#t_setpoint").html(Tsetpoint.toFixed(1));
+      }
+      if (msg.array_rad[0].water_temp != global_room_status.array_rad[0].water_temp ){
+        var Twater=parseFloat(msg.array_rad[0].water_temp/10.0);
+        $("#t_water").html(Twater.toFixed(1));
+      }      
+      
+    
+   global_room_status=msg; 
   }
         
 });
+  
+  listener_cmd_room.subscribe(function(msg) {
+  
+  var obj = jQuery.parseJSON(msg.data);
+    
+    console.log( 'obj='+msg.data);
+    if (obj.type=='config' && obj.roomid==ID_ROOM){
+      
+      if (obj.action=='set_next_tasks'){
+      
+        var tasks=obj.value
+        console.log( 'tasks.length='+tasks.length);
+        
+        var blind_tasks=[];
+        var radiator_tasks=[];
+        
+        for (i=0;i<tasks.length;i++){
+          
+          if (tasks[i].action[0].device=='blind'){
+            
+            var obj={"timealert":tasks[i].timealert ,"value": tasks[i].action[0].value }
 
-}
-function Command_Manual(id_room,id_dev,action){
+            
+            blind_tasks.push(obj)
+              
+          }
+          else if (tasks[i].action[0].device=='radiator'){
+            
+            var obj={"timealert":tasks[i].timealert ,"value": tasks[i].action[0].value }
 
-var str_nameroom=id_room;
-var str_namedev=id_dev;
-var str_action=action;
+            radiator_tasks.push(obj)
+              
+          }
+                   
 
+          
+        }
+      
+        //console.log( 'obj='+radiator_tasks[0]);
+        for (i=0;i<2;i++){
+          
+          var index=i+1;
+          if ( radiator_tasks[i]){
 
-var array_action=new Array();
-var act = Object.seal({
-    nameroom: str_nameroom,
-	namedev: str_namedev,
-	action: str_action
-	
-});
-array_action.push(act);
+            var timedefault=["0","0","0","0"]
+            var time=radiator_tasks[i].timealert.toString(10).split('');
 
- goal = new ROSLIB.Message({
-    array_actions: array_action
-  });
- // Then we create the payload to be published. The object we pass in to ros.Message matches the 
+            for(t=time.length-1;t>-1;t--){
 
-  // And finally, publish.
-  cmd_action.publish(goal);
+              timedefault[t]=time[t];
 
-	//log_html('Published message ' + goal.pregunta);	
-}
+            }
+            $("#next_"+index+"_time_rad").html(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
+            var T=parseFloat(radiator_tasks[0].value/10.0);
+            $("#next_"+index+"_temp_rad").html(T.toFixed(1));
 
+          }
+          else{
 
+            $("#next_"+index+"_time_rad").html("--:--");
 
+            $("#next_"+index+"_temp_rad").html("--.-");
 
+          }
+          
+        }
+        
+        // blind
+            for (i=0;i<2;i++){
+          
+          var index=i+1;
+          if ( blind_tasks[i]){
+console.log( 'obj='+blind_tasks[i].timealert);
+            var timedefault=["0","0","0","0"]
+            var time=blind_tasks[i].timealert.toString(10).split('');
 
-var StatusDefault = [
-    {
-        id: 0,
-        temp: "?",
-        blindid: 0,
-		blindup: false,
-		blinddown: false,
-		blindpush_up:false,
-		blindpush_down:false,
-		blindposition: 'null',
-		blinderror: 0
-			
+            for(t=time.length-1;t>-1;t--){
+
+              timedefault[t]=time[t];
+
+            }
+            $("#next_"+index+"_time_blind").html(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
+            $("#next_"+index+"_pose_blind").attr("src","./images/persiana_"+blind_tasks[i].value+".png");
+
+          }
+          else{
+
+            $("#next_"+index+"_time_blind").html("--:--");
+
+            $("#next_"+index+"_pose_blind").attr("src","");
+
+          }
+          
+        }    
+      }
+      
+      else if (obj.action=='current_schedule'){
+        
+        schedule=obj.value;
+        console.log( 'current_schedule='+schedule.length);
+        
+      }
     }
-];
+    
+    });
+
+}
 
 
-var global_data=null;
-var global_data_schedule=null;
-var selected_room=null;
+
 
 function Read_file(name_file) {
 console.log('Read_file');
@@ -427,23 +753,240 @@ return temp_data
 }
 
 
+
+  
+var SelectedLi_to_remove = '';
+
+
+$('.clockpicker').clockpicker();
+
 $(document).on("pageshow","#page_main",function(){
 
 
 
 });
 
+$(document).on("pageshow","#page_blind_schedule",function(){
+  
 
+    $('#schedule_blind').empty().listview('refresh');
 
-function Create_list_schedule(){
+  
+  
 
+    Create_list_schedule_blind();
+  
+  
+  
+
+});
+
+  
+function Create_list_schedule_blind(){
+
+console.log('Create_list_schedule_blind');
+  
+    temp_schedule=schedule;
+	for (var i=0;i<schedule.length;i++){
+	var item=schedule[i];
+    
+    var selected_on=""
+    if (schedule[i].enable == 'true'){
+      
+      selected_on='selected=""';
+     
+    }
+    var timedefault=["0","0","0","0"]
+    var time=schedule[i].timealert.toString(10).split('');
+
+    for(t=time.length-1;t>-1;t--){
+
+      timedefault[t]=time[t];
+
+    }
+    var item_time= timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3];
+      
+      if(item.action[0].device=="blind"){
+        var position_image="./images/persiana_"+item.action[0].value+".png"
+
+        $('#schedule_blind').append(
+              $('<li>').attr("id","task_"+i).append(
+                $('<div>').attr('class',' ui-grid-a').attr("style","padding-left:20px;").append(
+                      $('<div>').attr('class',' ui-block-a').attr("style","width:70%;").append(
+                        
+                        $('<a>').attr("href","#page_edit_blind_schedule").attr("class","list-schedule").bind('vclick',function(){
+                          
+                            
+                         var id = $(this).parent().parent().parent();
+                         Edit_event_blind(id);
+                        }).append(
+                          $('<div>').attr('class',' ui-grid-a').append(
+                            $('<div>').attr('class',' ui-block-a').append(
+                              $('<h2>').attr("id","timealert").text(item_time)
+                            ),
+                            $('<div>').attr('class',' ui-block-b').append(
+                              $('<img>').attr("id","position_"+item.action[0].value).attr("src",position_image).attr("class","img-mini").attr("style","padding-top:4px;")
+                            )
+                          )
+                        )
+                      ),
+                      $('<div>').attr('class',' ui-block-b').attr("style","width:28%;").append(
+                        
+                  //'<input type="checkbox" data-role="flipswitch" name="flip-checkbox-4" id="flip-checkbox-4" '+enable+' data-mini="true">'
+'<select id="flip-blind-'+i+'" name="flip-select" data-role="flipswitch" data-mini="true"><option value="off">Off</option><option '+selected_on+' value="on">On</option></select>'
+                
+                 //$('<input>').attr('type',' checkbox').attr('id',' flip').attr('name',' flip').attr('data-role',' flipswitch').attr('data-mini',' true')
+                     
+                 //$('<select>').attr('id',' flip').attr('name',' flip-select').attr('data-role',' flipswitch').attr('data-mini',' true')
+                    )
+               )
+            )
+          );
+          
+        
+
+	     //$('#list_events').append(lista.children()).enhanceWithin().listview('refresh');
+      }
+	} 
+  $('#schedule_blind').enhanceWithin().listview('refresh');
+  
+  
+ 
+}
+
+function Edit_event_blind(id){
+  var nameid=id.attr('id');
+  var timealert=id.children().find('#timealert').text();
+  var position=id.children().find('img').attr('id');
+  
+  
+  console.log('Edit_event_blind position='+position);
+  
+  $('#list_edittask_blind_content').empty();
+  $('#list_edittask_blind_buttons').empty();
+  
+  $('#list_edittask_blind_content').append(
+		$('<div>').attr('class','ui-grid-a').append(
+			$('<div>').attr('class','ui-block-a').attr('style','float:left;').append(
+              $('<input>').attr('type','text').attr('data-role','datebox').attr('data-options','{"mode":"timebox"}').attr('data-theme','b').attr('value',timealert)
+              //'<input type="text" data-role="datebox" data-options='{"mode":"timebox", "useInlineBlind":true}' data-theme="b">'
+          
+                         //'<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"> <input type="text" class="form-control" value="'+timealert+'"> <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div>'//
+          
+			),
+			$('<div>').attr('class','ui-block-b').append(
+              //$('<div>').html(position)
+              '<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"> <input type="text" class="form-control" value="'+timealert+'"> <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div>'
+			)
+
+		)
+	).enhanceWithin();
+	
+  $('#list_edittask_blind_buttons').append(
+    $('<div>').attr('class','ui-grid-b').append(
+        $('<div>').attr('class','ui-block-a').append(
+            $('<button>').attr("href","#page_blind_schedule").attr('id','cancel_edit_blind').text("CANCEL").bind('vclick',function(){								
+              var id = $(this).attr('id');
+
+              Push_button_edit_blind('cancel_edit_blind',id);
+              
+
+            })
+        ),
+        $('<div>').attr('class','ui-block-b').append(
+          
+          ),
+        $('<div>').attr('class','ui-block-c').append(
+            $('<button>').attr('id','ok_edit_blind').text("GUARDAR").bind('vclick',function(){	
+              var id = $(this).attr('id');
+              Push_button_edit_blind('ok_edit_blind',id);
+
+            })
+        )
+    )
+  ).enhanceWithin();
+  
+$('#list_edittask_blind_content').enhanceWithin().listview('refresh');
+  $('#list_edittask_blind_buttons').enhanceWithin().listview('refresh');
+
+  //$('#Edittask_popup_blind').popup('open');
+  
 
 }
 
+function NEw_event_blind(){
+  
+}
+function Push_button_edit_blind(cmd,id){
+  
+  if (cmd == 'cancel_edit_blind'){
+    
+    console.log('cancel_edit_blind');
+    $('#Edittask_popup_blind').popup('close');
+    $('#schedule_blind').prop( "disabled", false );
+    
+  }
+  else if(cmd == 'ok_edit_blind'){
+          
+          
+          
+  }
+  else if(cmd == 'remove_task_blind'){
+          
+    var id=$(SelectedLi_to_remove);  //SelectedLi_to_remove=$(this).parent();
+    //Borrar_evento(id);
+    //Save_file();
+    //id.remove();											
+    //id.fadeOut();
+    $('#Edittask_popup_blind').popup('close');        
+          
+  }  
 
 
+  
+  
+}
+function Publish_command(dev,com,value){
+  
 
+  var id_dev=dev;
+  var cmd=com;
+  var val=value;
+  
+  
+  
+  //cmd={"action": [{"roomid": IDROOM,"device":"radiator", "id": 1,"command":"setpoint" , "value":value }]}
+  //var cmd={"action": [{"roomid": 4,"device":"blind", "id": 1,"command":"setposition" , "value":value }]}  
+  
+  var cmd_str={"action": [{"roomid":ID_ROOM  ,"device": id_dev, "id": 1,"command":cmd, "value": val }]}
+  console.log('id_dev='+id_dev)
+  var JSONstr = JSON.stringify(cmd_str);
+  var cmd_str = new ROSLIB.Message({
+    data: JSONstr
 
+  });       
+
+    cmd_action.publish(cmd_str)
+  
+}
+
+  
+function Publish_config_command(com,value){
+
+  var cmd=com;
+  var val=value;
+  
+  var cmd_str={"type":"config","roomid": ID_ROOM,"action":cmd,"value": value} ;
+  
+  var JSONstr = JSON.stringify(cmd_str);
+  var cmd_str = new ROSLIB.Message({
+    data: JSONstr
+
+  });       
+
+    cmd_action.publish(cmd_str)
+  
+}
 </script>
 
 </body>

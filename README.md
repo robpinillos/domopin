@@ -1,6 +1,19 @@
 # domopin
 Home automation under ROS with raspberry pi
 
+
+##LAUNCH
+
+roscd domopin_central
+roslaunch domopin_central domopin.launch
+
+
+roscd domopin_room
+roslaunch domopin_room domopin_room.launch
+
+
+roslaunch rosbridge_server rosbridge_websocket.launch
+
 ##TODO
 
 ### ROBERTO
@@ -8,10 +21,10 @@ Home automation under ROS with raspberry pi
 * Interfaz pantalla táctil web
 * Comprobar pérdida comunicación > T agua
 
-# PERSIANA
+#### PERSIANA
 * Leer config_room (path)
 
-# INTERFAZ
+#### INTERFAZ
 * PRINCIPAL
 	> T actual grande
 	> T consigna y próxima cambio
@@ -61,6 +74,13 @@ export ROS_MASTER_URI=http://<hostname or IP local>:11311
 
 * En cada PC en /etc/hosts añadir los hostname de cada PC (todos en todos)
 
+03/10/2018
+
+* Changed  "/domopin/command" wich NOW is  type={'config','action'}
+
+    #{"type":"actionroscore
+","action": [{"roomid": room_config['roomid'],"device":"blind", "id": 1,"command":"position" , "value":value }]}  
+    #{"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
 
 05/07/2018
 
@@ -88,11 +108,9 @@ export ROS_MASTER_URI=http://<hostname or IP local>:11311
 	{ "type":"COMMAND", "roomid": 1, "action":[{"device":"radiator", "id": 1,"command":"setpoint" , "value":270 }]}
 
 
-rostopic pub -1 domopin/command std_msgs/String '{ "type":"COMMAND", "roomid": 1, "action":[{"device":"radiator", "id": 1,"command":"setpoint" , "value":270 }]}' 
 
-rostopic pub -1 domopin/command std_msgs/String '{"action":[{"room":2,"device":"radiator", "id": 1,"command":"setpoint" , "value":270 }]}' 
 
-rostopic pub -1 domopin/command std_msgs/String '{"action":[{"room":4,"device":"blind", "id": 1,"command":"setposition" , "value":"position_1" }]}'
+
 
 
 

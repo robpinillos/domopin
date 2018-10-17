@@ -12,9 +12,9 @@ N_VAR_TER=8		# Num. variables
 TERMOSTATO=[0,0,0,0,0,0,0,0]
 ANT_TERMOSTATO=[0,0,0,0,0,0,0,0]
 
-for i in range(N_VAR_TER):
-	TERMOSTATO[i]=0		# [0]T Habitacion;[1]TCalle;[2]TConsigan;[3]ReleRadiador;[4]VvulaAbierta;[5]Error;[6]Encendido/Apagado
-	ANT_TERMOSTATO[i]=0
+#for i in range(N_VAR_TER):
+#	TERMOSTATO[i]=0		# [0]T Habitacion;[1]TCalle;[2]TConsigan;[3]ReleRadiador;[4]VvulaAbierta;[5]Error;[6]Encendido/Apagado
+#	ANT_TERMOSTATO[i]=0
 
 #web=['000','0','0','000'] #0-POSICION,1-subir,2-bajar,3-temperatura
 web=[0,0,0,0] #0-POSICION,1-subir,2-bajar,3-temperatura
@@ -37,7 +37,7 @@ def Publicar_estado_actual():
 
 def Actualizar_valores(datacmd,datavalue):
     
-#    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
+    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
 
     if datacmd=='setpoint':
         TERMOSTATO[2]=datavalue
@@ -55,8 +55,8 @@ def Inicio(configuracion_hab):
 
     print "Persiana Inicio"
     global TERMOSTATO
-    TERMOSTATO[0]=0
-    TERMOSTATO[2]=0
+    TERMOSTATO[0]=200
+    TERMOSTATO[2]=220
     
     
     global EJECUTANDO
@@ -81,10 +81,12 @@ def Bucle_principal():
         
         if TERMOSTATO[0]< TERMOSTATO[2]:
             TERMOSTATO[7]=1
-            TERMOSTATO[0]=TERMOSTATO[0]+10
-            TERMOSTATO[1]=TERMOSTATO[1]+5
+            TERMOSTATO[0]=TERMOSTATO[0]+2
+            TERMOSTATO[1]=TERMOSTATO[1]+2
         else:
             TERMOSTATO[7]=0
+            TERMOSTATO[0]=TERMOSTATO[0]-6
+            TERMOSTATO[1]=TERMOSTATO[1]-2
             
         print 'RADIADOR:'
         print 'TERMOSTATO[0]=',TERMOSTATO[0]
