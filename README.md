@@ -14,6 +14,13 @@ roslaunch domopin_room domopin_room.launch
 
 roslaunch rosbridge_server rosbridge_websocket.launch
 
+* interface
+
+roscd interface_touchscreen/www
+python -m SimpleHTTPServer
+
+>> Go to http://localhost:8000/index.html 
+
 ##TODO
 
 ### ROBERTO
@@ -34,6 +41,13 @@ roslaunch rosbridge_server rosbridge_websocket.launch
 * RADIADOR
 	> Ajuste temporal
 
+
+## TMUX
+
+   tmux a  --> connect (atached)
+   ctrl + B, n(screen number)
+   ctrl + b, d --> disconnect (detached)
+   tmux kill-server --> close all sessions
 
 
 
