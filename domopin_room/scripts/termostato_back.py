@@ -50,7 +50,7 @@ PinTEA.off()
 
 ## CONSTANTES
 C_TEMP_UMBRAL=5                # Umbral para variar la temperatura
-C_TEMP_AGUA=400
+C_TEMP_AGUA=300
 
 #Variables Termostato
 N_VAR_TER=8			# Num. variables
@@ -82,7 +82,7 @@ TM_CONFIRMAR_RADIADOR_ABIERTO=300 # Segundos
 TM_CONFIRMAR_RADIADOR_CERRADO=300
 TM_LEER_TEMPERATURA=20          # Tiempo de lectura de temperatura
 TM_LEER_FICHERO_TERMO=60
-TM_ESPERA_CERRAR_RADIADOR=60    # Original valor 90
+TM_ESPERA_CERRAR_RADIADOR=90
 TM_DESPUES_SENSOR_VENTANA=15
 
 TCRR=[False,0,False]		# Temporizador Confimar Rele Radiador
@@ -305,7 +305,7 @@ def Bucle_principal():
                                                 TERMOSTATO[7]=1
                                                 TECR[0]=False
                                                 TECR[2]=False
-                                                if (TAGUA>C_TEMP_AGUA):
+                                                if (TAGUA>C_TEMP_AGUA): #ABRIR RADIADOR
                                                         if(AUX_TRA==True):
                                                                 #print 'Termostato ENCENDIDO'
                                                                 PinTAR.off()
@@ -316,7 +316,7 @@ def Bucle_principal():
                                                                 PinTAR.on()
                                                                 AUX_TRA=True
                                                                 
-                                                else:
+                                                else: # CERRAR RADIADOR
                                                         if (AUX_TRC==True):
                                                                # print'Termostato APAGADO'
                                                                 PinTCR.off()

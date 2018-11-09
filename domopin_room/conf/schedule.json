@@ -1,22 +1,22 @@
 {
   "task": [
-		{ "timealert": 1530, "enable": "true", "action": [
+		{ "timealert": 1530, "enable": "true", "type":"action","action": [
 			{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":1 }
 			]
 		},		{ "timealert": 2020,"enable": "false", "action": [
 			{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":4 }
 			]
 		},
-		{ "timealert": 1142,"enable": "true", "action": [
+		{ "timealert": 1142,"enable": "true", "type":"action","action": [
 			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":180 }
 			]
 		},
-		{ "timealert": 1100,"enable": "true", "action": [
+		{ "timealert": 1100,"enable": "true","type":"action", "action": [
 			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":240 }
 			]
 		}
 ,
-		{ "timealert": 2359,"enable": "true", "action": [
+		{ "timealert": 2359,"enable": "true", "type":"action", "action": [
 			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":340 }
 			]
 		}

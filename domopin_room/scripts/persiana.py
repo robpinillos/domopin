@@ -1,41 +1,38 @@
 ##cambiamos si esta arriba o abajo, no se pulsa
 from gpiozero import LED, Button
 import time
+import sys
 from datetime import datetime
 #import spidev
 import os
+import smbus
 
+bus=smbus.SMBus(1)
+
+DEVICE=0x20			#Device adress (A0-A2)
+IODIRA=0x00			# Byte A 0 salida 1 entrada
+IODIRB=0x01			#Byte B = salida 1 entrada
+OLATA=0x14			#Salidas A
+OLATB=0x15			# Salidas B
+GPIOA=0x12			# Registros para entradas A
+GPIOB=0x13			# Registro entradas B
+
+#Ponemos entradas/salidas byte A y byte B
+bus.write_byte_data(DEVICE,IODIRA,0b10000000)
+bus.write_byte_data(DEVICE,IODIRB,0b00111111)
+
+#Ponemos todas las salidas a 0
+bus.write_byte_data(DEVICE,OLATA,0b00000000)
+bus.write_byte_data(DEVICE,OLATB,0b00000000)
 
 
 
 # Definimos entradas y salidas
 #Entradas
-PinPS=Button(6)         # Pulsador Subir
-PinPB=Button(13)        # Pulsador Bajar
-PinCRS=Button(21)       # Confirmar Rele Subir
-PinCRB=Button(20)       # Confirmar Rele Bajar	
-##PinCRR=Button(25)       # Confirmar Rele Radiador
-##PinVC=Button(11)        # Confirmar Valvula Abierta
-PinSV=Button(12)        # Sensor Ventana
-PinSP=Button(5)         # Sensor Puerta
-PinP1=Button(19)        # Pulsador 1
-PinP2=Button(16)        # Pulsador 2
-PinP3=Button(26)        # Pulsador 3
+#Lo lee el programa termostato
+#PinSV=Button(21)        # Sensor Ventana
+#PinSP=Button(20)         # Sensor Puerta
 
-
-#Salidas
-PinRSP=LED(4)           # Rele Subir Persiana
-PinRBP=LED(17)  	# Rele Bajar Persiana
-##PinTCR=LED(18)          # Telerruptor Cerrar Radiador
-##PinTAR=LED(27)	        # Telerruptor Abrir Radiador
-
-#Inicialiazamos Salidas
-PinRSP.off()
-PinRBP.off()
-##PinTCR.on()
-##time.sleep(0.3)
-##PinTCR.off()
-##PinTAR.off()
 
 
 
@@ -78,6 +75,7 @@ AFSP3=False			# Auxiliar Flnaco Subida Pulsador 3
 
 POS_ACTUAL=str(0)		# Posicion Persiana Actual)
 POS_DESEADA=0			# Posicion Persiana Deseada
+POS_DESEADA_WEB=0			# Posicion Persiana Deseada
 
 CONT_1=False			# Auxiliar primer ciclo de ejecucion
 
@@ -102,10 +100,92 @@ TPP=[False,0,False]		# Temporizador Posicion Persiana
 
 
 # ESTADOS
-N_EST_PER=10			# Numero de Estados
+N_EST_PER=11			# Numero de Estados
 P=[0,0,0,0,0,0,0,0,0,0,0]
 for i in range(N_EST_PER):
 	P[i]=0	# Ponemos todos los estados como falsos
+
+
+
+#########################
+# COMUNICACION#
+global configuracion_hab
+global EJECUTANDO
+
+def Publicar_estado_actual_persiana():
+
+        #print 'PERSIANA=',PERSIANA
+        return PERSIANA
+
+def Actualizar_estado_habitacion(estado):
+
+    #global estado_habitacion
+    estado_habitacion=estado
+    print 'puerta abierta=',estado_habitacion.array_window[0].door_opened
+    print 'ventana abierta=',estado_habitacion.array_window[0].window_opened
+    #SENSORES=[0,0]                  # [0] vENTANA;[1] PUERTA
+    SENSORES[0]=estado_habitacion.array_window[0].window_opened
+    SENSORES[1]=estado_habitacion.array_window[0].door_opened
+
+
+def Actualizar_valores(datacmd,datavalue):
+        global POS_DESEADA_WEB
+    
+#    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
+        if datacmd=='setposition':
+                
+                blind=configuracion_hab['device']['blind'][0]['positions']
+                pos_deseada=[]
+                for pose in blind:
+                    if pose['name']==datavalue:
+                        pos_deseada=pose['value']
+                #parsear de position_1 > int
+                sentido=0
+                if AUX_SUBIR is True:
+                    sentido=0
+                else:
+                    sentido=1
+                    
+                    
+                POS_DESEADA_WEB=int(pos_deseada[sentido])
+                print 'POS_DESEADA_WEB_INICIAL=',POS_DESEADA_WEB
+
+        elif datacmd=='push_up':
+                PERSIANA[3]=1
+        
+
+
+# Programa principal
+
+def Inicio(config_hab):
+    
+    # En configuracion_hab    se tinenen los datos de configuracion por si se quiere iniciar alguna variable
+    ## Ejemplo posiciones de persiana
+
+    global configuracion_hab
+
+    configuracion_hab=config_hab
+    
+    global EJECUTANDO
+    EJECUTANDO=True
+
+
+def Cerrar_programa():
+
+    global EJECUTANDO
+    EJECUTANDO=False
+    print "Cerrando persiana.py"
+
+
+
+
+
+#
+#########################
+
+
+
+
 
 
 
@@ -132,39 +212,48 @@ def Leer_entradas():
 	global PC
 	global POS_ACTUAL
 	global POS_DESEADA
+	global POS_DESEADA_WEB
 	global AUX_SUBIR
 
+	MyEntradasA=bus.read_byte_data(DEVICE,GPIOA)
+	MyEntradasB=bus.read_byte_data(DEVICE,GPIOB)
+    
 	# Leer P. Subir Persiana
-        if PinPS.is_pressed:    # No pulsado
-                PERSIANA[3]=0
-        else:                   # Pulsado
+	
+        if MyEntradasB & 0b00100000 == 0b00100000:    # Pulsado
                 PERSIANA[3]=1
+        else:                   # NO Pulsado
+                PERSIANA[3]=0
 	FSPS,AFSPS=FlancoDeSubida(bool(PERSIANA[3]),AFSPS)	# Flanco Subida Pul. subir
 			
 
 	# Leer P. Bajar
-        if PinPB.is_pressed:    # No pulsado
-                PERSIANA[4]=0
-        else:                   # Pulsado
+
+        if MyEntradasB & 0b00010000 == 0b00010000:    # Pulsado
                 PERSIANA[4]=1
+        else:                   # no Pulsado
+                PERSIANA[4]=0
 	FSPB,AFSPB=FlancoDeSubida(bool(PERSIANA[4]),AFSPB)	# Flanco Subida Pul. Bajar
 			
 	# Leer confirmar Rele Subida
-        if PinCRS.is_pressed:    # No pulsado
-                CRS=False
-        else:                   # Pulsado
+        if MyEntradasB & 0b00001000 == 0b00001000:    # Pulsado
                 CRS=True
-	# Leer confirmar Rele Bajada			 
-        if PinCRB.is_pressed:    # No pulsado
-                CRB=False
-        else:                   # Pulsado
+        else:                   # No Pulsado
+                CRS=False
+                
+	# Leer confirmar Rele Bajada
+        if MyEntradasA & 0b10000000 == 0b10000000:    # Pulsado
                 CRB=True
+        else:                   # No Pulsado
+                CRB=False
 
 	if (POS_ACTUAL>=T_POSICION_PERSIANA+4000):
 		PA=True
 		POS_ACTUAL=T_POSICION_PERSIANA
 		AUX_SUBIR=False
 		POS_DESEADA=POS_ACTUAL
+		POS_DESEADA_WEB=POS_ACTUAL  
+
 
 ##		if (POS_ACTUAL==T_POSICION_PERSIANA and PERSIANA[0]==1) or POS_ACTUAL>T_POSICION_PERSIANA:
 ##                        POS_DESEADA=POS_ACTUAL
@@ -177,51 +266,46 @@ def Leer_entradas():
 		POS_ACTUAL=0
 		AUX_SUBIR=True
 		POS_DESEADA=POS_ACTUAL
+		POS_DESEADA_WEB=POS_ACTUAL
 	else:
 		PC=False
 
         # Leer Pulsador 1,2 o 3
-        if PinP1.is_pressed:    # No pulsado
-                FSP1,AFSP1=FlancoDeSubida(False,AFSP1)
-                if PinP2.is_pressed:  # no pulsado 2
-                        FSP2,AFSP2=FlancoDeSubida(False,AFSP2)
-                        if PinP3.is_pressed:
-                                 FSP3,AFSP3=FlancoDeSubida(False,AFSP3)
-                        else:            # Pulsado 3
-                                
-                                FSP3,AFSP3=FlancoDeSubida(True,AFSP3)
-                                if FSP3==True and AUX_SUBIR==True:
-                                        ##print 'Pulsado Boton 3'
-                                        POS_DESEADA=T_50_TRESCUARTO
-                                elif FSP3==True and AUX_SUBIR==False:
-                                        ##print 'Pulsado Boton 3'
-                                        POS_DESEADA=T_51_TRESCUARTO
-                else:                   # Pulsado 2
-                        
-                        FSP2,AFSP2=FlancoDeSubida(True,AFSP2)
-                        if FSP2==True and AUX_SUBIR==True:
-                                ##print 'Pulsado Boton 2'
-                                POS_DESEADA=T_20_DESPERTAR
-                        elif FSP2==True and AUX_SUBIR==False:
-                                ##print 'Pulsado Boton 2'
-                                POS_DESEADA=T_21_DESPERTAR
-        else:                   # Pulsado 1
-                
-                FSP1,AFSP1=FlancoDeSubida(True,AFSP1)
-                if FSP1==True and AUX_SUBIR==True:
-                        ##print 'Pulsado Boton 1'
-                        POS_DESEADA=T_10_VERANO
-                elif FSP1==True and AUX_SUBIR==False:
-                        ##print 'Pulsado Boton 1'
-                        POS_DESEADA=T_11_VERANO
-                
+
+	#Pulsasdo 1
+	if MyEntradasB & 0b00000001 == 0b00000001:    # Pulsado 1
+		FSP1,AFSP1=FlancoDeSubida(True,AFSP1)
+		FSP2,AFSP2=FlancoDeSubida(False,AFSP2)
+		FSP3,AFSP3=FlancoDeSubida(False,AFSP3)
+		if FSP1==True and AUX_SUBIR==True:
+			POS_DESEADA=T_10_VERANO
+		elif FSP1==True and AUX_SUBIR==False:
+			POS_DESEADA=T_11_VERANO
+
+	elif MyEntradasB & 0b00000010 == 0b00000010:    #Pulsado 2
+		FSP2,AFSP2=FlancoDeSubida(True,AFSP2)
+		FSP1,AFSP1=FlancoDeSubida(False,AFSP1)
+		FSP3,AFSP3=FlancoDeSubida(False,AFSP3)
+		if FSP2==True and AUX_SUBIR==True:
+			POS_DESEADA=T_20_DESPERTAR
+		elif FSP2==True and AUX_SUBIR==False:
+			POS_DESEADA=T_21_DESPERTAR
+
+	elif MyEntradasB & 0b00000100 == 0b00000100:    #Pulsado 3
+		FSP3,AFSP3=FlancoDeSubida(True,AFSP3)
+		FSP1,AFSP1=FlancoDeSubida(False,AFSP1)
+		FSP2,AFSP2=FlancoDeSubida(False,AFSP2)
+		if FSP3==True and AUX_SUBIR==True:
+			POS_DESEADA=T_50_TRESCUARTO
+		elif FSP3==True and AUX_SUBIR==False:
+			POS_DESEADA=T_51_TRESCUARTO             
 	
 
         # Leer Sensor Puerta Abierta
-        if PinSP.is_pressed:    # No pulsado
-                SENSORES[1]=0
-        else:                   # Pulsado
-                SENSORES[1]=1
+#        if PinSP.is_pressed:    # No pulsado
+        #SENSORES[1]=1 # Esto es 0   
+        #else:                   # Pulsado
+        #        SENSORES[1]=1
 	return
 	
 
@@ -269,19 +353,22 @@ def Salidas():
 	global PERSIANA
 	global ANT_PERSIANA
 
-	if (PERSIANA[0]==0 and ANT_PERSIANA[0]==1):	
-		PinRSP.off()
+	salidaB=bus.read_byte_data(DEVICE,OLATB)
+
+	if (PERSIANA[0]==0 and ANT_PERSIANA[0]==1):
+		salidaB=salidaB & 0b01111111	
 		EscribirFichero()
 	
 	if (PERSIANA[0]==1 and ANT_PERSIANA[0]==0):
-		PinRSP.on()
+		salidaB=salidaB | 0b10000000	
+
 	
 	if (PERSIANA[1]==0 and ANT_PERSIANA[1]==1):
-		PinRBP.off()
+		salidaB=salidaB & 0b10111111	
 		EscribirFichero()
 	
 	if (PERSIANA[1]==1 and ANT_PERSIANA[1]==0):
-		PinRBP.on()
+		salidaB=salidaB | 0b01000000	
 
 	if (PERSIANA[5]==1):
 		print("ERROR EN RELE SUBIR")
@@ -292,7 +379,7 @@ def Salidas():
 	if(ANT_PERSIANA!=PERSIANA):
 		for i in range(N_VAR_PER):
 			ANT_PERSIANA[i]=PERSIANA[i]
-
+	bus.write_byte_data(DEVICE,OLATB,salidaB)
 	return
 
 
@@ -301,6 +388,7 @@ def Salidas():
 ################
 def LeerFichero():
 	global POS_ACTUAL
+	global PERSIANA
 
 	f=open("posicion.txt","r")
 	a=0
@@ -310,6 +398,7 @@ def LeerFichero():
 		if not linea: break
 		if (a%2==0):
 			POS_ACTUAL=int(linea)
+			PERSIANA[2]=POS_ACTUAL
 	f.close()
 	return
 
@@ -320,7 +409,9 @@ def LeerFichero():
 ####################
 def EscribirFichero():
 	global POS_ACTUAL
+	global PERSIANA
 	print("POSICION_ACTUAL="+str(POS_ACTUAL))
+	PERSIANA[2]=POS_ACTUAL
 	f=open("posicion.txt","w")
 	f.seek(0,0)
 	f.write('Posicion:\n')
@@ -333,198 +424,215 @@ def EscribirFichero():
 ######################
 # PROGRAMA PRINCIPAL #
 ######################
-#def Init():
-
-while True:
-		
-	Leer_entradas()			# Leemos las entradas
-##	print('actual='+str(PERSIANA))
-##	time.sleep(2)
-
-		
-		# ESTADO 0 - Leer de fichero tras ejecucion nueva
-	i=1
-	while (i<N_EST_PER):
-		if (P[i]==0):
-			P[0]=1
-		else:
-			P[0]=0	
-			break
-		i=i+1
-		
-		
-
-	# ESTADO 1 - Espera
-	if ((P[0]==1 and CONT_1==True) or
-            (P[2]==1 and ( PA==True or (FSPS==True and AUXP==True) or POS_DESEADA!=POS_ACTUAL)) or
-	    (P[4]==1) or
-            (P[3]==1 and ( PC==True or (FSPB==True and AUXP==True) or POS_DESEADA!=POS_ACTUAL)) or
-            (P[5]==1) or
-            (P[8]==1)):
-##            (P[6]==1 and (POS_DESEADA<=POS_ACTUAL or PA==True or FSPS==True or FSPB==True or SENSORES[1]==0)) or
-##            (P[7]==1 and (POS_DESEADA>=POS_ACTUAL or PC==True or FSPB==True or FSPS==True or SENSORES[1]==0))):
-		P[1]=1
-		P[0]=0
-		P[2]=0
-		P[3]=0
-		P[4]=0
-		P[5]=0
-##		P[6]=0
-##		P[7]=0
-		P[8]=0
-
-
-	# ESTADO 2 - Subir
-	if ((P[1]==1 and FSPS==True and AUXP==False and PA==False and PERSIANA[4]==0 and PERSIANA[5]!=1) or
-            (P[3]==1 and FSPS==True and AUXP==True and PERSIANA[5]!=1 and PA==False)):    
-		P[2]=1
-		P[1]=0
-		P[3]=0
-		
-
-	# ESTADO 3 - Bajar
-	if ((P[1]==1 and FSPB==True and AUXP==False and PC==False and PERSIANA[3]==0 and PERSIANA[5]!=2) or
-            (P[2]==1 and FSPB==True and AUXP==True and PERSIANA[5]!=2 and PC==False)):
-		P[3]=1
-		P[1]=0
-		P[2]=0
-
-		
-	# ESTADO 4 - Error Rele Subir
-	if (P[2]==1 and CRS==False and TCRS[2]==True):
-		P[4]=1
-		P[2]=0
-		P[1]=1
-
-
-	# ESTADO 5 - Error Rele Bajar
-	if (P[3]==1 and CRB==False and TCRB[2]==True):
-		P[5]=1
-		P[3]=0
-		P[1]=1
-
-	# ESTADO 6 - Subir Automatico
-	if (P[1]==1 and POS_DESEADA>POS_ACTUAL):
-                P[6]=1
-                P[1]=0
-                
-        # ESTADO 7 - BajarAutomatico
-	if (P[1]==1 and POS_DESEADA<POS_ACTUAL):
-                P[7]=1
-                P[1]=0
-                
-        # ESTADO 9 - Bajar Automatico web
-##	if (P[1]==1 and POS_DESEADA<POS_ACTUAL and SENSORES[1]==1):
-##                P[7]=1
-##                P[1]=0
-##
-##       # ESTADO 10 - Subir Automatico web
-##	if (P[1]==1 and POS_DESEADA>POS_ACTUAL and SENSORES[1]==1):
-##                P[6]=1
-##                P[1]=0
-
+def Bucle_principal():
+        global EJECUTANDO
+        global CONT_1
+        global P
+        global POS_DESEADA
+        global POS_DESEADA_WEB
+        global POS_ACTUAL
         
-##        print "P="+str(P)
-        # ESTADO 8 - Cuando hay paro de subir/bajar automatico
-        if ((P[6]==1 and (POS_ACTUAL>=POS_DESEADA or PA==True or FSPS==True or FSPB==True)) or
-            (P[7]==1 and (POS_ACTUAL<=POS_DESEADA or PC==True or FSPB==True or FSPS==True)) or
-            (P[9]==1 and (SENSORES[1]==0 or POS_ACTUAL>=POS_DESEADA or PA==True or FSPS==True or FSPB==True)) or
-            (P[10]==1 and (SENSORES[1]==0 or POS_ACTUAL<=POS_DESEADA or PC==True or FSPB==True or FSPS==True))):
-                P[8]=1
-                P[6]=0
-                P[7]=0
-##	print "P="+str(P)	
-##	time.sleep(2)
-	#### EFECTOS
-	if (P[0]==1):	# Leemos valores de fichero
-		LeerFichero()
-		CONT_1=True
-		POS_DESEADA=POS_ACTUAL
+        while EJECUTANDO:
 
-	if (P[1]==1):	# Espera
-		AUXP=False	# Ponemos el pulsador auxiliar en Falsp
-##		POS_DESEADA=POS_ACTUAL
+        ##        print'POS_DESEADA_WEB_ANTES ENTRADAS='+str(POS_DESEADA_WEB)                        
+                Leer_entradas()			# Leemos las entradas
+        ##	print('actual='+str(PERSIANA))
+        ##	time.sleep(2)
+        ##        print'POS_DESEADA_WEB_DESPUES ENTRADAS='+str(POS_DESEADA_WEB)                        
 
-	if (P[2]==1 or P[6]==1):	# Subir
-		PERSIANA[0]=1
-		TCRS[0],TCRS[1],TCRS[2]=Temporizador(TCRS[0],TCRS[1],TCRS[2],T_CONFIRMAR_RELE)
-		AUXP=True
-		
-	else:
-		PERSIANA[0]=0
-		TCRS[0]=False
-		TCRS[2]=False
-			
-	if (P[3]==1 or P[7]==1):	# Bajar
-		PERSIANA[1]=1
-		TCRB[0],TCRB[1],TCRB[2]=Temporizador(TCRB[0],TCRB[1],TCRB[2],T_CONFIRMAR_RELE)
-		AUXP=True
-			
-	else:
-		PERSIANA[1]=0
-		TCRB[0]=False
-		TCRB[2]=False
+                        
+                        # ESTADO 0 - Leer de fichero tras ejecucion nueva
+                i=1
+                while (i<N_EST_PER):
+                        if (P[i]==0):
+                                P[0]=1
+                        else:
+                                P[0]=0	
+                                break
+                        i=i+1
+                        
+                        
 
-	
-	if (P[2]==1 or P[3]==1 or P[6]==1 or P[7]==1):	# Calulo posicion persiana
+                # ESTADO 1 - Espera
+                if ((P[0]==1 and CONT_1==True) or
+                    (P[2]==1 and ( PA==True or (FSPS==True and AUXP==True) or POS_DESEADA!=POS_ACTUAL)) or
+                    (P[4]==1) or
+                    (P[3]==1 and ( PC==True or (FSPB==True and AUXP==True) or POS_DESEADA!=POS_ACTUAL)) or
+                    (P[5]==1) or
+                    (P[8]==1)):
+##              (P[6]==1 and (POS_DESEADA_WEB<=POS_ACTUAL or PA==True or FSPS==True or FSPB==True or SENSORES[1]==0)) or
+##                    (P[7]==1 and (POS_DESEADA_WEB>=POS_ACTUAL or PC==True or FSPB==True or FSPS==True or SENSORES[1]==0))):
+                        P[1]=1
+                        P[0]=0
+                        P[2]=0
+                        P[3]=0
+                        P[4]=0
+                        P[5]=0
+##                        P[6]=0
+##                        P[7]=0
+                        P[8]=0
+
+
+                # ESTADO 2 - Subir
+                if ((P[1]==1 and FSPS==True and AUXP==False and PA==False and PERSIANA[4]==0 and PERSIANA[5]!=1) or
+                    (P[3]==1 and FSPS==True and AUXP==True and PERSIANA[5]!=1 and PA==False)):    
+                        P[2]=1
+                        P[1]=0
+                        P[3]=0
+                        
+
+                # ESTADO 3 - Bajar
+                if ((P[1]==1 and FSPB==True and AUXP==False and PC==False and PERSIANA[3]==0 and PERSIANA[5]!=2) or
+                    (P[2]==1 and FSPB==True and AUXP==True and PERSIANA[5]!=2 and PC==False)):
+                        P[3]=1
+                        P[1]=0
+                        P[2]=0
+
+                        
+                # ESTADO 4 - Error Rele Subir
+                if (P[2]==1 and CRS==False and TCRS[2]==True):
+                        P[4]=1
+                        P[2]=0
+                        P[1]=1
+
+
+                # ESTADO 5 - Error Rele Bajar
+                if (P[3]==1 and CRB==False and TCRB[2]==True):
+                        P[5]=1
+                        P[3]=0
+                        P[1]=1
+
+                # ESTADO 6 - Subir Automatico
+                if (P[1]==1 and POS_DESEADA>POS_ACTUAL ):
+                        P[6]=1
+                        P[1]=0
+                        
+                # ESTADO 7 - BajarAutomatico
+                if (P[1]==1 and POS_DESEADA<POS_ACTUAL):
+                        P[7]=1
+                        P[1]=0
+                        
+                # ESTADO 9 - Bajar Automatico web
+                if (P[1]==1 and POS_DESEADA_WEB<POS_ACTUAL and SENSORES[1]==1 and PC==False):
+                        P[9]=1
+                        P[1]=0
+
+               # ESTADO 10 - Subir Automatico web
+                if (P[1]==1 and POS_DESEADA_WEB>POS_ACTUAL and SENSORES[1]==1 and PA==False):
+                        P[10]=1
+                        P[1]=0
+
                 
-		TPP[0],TPP[1],TPP[2]=Temporizador(TPP[0],TPP[1],TPP[2],T_POSICION_PERSIANA)
-		Tactual=int(time.time()*1000)
-		if (P[2]==1 or P[6]==1):
-##                        print'POS_ACTUAL'+str(POS_ACTUAL)
-##                        print'start='+str(TPP[1])
-##                        print'time='+str(Tactual)
-                        
-        		POS_ACTUAL=POS_ACTUAL+Tactual-TPP[1] # Sumamos tiempo
-##        		print'POS_ACTUAL'+str(POS_ACTUAL)
-        		
-		else:
-			POS_ACTUAL=POS_ACTUAL-(Tactual-TPP[1]) # Restamos tiem
-			
-                TPP[1]=Tactual
-                if (P[2]==1 or P[3]==1):
+##                print 'P="'+str(P)
+                # ESTADO 8 - Cuando hay paro de subir/bajar automatico
+                if ((P[6]==1 and (POS_ACTUAL>=POS_DESEADA or PA==True or FSPS==True or FSPB==True)) or
+                    (P[7]==1 and (POS_ACTUAL<=POS_DESEADA or PC==True or FSPB==True or FSPS==True)) or
+                    (P[9]==1 and (SENSORES[1]==0 or POS_ACTUAL<=POS_DESEADA_WEB or PC==True or FSPS==True or FSPB==True)) or
+                    (P[10]==1 and (SENSORES[1]==0 or POS_ACTUAL>=POS_DESEADA_WEB or PA==True or FSPB==True or FSPS==True))):
+                        P[8]=1
+                        P[6]=0
+                        P[7]=0
+                        P[9]=0
+                        P[10]=0
+##        	print "P="+str(P)	
+##        	time.sleep(2)
+                #### EFECTOS
+                if (P[0]==1):	# Leemos valores de fichero
+                        LeerFichero()
+                        CONT_1=True
                         POS_DESEADA=POS_ACTUAL
+                        POS_DESEADA_WEB=POS_ACTUAL  
+
+                if (P[1]==1):	# Espera
+                        AUXP=False	# Ponemos el pulsador auxiliar en Falsp
+        ##		POS_DESEADA=POS_ACTUAL
+
+                if (P[2]==1 or P[6]==1 or P[10]==1):	# Subir
+                        PERSIANA[0]=1
+                        TCRS[0],TCRS[1],TCRS[2]=Temporizador(TCRS[0],TCRS[1],TCRS[2],T_CONFIRMAR_RELE)
+                        AUXP=True
                         
-	else:
-		TPP[0]=False
-		TPP[2]=False
-	
-	if (P[4]==1):	# Error Rele Subir
-		PERSIANA[5]=1
-	elif (P[5]==1):	# Error Rele Bajar
-		PERSIANA[5]=2
+                else:
+                        PERSIANA[0]=0
+                        TCRS[0]=False
+                        TCRS[2]=False
+                                
+                if (P[3]==1 or P[7]==1 or P[9]==1):	# Bajar
+                        PERSIANA[1]=1
+                        TCRB[0],TCRB[1],TCRB[2]=Temporizador(TCRB[0],TCRB[1],TCRB[2],T_CONFIRMAR_RELE)
+                        AUXP=True
+                                
+                else:
+                        PERSIANA[1]=0
+                        TCRB[0]=False
+                        TCRB[2]=False
 
-        if (P[8]==1):
-                POS_ACTUAL=POS_DESEADA
-##	print "actual  ="+str(PERSIANA)
-##	print "anterior="+str(ANT_PERSIANA)
-##	print "POS_ACTUAL="+str(POS_ACTUAL)
-##	print "POS_DESEADA="+str(POS_DESEADA)	
-##	print "PA="+str(PA)
-##	print "PC="+str(PC)
-##	print "AUXP="+str(AUXP)
-	Salidas()
-	
-	#print "Confirmar Rele Radiador  ="+str(wiringpi.digitalRead(PinCRR))
-	#print "Ventana  ="+str(wiringpi.digitalRead(PinVA))
-##	print "Puerta  ="+str(wiringpi.digitalRead(PinPA))
-##      print "Valvula Radiador  ="+str(wiringpi.digitalRead(PinVC))
-##	print "Pulsador Subir  ="+str(wiringpi.digitalRead(PinPS))
-##	print "Pulsador Bajar ="+str(wiringpi.digitalRead(PinPB))
-##	print "Pulsador_1  ="+str(wiringpi.digitalRead(PinP1))
-##	print "Pulsador_2  ="+str(wiringpi.digitalRead(PinP2))
-##	print "Pulsador_3  ="+str(wiringpi.digitalRead(PinP3))
-##	print "Abrir Radiador  ="+str(wiringpi.digitalRead(PinTAR))
-##	print "Cerrar Radiador  ="+str(wiringpi.digitalRead(PinTCR))
-##	print "=============="
-##	time.sleep(0.2)
-##	time.sleep(0.2)
-	time.sleep(0.05)
-        #wiringpi.digitalWrite(PinTCR,1)
-##        time.sleep(0.5)
-        #wiringpi.digitalWrite(PinTAR,1)
-##        print'PA='+str(PA)
-			
+                
+                if (P[2]==1 or P[3]==1 or P[6]==1 or P[7]==1 or P[9]==1 or P[10]==1):	# Calulo posicion persiana
+                        
+                        TPP[0],TPP[1],TPP[2]=Temporizador(TPP[0],TPP[1],TPP[2],T_POSICION_PERSIANA)
+                        Tactual=int(time.time()*1000)
+                        if (P[2]==1 or P[6]==1 or P[10]==1):
+        ##                        print'POS_ACTUAL'+str(POS_ACTUAL)
+        ##                        print'start='+str(TPP[1])
+        ##                        print'time='+str(Tactual)
+                                
+                                POS_ACTUAL=POS_ACTUAL+Tactual-TPP[1] # Sumamos tiempo
+        ##        		print'POS_ACTUAL'+str(POS_ACTUAL)
+                                
+                        else:
+                                POS_ACTUAL=POS_ACTUAL-(Tactual-TPP[1]) # Restamos tiem
+                                
+                        TPP[1]=Tactual
+                        PERSIANA[2]=int(POS_ACTUAL)
+                        if (P[2]==1 or P[3]==1):
+                                POS_DESEADA=POS_ACTUAL
+                                POS_DESEADA_WEB=POS_ACTUAL                        
+                else:
+                        TPP[0]=False
+                        TPP[2]=False
+                
+                if (P[4]==1):	# Error Rele Subir
+                        PERSIANA[5]=1
+                elif (P[5]==1):	# Error Rele Bajar
+                        PERSIANA[5]=2
 
-	
-	
+                if (P[8]==1):
+                        POS_DESEADA=POS_ACTUAL
+                        POS_DESEADA_WEB=POS_ACTUAL
+          
+        ##	print "actual  ="+str(PERSIANA)
+        ##	print "anterior="+str(ANT_PERSIANA)
+  ##      	print "POS_ACTUAL="+str(POS_ACTUAL)
+  ##      	print "POS_DESEADA="+str(POS_DESEADA)
+##       	print "POS_DESEADA_WEB="+str(POS_DESEADA_WEB)
+        ##	print "PA="+str(PA)
+        ##	print "PC="+str(PC)
+        ##	print "AUXP="+str(AUXP)
+                Salidas()
+                
+                #print "Confirmar Rele Radiador  ="+str(wiringpi.digitalRead(PinCRR))
+                #print "Ventana  ="+str(wiringpi.digitalRead(PinVA))
+        ##	print "Puerta  ="+str(wiringpi.digitalRead(PinPA))
+        ##      print "Valvula Radiador  ="+str(wiringpi.digitalRead(PinVC))
+        ##	print "Pulsador Subir  ="+str(wiringpi.digitalRead(PinPS))
+        ##	print "Pulsador Bajar ="+str(wiringpi.digitalRead(PinPB))
+        ##	print "Pulsador_1  ="+str(wiringpi.digitalRead(PinP1))
+        ##	print "Pulsador_2  ="+str(wiringpi.digitalRead(PinP2))
+        ##	print "Pulsador_3  ="+str(wiringpi.digitalRead(PinP3))
+        ##	print "Abrir Radiador  ="+str(wiringpi.digitalRead(PinTAR))
+        ##	print "Cerrar Radiador  ="+str(wiringpi.digitalRead(PinTCR))
+        ##	print "=============="
+        ##	time.sleep(0.2)
+        ##	time.sleep(0.2)
+                time.sleep(0.05)
+                #wiringpi.digitalWrite(PinTCR,1)
+        ##        time.sleep(0.5)
+                #wiringpi.digitalWrite(PinTAR,1)
+        ##        print'PA='+str(PA)
+                                
+
+                
+                
+        print "Cerrado"
+        sys.exit(0)
