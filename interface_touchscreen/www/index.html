@@ -47,6 +47,7 @@ body{
 
 	 margin:0;
 	 padding:0;
+  font-family: -webkit-pictograph;
 
 }
 
@@ -56,7 +57,8 @@ body{
 }
 
 .ui-content{
-  height: 115px;
+  font-family: -webkit-pictograph;
+/*height: 500px;*/
 padding: 2px 2px;
 }
 .ui-header .ui-title, .ui-footer .ui-title{
@@ -304,28 +306,57 @@ height: 45px;
   </div>
 	
   <div data-role="content" >
+    <ul data-role="listview" data-inset="true">
+      <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="b" >
+    <li data-role="list-divider" style="font-size:20px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
 
-      <div class="ui-grid-c" style="height:60px" >
-        <div class="ui-block-a" >
-        
-          <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-            <input type="text" class="form-control" value="13:14">
-            <span class="input-group-addon">
-                <span class="glyphicon glyphicon-time"></span>
-            </span>
+      <li>
+        <div class="ui-grid-a" style="height:60px" >
+          <div class="ui-block-a" >
+  
+                <select id="flip-radiator-manual" name="flip-select" data-role="flipswitch" ><option value="auto">Auto</option><option value="manual">Manual</option></select>
+
+          </div>
+          <div class="ui-block-b" >
+            <div id="radiator-manual-open" class="ui-grid-a" style="height:60px" style="display:none;">
+              <div class="ui-block-a" >
+                 <label style="font-size:20px;font-family: -webkit-pictograph;" >
+                RELE:
+                </label>
+              </div>
+              <div class="ui-block-b" >
+            <select id="flip-radiator-manual-open" name="flip-select" data-role="flipswitch" ><option value="close">CERRADO</option><option value="open">ABIERTO</option></select>
+              </div>
+            </div>
           </div>
         </div>
+      </li>
+    </ul>
+    <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+    <li data-role="list-divider" style="font-size:20px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
+      <li>
+        <div class="ui-grid-c" style="height:60px" >
+          <div class="ui-block-a" >
 
-
-          <div class="ui-block-b" >
-
+            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+              <input type="text" class="form-control" value="13:14">
+              <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+              </span>
+            </div>
           </div>
-          <div class="ui-block-c" >
-            <input type="text" data-role="datebox" data-options='{"mode":"timebox"}' >
-          </div>
-    </div>
+
+
+            <div class="ui-block-b" >
+
+            </div>
+            <div class="ui-block-c" >
+              <input type="text" data-role="datebox" data-options='{"mode":"timebox"}' >
+            </div>
+      </div>
     
-
+      </li>
+    </ul>
 
   </div><!-- /content -->
   
@@ -513,6 +544,8 @@ error: 0
 
 var schedule=null;
 var temp_schedule=null;
+var flip_radiator_manual_change=false;
+var flip_radiator_manual_open_change=false;
   
 function start_ros(){
 
@@ -535,9 +568,9 @@ function start_ros(){
   });
 
   // Create a connection to the rosbridge WebSocket server.
-  //ros.connect('ws://192.168.1.24:9090');
-
   ros.connect('ws://localhost:9090');
+
+  //ros.connect('ws://192.168.1.109:9090');
   // Publishing a Topic
   // ------------------
 
@@ -781,6 +814,32 @@ $(document).on("pageshow","#page_blind_schedule",function(){
 
 });
 
+
+$("#flip-radiator-manual").on("change", function(e) {
+  
+console.log('flip-radiator-manual:: '+flip_radiator_manual_change);
+  if(flip_radiator_manual_change==false){
+      var value = this.value;
+      console.log('value:: '+value);
+      Publish_config_command('radiator_manual',value);
+  }
+  else{
+    flip_radiator_manual_change=false;
+  }
+});
+
+$("#flip-radiator-manual-open").on("change", function(e) {
+  
+console.log('flip-radiator-manual:: '+flip_radiator_manual_open_change);
+  if(flip_radiator_manual_open_change==false){
+      var value = this.value;
+      console.log('value:: '+value);
+      Publish_config_command('radiator_manual',value);
+  }
+  else{
+    flip_radiator_manual_open_change=false;
+  }
+});
   
 function Create_list_schedule_blind(){
 
@@ -958,7 +1017,7 @@ function Publish_command(dev,com,value){
   //cmd={"action": [{"roomid": IDROOM,"device":"radiator", "id": 1,"command":"setpoint" , "value":value }]}
   //var cmd={"action": [{"roomid": 4,"device":"blind", "id": 1,"command":"setposition" , "value":value }]}  
   
-  var cmd_str={"action": [{"roomid":ID_ROOM  ,"device": id_dev, "id": 1,"command":cmd, "value": val }]}
+  var cmd_str={"type":"action","action": [{"roomid":ID_ROOM  ,"device": id_dev, "id": 1,"command":cmd, "value": val }]}
   console.log('id_dev='+id_dev)
   var JSONstr = JSON.stringify(cmd_str);
   var cmd_str = new ROSLIB.Message({

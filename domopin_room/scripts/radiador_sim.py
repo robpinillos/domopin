@@ -45,7 +45,29 @@ def Actualizar_valores(datacmd,datavalue):
     elif datacmd=='temp_agua':
         TAGUA=datavalue
         
-
+    elif datacmd=='radiator_manual':
+        
+        if datavalue=='auto':
+        
+            TERMOSTATO[6]=1
+            
+        elif datavalue=='manual':
+        
+            TERMOSTATO[6]=0
+            
+        elif datavalue=='close':
+        
+            Abrir_Cerrar_rele(0)
+            
+        elif datavalue=='open':
+            
+            Abrir_Cerrar_rele(1)
+        
+            
+def Abrir_Cerrar_rele(act):
+    
+    TERMOSTATO[3]=act
+    
 # Programa principal
 
 def Inicio(configuracion_hab):

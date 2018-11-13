@@ -146,6 +146,10 @@ def parse_command(data):
     elif data['type']=='config': 
         
         if data['roomid']==room_config['roomid']:
+            
+            if data['action']=='radiator_manual':
+                    
+                radiator.Actualizar_valores(data['action'],data['value'])
     
             if data['action']=='refresh_schedule':
                     
