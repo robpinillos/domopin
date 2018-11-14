@@ -1,7 +1,7 @@
 int32 id
-bool on_off
-bool relay_opened
-bool valve_opened
+bool auto_mode
+bool relay_closed
+bool valve_closed
 bool boiler_on
 int32 current_temp
 int32 setpoint_temp

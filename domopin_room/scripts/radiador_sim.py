@@ -12,6 +12,10 @@ N_VAR_TER=8		# Num. variables
 TERMOSTATO=[0,0,0,0,0,0,0,0]
 ANT_TERMOSTATO=[0,0,0,0,0,0,0,0]
 
+
+########### PONER [0,0] CUANDO ACTIVO SENSOSERES VENTANA Y PUERTA, 0=abierto, 1= cerrado
+SENSORES=[1,1]                  # [0] vENTANA;[1] PUERTA 
+
 #for i in range(N_VAR_TER):
 #	TERMOSTATO[i]=0		# [0]T Habitacion;[1]TCalle;[2]TConsigan;[3]ReleRadiador;[4]VvulaAbierta;[5]Error;[6]Encendido/Apagado
 #	ANT_TERMOSTATO[i]=0
@@ -31,8 +35,8 @@ global EJECUTANDO
 def Publicar_estado_actual():
 
     # TERMOSTATO [T actual, T calle, T consigna, Rele radiador, Valvula abierta, error, ON/OFF GENERAL ,Encender caldera ]
-
-    return TERMOSTATO
+	# SENSORES [0] vENTANA;[1] PUERTA 
+    return TERMOSTATO,SENSORES
 
 
 def Actualizar_valores(datacmd,datavalue):
@@ -57,11 +61,11 @@ def Actualizar_valores(datacmd,datavalue):
             
         elif datavalue=='close':
         
-            Abrir_Cerrar_rele(0)
+            Abrir_Cerrar_rele(1)
             
         elif datavalue=='open':
             
-            Abrir_Cerrar_rele(1)
+            Abrir_Cerrar_rele(0)
         
             
 def Abrir_Cerrar_rele(act):

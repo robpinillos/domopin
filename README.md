@@ -50,7 +50,16 @@ python -m SimpleHTTPServer
    tmux kill-server --> close all sessions
 
 
-
+##DEPENDENCIAS
+* multimaster:
+	git clone https://github.com/fkie/multimaster_fkie.git
+* sensor de temperatura:
+	En /boot/config.txt añadir:
+		dtoverlay=w1-gpio,gpiopin=19
+* librería gpiozero:
+	sudo apt-get install python-gpiozero
+* tmux:
+	sudo apt-get install tmux
 
 ##MULTIMASTER
 
@@ -92,8 +101,7 @@ export ROS_MASTER_URI=http://<hostname or IP local>:11311
 
 * Changed  "/domopin/command" wich NOW is  type={'config','action'}
 
-    #{"type":"actionroscore
-","action": [{"roomid": room_config['roomid'],"device":"blind", "id": 1,"command":"position" , "value":value }]}  
+    #{"type":"action","action": [{"roomid": room_config['roomid'],"device":"blind", "id": 1,"command":"position" , "value":value }]}  
     #{"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
 
 05/07/2018

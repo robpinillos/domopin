@@ -528,15 +528,19 @@ var ID_ROOM=2;
 var global_room_status=
 {
 roomid: 2,
+connected_central: true,
 array_window:[
-{id: 0, window_opened: false, door_opened: false, outside_temp: 0, error: 0}
+{id: 0, window_closed: false, door_closed: false, outside_temp: 0, error: 0}
   ],
 array_blind: [
  {id: 0, up: false, down: false, push_up: false, push_down: false, position: 0, error: 0}
   ],
 array_rad:[
-{id: 0, on_off: false, relay_opened: false, valve_opened: false, boiler_on: false,
+{id: 0, auto_mode: false, relay_closed: false, valve_closed: false, boiler_on: false,
   current_temp: 0, setpoint_temp: 0, water_temp: 0, error: 0}
+  ],
+array_rel:[
+{id: 0, relay_closed: false, error: 0}
   ],
 error: 0
   
@@ -619,17 +623,17 @@ listener_status_room.subscribe(function(msg) {
       
       
       //console.log('Tint='+Tint);
-      if (msg.array_rad[0].relay_opened ==true && global_room_status.array_rad[0].relay_opened ==false ){
+      if (msg.array_rad[0].relay_closed ==true && global_room_status.array_rad[0].relay_closed ==false ){
         $("#relay_st").attr("src","./images/caldera_on.gif");
-      }else if (msg.array_rad[0].relay_opened == false){
+      }else if (msg.array_rad[0].relay_closed == false){
         
         $("#relay_st").attr("src","./images/caldera_off.png");
       }
 
-      if (msg.array_rad[0].valve_opened ==true){
+      if (msg.array_rad[0].valve_closed ==true){
         
         $("#valve_st").attr("src","./images/radiador_on.gif");
-      }else if (msg.array_rad[0].valve_opened == false){
+      }else if (msg.array_rad[0].valve_closed == false){
         $("#valve_st").attr("src","./images/radiador_off.png");
       }              
       if (msg.array_rad[0].boiler_on ==true && global_room_status.array_rad[0].boiler_on ==false){

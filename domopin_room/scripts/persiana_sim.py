@@ -35,8 +35,8 @@ def Actualizar_estado_habitacion(estado):
 
     global estado_habitacion
     estado_habitacion=estado
-    print 'puerta abierta=',estado_habitacion.array_window[0].door_opened
-    print 'ventana abierta=',estado_habitacion.array_window[0].window_opened
+    #print 'puerta cerrada=',estado_habitacion.array_window[0].door_opened
+    #print 'ventana cerrada=',estado_habitacion.array_window[0].window_opened
 
 
 

@@ -25,21 +25,21 @@ tmux send-keys "roslaunch domopin_central multimaster.launch" Enter
 
 tmux select-window -t $SESSION:1
 #tmux send-keys "roscd roscd domopin_central" C-m
-tmux send-keys "sleep 2; roslaunch domopin_central domopin.launch" Enter
+#tmux send-keys "sleep 5; roslaunch domopin_central domopin.launch" Enter
 
 tmux select-window -t $SESSION:2
 #tmux send-keys "roscd roscd domopin_room" C-m
-tmux send-keys " sleep 2; roslaunch domopin_room domopin_room.launch" Enter
+tmux send-keys " sleep 5; roslaunch domopin_room domopin_room.launch" Enter
 
 tmux select-window -t $SESSION:3
-tmux send-keys " sleep 4; roslaunch rosbridge_server rosbridge_websocket.launch" Enter
+tmux send-keys " sleep 6; roslaunch rosbridge_server rosbridge_websocket.launch" Enter
 
 tmux select-window -t $SESSION:4
-tmux send-keys "cd /home/robpin/catkin_ws/src/domopin/interface_touchscreen/www" C-m
+tmux send-keys "roscd interface_touchscreen/www" C-m
 tmux send-keys "python -m SimpleHTTPServer" Enter
 
 # Set default window
-tmux select-window -t $SESSION:1
+tmux select-window -t $SESSION:2
 
 # Attach to session
 tmux -2 attach-session -t $SESSION

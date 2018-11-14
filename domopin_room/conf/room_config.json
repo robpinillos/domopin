@@ -21,6 +21,12 @@
 			"id": 1,
 			"title": "radiador 1"
 			}
+		],
+		"relay": [
+			{
+			"id": 1,
+			"title": "rele 1"
+			}
 		]		
 	}
 	

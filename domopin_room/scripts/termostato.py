@@ -182,25 +182,45 @@ TAGUA=0                 # Temp- agua
 
 global EJECUTANDO
 EJECUTANDO=False
+global MANUAL_CERRAR
+MANUAL_CERRAR=-1
 
 def Publicar_estado_actual():
-
-        # TERMOSTATO [T actual, T calle, T consigna, Rele radiador, Valvula abierta, error, ON/OFF GENERAL,Encender Caldera ]
-
-        return TERMOSTATO
+	# TERMOSTATO [T actual, T calle, T consigna, Rele radiador, Valvula abierta, error, ON/OFF GENERAL,Encender Caldera ]
+	# SENSORES [0] vENTANA;[1] PUERTA 
+	
+	return TERMOSTATO, SENSORES
 
 
 def Actualizar_valores(datacmd,datavalue):
         global TAGUA
         global TERMOSTATO
+        global MANUAL_CERRAR
         
         ##print "Hab:",datacmd,"=",datavalue
         if datacmd=='setpoint':
-                TERMOSTATO[2]=datavalue
+			TERMOSTATO[2]=datavalue
+			
         elif datacmd=='temp_agua':
-                TAGUA=int(datavalue)
-                TERMOSTATO[1]=TAGUA
-        
+			TAGUA=int(datavalue)
+			TERMOSTATO[1]=TAGUA
+
+        elif datacmd=='radiator_manual':
+			if datavalue=='auto':
+				TERMOSTATO[6]=1
+				
+			elif datavalue=='manual':
+			
+				TERMOSTATO[6]=0
+				
+			elif datavalue=='close':
+			
+				MANUAL_CERRAR=1
+				
+			elif datavalue=='open':
+				
+				MANUAL_CERRAR=0
+              
 
 # Programa principal
 
@@ -236,49 +256,50 @@ def Cerrar_programa():
 ######################
     
 def Bucle_principal():
-
-        global TERMOSTATO
-        global AUX_TRA
-        global AUX_TRC
-        global TLT
-        global TECR
-        global EJECUTANDO
+	global TERMOSTATO
+	global AUX_TRA
+	global AUX_TRC
+	global TLT
+	global TECR
+	global EJECUTANDO
 ##        global RELE
-        global TAGUA
-        
-        print 'Bucle_principal'
+	global TAGUA
+	global MANUAL_CERRAR
+	
+	print 'Bucle_principal'
 
-        while EJECUTANDO:
-                # Leer Tempertua
-                TLT[0],TLT[1],TLT[2]=Temporizador_s(TLT[0],TLT[1],TLT[2],TM_LEER_TEMPERATURA)
-                
-                if (TLT[2]==True):
-                        TERMOSTATO[0]=(get_temp_sens(device_folder_0))
-                        TERMOSTATO[0]=(int(TERMOSTATO[0]*10))
-                        print "Leer Temperatura="+str(TERMOSTATO[0]/10.0)
-                        TLT[0]=False
-                        TLT[2]=False
+	while EJECUTANDO:
+		# Leer Tempertua
+		TLT[0],TLT[1],TLT[2]=Temporizador_s(TLT[0],TLT[1],TLT[2],TM_LEER_TEMPERATURA)
+		
+		if (TLT[2]==True):
+				TERMOSTATO[0]=(get_temp_sens(device_folder_0))
+				TERMOSTATO[0]=(int(TERMOSTATO[0]*10))
+				print "Leer Temperatura="+str(TERMOSTATO[0]/10.0)
+				TLT[0]=False
+				TLT[2]=False
 
-                # Leer Fichero Termostato
-                ##TLFT[0],TLFT[1],TLFT[2]=Temporizador_s(TLFT[0],TLFT[1],TLFT[2],TM_LEER_FICHERO_TERMO)
+		# Leer Fichero Termostato
+		##TLFT[0],TLFT[1],TLFT[2]=Temporizador_s(TLFT[0],TLFT[1],TLFT[2],TM_LEER_FICHERO_TERMO)
 
-                ##if (TLFT[2]==True):
-                ##        LeerFichero_termo()
-                ##        TLFT[0]=False
-                ##        TLFT[2]=False
-                ##        print "Leer Fichero"
+		##if (TLFT[2]==True):
+		##        LeerFichero_termo()
+		##        TLFT[0]=False
+		##        TLFT[2]=False
+		##        print "Leer Fichero"
 
-                #Leemos Confirmar Rele Radiador
-                if PinCRR.is_pressed:    # No pulsado
-                        CRR=False
-                else:                   # Pulsado
-                        CRR=True
-			
-                # Leer Valvula de Radiador
-                if PinVC.is_pressed:    # No pulsado
-                        TERMOSTATO[4]=0
-                else:                   # Pulsado
-                        TERMOSTATO[4]=1
+		#Leemos Confirmar Rele Radiador
+		if PinCRR.is_pressed:    # No pulsado
+				CRR=False
+		else:                   # Pulsado
+				CRR=True
+
+		# Leer Valvula de Radiador
+		if PinVC.is_pressed:    # No pulsado
+				TERMOSTATO[4]=0
+		else:                   # Pulsado
+				TERMOSTATO[4]=1
+				
 #####ACTIVARLO CUANDO HAYA SENSORES DE VEENTANA
 ##                # Leer Sensor Ventana
 ##                if PinSV.is_pressed:    # No pulsado
@@ -298,7 +319,35 @@ def Bucle_principal():
 ##                print ('Tagua='+str(TAGUA))
 ##	time.sleep(2)
 
-		if(TERMOSTATO[6]==1):
+		if(TERMOSTATO[6]==0): # MODO MANUAL
+			
+			if (MANUAL_CERRAR==1):
+				if(AUX_TRA==True):
+					print 'Termostato ENCENDIDO'
+					PinTAR.off()
+					AUX_TRA=False
+					TERMOSTATO[3]=True
+					MANUAL_CERRAR=-1
+				if(TERMOSTATO[3]==False and CRR==False):
+					print'Radiador ENCENDIDO'
+					PinTAR.on()
+					AUX_TRA=True
+							
+							
+			elif (MANUAL_CERRAR==0):
+				if (AUX_TRC==True):
+					print'Termostato APAGADO'
+					PinTCR.off()
+					AUX_TRC=False
+					TERMOSTATO[3]=False
+					MANUAL_CERRAR=-1
+				if (CRR==True and TERMOSTATO[3]==True):
+					print'Radiador APAGADO'
+					PinTCR.on()
+					AUX_TRC=True
+							
+			
+		elif(TERMOSTATO[6]==1):
                         if (SENSORES[0]==1 and SENSORES[1]==1):
                                 if (TDSV[2]==True):
                                         if (TERMOSTATO[0]<TERMOSTATO[2]-int(C_TEMP_UMBRAL/2)):

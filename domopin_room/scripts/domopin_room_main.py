@@ -17,8 +17,11 @@ from array import *
 import threading
 
 import persiana_sim as blind
-#import persiana_mcp as blind
-import radiador_sim as radiator
+#import radiador_sim as radiator
+import relay_sim as relay
+
+#import persiana as blind
+import termostato as radiator
 
 import time_alert 
 
@@ -58,14 +61,17 @@ def callback_command(req):
     
 def publish_room_state():
 
-
+    current_status=RoomStatus()
+    current_status.roomid=room_config['roomid']
+    current_status.connected_central= True
+    
+    
     #print 'room_config=',room_config
     try:
         datablind=blind.Publicar_estado_actual_persiana()
     except:
         datablind=[0,0,0,0,0,0,0]
-    current_status=RoomStatus()
-    current_status.roomid=room_config['roomid']
+
     current_blind_status=BlindStatus()
     current_blind_status.id=1
     current_blind_status.up=bool(datablind[0])
@@ -77,15 +83,16 @@ def publish_room_state():
     current_status.array_blind.append(current_blind_status)
     
     try:
-        dataradiator=radiator.Publicar_estado_actual()
+        dataradiator,datawindow=radiator.Publicar_estado_actual()
     except:
         dataradiator=[0,0,0,0,0,0,0,0]
+        datawindow=[0,0]
         
     current_radiator_status=RadiatorStatus()
     current_radiator_status.id=1
-    current_radiator_status.on_off=bool(dataradiator[6])
-    current_radiator_status.relay_opened=bool(dataradiator[3])
-    current_radiator_status.valve_opened=bool(dataradiator[4])
+    current_radiator_status.auto_mode=bool(dataradiator[6])
+    current_radiator_status.relay_closed=bool(dataradiator[3])
+    current_radiator_status.valve_closed=bool(dataradiator[4])
     current_radiator_status.boiler_on=bool(dataradiator[7])
     current_radiator_status.current_temp=int(dataradiator[0])
     current_radiator_status.setpoint_temp=int(dataradiator[2])
@@ -93,18 +100,25 @@ def publish_room_state():
     current_radiator_status.error=int(dataradiator[5])
     current_status.array_rad.append(current_radiator_status)
     
-    try:
-        datawindow=blind.Publicar_estado_actual_ventana()
-    except:
-        datawindow=[0,0]
+    
     current_window_status=WindowStatus()
     current_window_status.id=1
     current_window_status.outside_temp=int(0)
-    current_window_status.window_opened=bool(datawindow[0])
-    current_window_status.door_opened=bool(datawindow[1])
-    current_window_status.error=-1
+    current_window_status.window_closed=bool(datawindow[0])
+    current_window_status.door_closed=bool(datawindow[1])
+    current_window_status.error=0
     current_status.array_window.append(current_window_status)
-    
+
+    try:
+        datarelay=relay.Publicar_estado_actual()
+    except:
+        datarelay=[0,0]
+        
+    current_relay_status=RelayStatus()
+    current_relay_status.id=1
+    current_relay_status.relay_closed=bool(datarelay[0])
+    current_relay_status.error=datarelay[1]
+    current_status.array_rel.append(current_relay_status)
    
     pub_msg_room_status.publish(current_status)
     
@@ -244,7 +258,18 @@ if __name__ == "__main__":
     
         t_radiator = threading.Thread(target=radiator.Bucle_principal)
         t_radiator.start() 
-    
+
+    #EXTRA RELAY
+    if len(room_config['device']['relay'])>0:     
+        relay.Inicio(room_config)
+  
+        t_relay = threading.Thread(target=relay.Bucle_principal)
+        t_relay.start()
+    else:     
+        pass        
+
+      
+          
     # SCHEDULE
     timealert=time_alert.TimeAlarm(10, '../conf/schedule.json')
     timealert.start_worker()
