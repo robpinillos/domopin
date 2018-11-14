@@ -8,7 +8,8 @@ tmux new-window -t $SESSION:0 -n 'roscore'
 tmux new-window -t $SESSION:1 -n 'central'
 tmux new-window -t $SESSION:2 -n 'room'
 tmux new-window -t $SESSION:3 -n 'rosbridge'
-tmux new-window -t $SESSION:4 -n 'interface'
+tmux new-window -t $SESSION:4 -n 'interface_server'
+tmux new-window -t $SESSION:5 -n 'interface'
 
 
 #tmux select-window -t $SESSION:0
@@ -38,6 +39,9 @@ tmux select-window -t $SESSION:4
 tmux send-keys "roscd interface_touchscreen/www" C-m
 tmux send-keys "python -m SimpleHTTPServer" Enter
 
+tmux select-window -t $SESSION:5
+#tmux send-keys "sleep 10; DISPLAY=:0 chromium-browser -kiosk" Enter
+
 # Set default window
 tmux select-window -t $SESSION:2
 
@@ -45,3 +49,6 @@ tmux select-window -t $SESSION:2
 tmux -2 attach-session -t $SESSION
 
 tmux setw -g mode-mouse off
+
+
+
