@@ -41,7 +41,7 @@ def Publicar_estado_actual():
 
 def Actualizar_valores(datacmd,datavalue):
     
-    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
+    #print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
 
     if datacmd=='setpoint':
         TERMOSTATO[2]=datavalue
@@ -49,7 +49,7 @@ def Actualizar_valores(datacmd,datavalue):
     elif datacmd=='temp_agua':
         TAGUA=datavalue
         
-    elif datacmd=='radiator_manual':
+    elif datacmd=='mode':
         
         if datavalue=='auto':
         
@@ -58,8 +58,10 @@ def Actualizar_valores(datacmd,datavalue):
         elif datavalue=='manual':
         
             TERMOSTATO[6]=0
-            
-        elif datavalue=='close':
+
+    elif datacmd=='manual_cmd':
+          
+        if datavalue=='close':
         
             Abrir_Cerrar_rele(1)
             
@@ -81,6 +83,8 @@ def Inicio(configuracion_hab):
 
     print "Persiana Inicio"
     global TERMOSTATO
+    TERMOSTATO[6]=1 #auto
+    
     TERMOSTATO[0]=200
     TERMOSTATO[2]=220
     
@@ -114,8 +118,8 @@ def Bucle_principal():
             TERMOSTATO[0]=TERMOSTATO[0]-6
             TERMOSTATO[1]=TERMOSTATO[1]-2
             
-        print 'RADIADOR:'
-        print 'TERMOSTATO[0]=',TERMOSTATO[0]
+        #print 'RADIADOR:'
+        #print 'TERMOSTATO[0]=',TERMOSTATO[0]
         #Publicar_estado()
         time.sleep(2.0)
     

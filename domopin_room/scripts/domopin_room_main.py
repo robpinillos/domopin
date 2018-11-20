@@ -17,16 +17,19 @@ from array import *
 import threading
 
 import persiana_sim as blind
-#import radiador_sim as radiator
+import radiador_sim as radiator
 import relay_sim as relay
 
 #import persiana as blind
-import termostato as radiator
+#import termostato as radiator
 
 import time_alert 
 
 
 global room_config
+global current_radiator_schedule
+global current_blind_schedule
+global current_relay_schedule
 
 
 stepDelay = 0.5                    # Number of seconds between each sequence step
@@ -80,6 +83,9 @@ def publish_room_state():
     current_blind_status.push_up=bool(datablind[3]) 
     current_blind_status.push_down=bool(datablind[4]) 
     current_blind_status.error=int(datablind[5])
+    
+    current_blind_status.current_schedule=current_blind_schedule
+    
     current_status.array_blind.append(current_blind_status)
     
     try:
@@ -98,6 +104,9 @@ def publish_room_state():
     current_radiator_status.setpoint_temp=int(dataradiator[2])
     current_radiator_status.water_temp=int(dataradiator[1])
     current_radiator_status.error=int(dataradiator[5])
+    
+    current_radiator_status.current_schedule=current_radiator_schedule
+    
     current_status.array_rad.append(current_radiator_status)
     
     
@@ -107,6 +116,9 @@ def publish_room_state():
     current_window_status.window_closed=bool(datawindow[0])
     current_window_status.door_closed=bool(datawindow[1])
     current_window_status.error=0
+    
+    
+    
     current_status.array_window.append(current_window_status)
 
     try:
@@ -118,6 +130,9 @@ def publish_room_state():
     current_relay_status.id=1
     current_relay_status.relay_closed=bool(datarelay[0])
     current_relay_status.error=datarelay[1]
+    
+    current_relay_status.current_schedule=current_relay_schedule
+    
     current_status.array_rel.append(current_relay_status)
    
     pub_msg_room_status.publish(current_status)
@@ -132,6 +147,10 @@ def publish_room_state():
 
 def parse_command(data):
     
+    global current_radiator_schedule
+    global current_blind_schedule
+    global current_relay_schedule
+
     #{"type":"action","action": [{"roomid": room_config['roomid'],"device":"blind", "id": 1,"command":"position" , "value":value }]}  
     #{"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
 
@@ -153,21 +172,79 @@ def parse_command(data):
     
                 elif  iaction['device']=='radiator':
                     
-    
-                    radiator.Actualizar_valores(iaction['command'],iaction['value'])
+                    if iaction['command']=='setpoint':
+                
+                        
+                        current_radiator_schedule.type="schedule"
+                        current_radiator_schedule.value=iaction['value']
+                        current_radiator_schedule.end_time=0
+                        
+                        radiator.Actualizar_valores(iaction['command'],iaction['value'])
+                    
+                    if iaction['command']=='radiator_adj_temp':
+                
+                        
+                        timealert.adj_temp('radiator','setpoint',current_radiator_schedule.value,iaction['value']['end_time']) #timealert.adj_temp(device,command,current_setpoint,adj_end_time)
+                        
+                        current_radiator_schedule.type="temporary"
+                        current_radiator_schedule.value=iaction['value']['value']
+                        current_radiator_schedule.end_time=iaction['value']['end_time']
+                        
+                        radiator.Actualizar_valores('setpoint',current_radiator_schedule.value)
+                        
+                        publish_room_state()
+                        
+                        time.sleep(0.2)
+                        value=timealert.list_tasks
+                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+                  
+                        pub_command.publish(json.dumps(cmd))
+
+
+                    elif iaction['command']=='cancel_radiator_adj_temp':
+                        
+                        timealert.update_cal()
+                            
+                        current_radiator_schedule.type="default"
+                        #current_radiator_schedule.value=data['value']['value']
+                        #current_radiator_schedule.end_time=data['value']['end_time']
+                        
+                        
+                        publish_room_state()
+                        
+                        time.sleep(0.2)
+                        value=timealert.list_tasks
+                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+                  
+                        pub_command.publish(json.dumps(cmd))
+                    
+                    
+            
+                    
                     
                     
     elif data['type']=='config': 
         
         if data['roomid']==room_config['roomid']:
             
-            if data['action']=='radiator_manual':
-                    
-                radiator.Actualizar_valores(data['action'],data['value'])
-    
+   
             if data['action']=='refresh_schedule':
                     
-                pass
+                timealert.update_cal()
+                
+                value=timealert.schedule
+                
+                cmd={"type":"config","roomid": room_config['roomid'],"action":"current_schedule","value": value}
+                
+                
+                pub_command.publish(json.dumps(cmd))
+                
+                time.sleep(0.2) 
+
+                value=timealert.list_tasks
+                cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+          
+                pub_command.publish(json.dumps(cmd))
         
             elif data['action']=='get_schedule':
                     
@@ -186,7 +263,8 @@ def parse_command(data):
                 cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
                   
                 pub_command.publish(json.dumps(cmd))
-            
+
+
 def get_next_tasks(device):
     
     
@@ -227,7 +305,9 @@ def shutdown():
 if __name__ == "__main__":
     
     global room_config
-    
+    global current_radiator_schedule
+    global current_blind_schedule
+    global current_relay_schedule
         
     name_configfile=rospy.get_param('/config_file', '../conf/room_config.json')
 
@@ -251,6 +331,8 @@ if __name__ == "__main__":
         
         t_blind = threading.Thread(target=blind.Bucle_principal)
         t_blind.start()
+
+
         
     #RADIATOR
     if len(room_config['device']['radiator'])>0:     
@@ -258,6 +340,8 @@ if __name__ == "__main__":
     
         t_radiator = threading.Thread(target=radiator.Bucle_principal)
         t_radiator.start() 
+        
+
 
     #EXTRA RELAY
     if len(room_config['device']['relay'])>0:     
@@ -265,13 +349,21 @@ if __name__ == "__main__":
   
         t_relay = threading.Thread(target=relay.Bucle_principal)
         t_relay.start()
+        
+
+        
     else:     
         pass        
 
-      
+    current_radiator_schedule=CurrentSchedule()
+    current_radiator_schedule.type="default"
+    current_blind_schedule=CurrentSchedule()
+    current_blind_schedule.type="default"
+    current_relay_schedule=CurrentSchedule()
+    current_relay_schedule.type="default"
           
     # SCHEDULE
-    timealert=time_alert.TimeAlarm(10, '../conf/schedule.json')
+    timealert=time_alert.TimeAlarm(10, '../conf/schedule.json',room_config['roomid'])
     timealert.start_worker()
     
     print "Started"

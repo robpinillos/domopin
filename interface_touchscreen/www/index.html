@@ -33,7 +33,9 @@
   <!-- clockpicker -->
  <script type="text/javascript" src="./clockpicker/clockpicker.js"></script>
  <link rel="stylesheet" href="./clockpicker/clockpicker.css" />
-
+  
+<!-- spinbox temperature-->
+<script type="text/javascript" src="./spinbox/jqm-spinbox.js"></script>
   
 <!-- rosbridge -->
   <script type="text/javascript" src="js/WebSocketTest.js"></script>
@@ -50,15 +52,12 @@ body{
   font-family: -webkit-pictograph;
 
 }
-
- .ui-mobile .ui-page {
-    height: 200px;
-    min-height: 200px;
+.ui-mobile .ui-page {
+  min-height: 200px;
 }
-
 .ui-content{
-  font-family: -webkit-pictograph;
-/*height: 500px;*/
+font-family: -webkit-pictograph;
+height: 245px;
 padding: 2px 2px;
 }
 .ui-header .ui-title, .ui-footer .ui-title{
@@ -74,8 +73,6 @@ padding: 4px 4px;
 .ui-content .ui-listview-inset{
 	margin: 0px 0px
 }
-
-
 
 .img-status, .img-schedule{
 height: 30px;
@@ -118,6 +115,36 @@ height: 45px;
     margin-right: 0px;
   }
 
+  
+  #header{
+  
+    height: 60px;
+  }
+.header-but {
+  
+  width: 110px;
+  height: 30px;
+  margin-top: 5px;
+  padding-top: 6px;
+  
+  
+  }
+  .ui-header .ui-btn{
+    font-size:x-large;
+  }
+
+  .header-title{
+    
+    margin-top:12px;
+    text-align: center;
+    
+  } 
+  #page_home ul li {
+    
+    font-size: 32px;
+  }
+ 
+
 </style>
 
 </head>
@@ -136,11 +163,11 @@ height: 45px;
 
  <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:40px" >
-        <div class="ui-block-a" style="width: 30%" >
-          <a id="rad_button" href="#page_radiator"  class="ui-btn ui-corner-all ui-shadow ui-btn-b" style="margin-top:2px;"  >Radiador</a>
+    <div id="header" class="ui-grid-b"  >
+        <div class="ui-block-a" style="width: 35%" >
+          <a id="rad_button" href="#page_radiator"  class="ui-btn ui-corner-all ui-shadow ui-btn-b header-but "  >Radiador</a>
         </div>
-        <div class="ui-block-b" style="width: 38%" >
+        <div class="ui-block-b" style="width: 30%" >
             <div id="title_page" style="margin-top:8px">
               <div class="clock">
                 <div id="Date"></div>
@@ -160,7 +187,7 @@ height: 45px;
         <div class="ui-block-c" style="width: 30%">
 						
             
-                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b" style="margin-left:10px;margin-top:2px;"  >Persiana</a>
+                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b header-but" style="margin-left:2px;"  >Persiana</a>
 
             
 
@@ -169,26 +196,37 @@ height: 45px;
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" >
+  <div data-role="content" data-theme="b" style="height: 200px;">
 
     <div class="ui-grid-b"  >
-        <div class="ui-block-a" >
-            <ul data-role="listview" data-inset="true">
+        <div class="ui-block-a" style="width:36%">
+            <ul id="list_status_rad" data-role="listview" data-inset="true">
               <li >
-                <div class="ui-grid-a" style="height:60px" >
+                <div class="ui-grid-a" style="height:70px" >
                   <div class="ui-block-a" >
-                    <img src="./images/termometro.png" alt="temp" /> 
+                    <img src="./images/termometro.png" alt="temp" style="margin-top: 10px;margin-left: 10px;" /> 
                   </div>
                   <div class="ui-block-b" >
-                    <div id="t_setpoint" class="icon-">--.-</div>
+                    <div id="t_setpoint" class="icon-" style="font-size: 40px;">--.-</div>
                   </div>
                 </div>
               </li>
               <li>
+                <div id="grid_adj_temp_rad" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 30px;" >
+                  <div class="ui-block-a" >
+                    Aj. temp. > 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="adj_temp_time_rad" class="icon-">--.-</div>
+                  </div>
+                </div>
+                
+              </li>
+              <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
-                    <div id="next_1_time_rad" class="icon-">20:00</div> 
-                  </div>
+                    <div id="next_1_time_rad" class="icon-">--.-</div> 
+                  </div> 
                   <div class="ui-block-b" >
                     <div id="next_1_temp_rad" class="icon-">--.-</div>
                   </div>
@@ -199,7 +237,7 @@ height: 45px;
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;">
                   <div class="ui-block-a" >
                     <div id="next_2_time_rad" class="icon-">--:--</div> 
-                  </div>
+                  </div> 
                   <div class="ui-block-b" >
                     <div id="next_2_temp_rad" class="icon-">--.-</div>
                   </div>
@@ -208,17 +246,17 @@ height: 45px;
               </li>
             </ul>
         </div>
-          <div class="ui-block-b" >
+          <div class="ui-block-b"  style="width:30%">
             <ul data-role="listview" data-inset="true">
               <li >
               </li>
               <li>
-                <div id="t_int" style="font-size:50px;text-align: center;">--.-</div>
+                <div id="t_int" style="font-size:70px;text-align: center;">--.-</div>
               </li>
             </ul>
         </div>
        <div class="ui-block-c" >
-            <ul data-role="listview" data-inset="true">
+            <ul id="list_status_blind" data-role="listview" data-inset="true">
               <li >
                 <div style="height:50px">
                   <img src="./images/persiana_3.png" class="img-but" style="padding-left: 20px;"/>
@@ -254,8 +292,8 @@ height: 45px;
     </div>
     </div><!-- /content -->
   
-    <div data-role="footer" style="height:30px;padding: 4px;"> 
-    <div class="ui-grid-c" >
+    <div data-role="footer" style="height:40px;padding: 4px;"> 
+    <div class="ui-grid-c" style="height:100%;">
         <div class="ui-block-a" >
         
           <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
@@ -287,30 +325,69 @@ height: 45px;
 
  <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:40px" >
-        <div class="ui-block-a"  >
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
+    <div id="header" class="ui-grid-b" style="height:60px" >
+        <div class="ui-block-a"  style="width: 35%" >
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:8px;width: 80px;height: 52px;">No text</a>
         </div>
-        <div class="ui-block-b" >
+        <div class="ui-block-b" style="width: 30%" >
             <div id="title_page">
-                <h3  style="margin-top:5px;">RADIADOR</h3>
+                <h3  class="header-title">RADIADOR MANUAL</h3>
             </div>
         </div>
 				
         <div class="ui-block-c" >
 
-            <a id="blind_button" href="#page_rad_schedule"  class="ui-btn ui-corner-all ui-btn-b" style="margin-left:18px;margin-top:2px;" >Agenda</a> 
+            <a id="blind_button" href="#page_radiator_schedule"  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;" onclick="Create_list_schedule_radiator();"  >Agenda</a> 
       </div>
 					
     </div><!-- /grid-b -->
   </div>
 	
   <div data-role="content" >
-    <ul data-role="listview" data-inset="true">
-      <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="b" >
-    <li data-role="list-divider" style="font-size:20px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
+    
 
-      <li>
+    <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 18px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
+      <li style="font-size: 22px;">
+        <div class="ui-grid-a">
+          <div class="ui-block-a" >
+            <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
+-->
+                <div class="ui-field-contain" style="width: 150px;margin:0px 2px 0px 2px;">
+                    
+                    <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj" data-options='{"type":"vertical"}'  min="14" max="30" step="0.1" style="font-size: 30px;"/>
+                </div>
+          </div>
+
+            <div class="ui-block-b" >
+              <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+              <li style="font-size: 22px;">
+
+              <input id="input-endtime-rad-tempadj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px" >
+              <!--<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true" style="height:50px" >
+              <input type="text" class="form-control" value="13:14">
+              <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-time"></span>
+              </span>
+              </div>
+              -->
+            </li>
+            <li style="font-size: 22px;">
+         <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+
+            
+            </li>
+            </ul>
+           </div>
+      </div>
+    
+      </li>
+      
+    </ul>
+      <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 18px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
+
+      <li style="font-size: 22px;">
         <div class="ui-grid-a" style="height:60px" >
           <div class="ui-block-a" >
   
@@ -332,59 +409,134 @@ height: 45px;
         </div>
       </li>
     </ul>
-    <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-    <li data-role="list-divider" style="font-size:20px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
-      <li>
-        <div class="ui-grid-c" style="height:60px" >
-          <div class="ui-block-a" >
-
-            <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-              <input type="text" class="form-control" value="13:14">
-              <span class="input-group-addon">
-                  <span class="glyphicon glyphicon-time"></span>
-              </span>
-            </div>
-          </div>
-
-
-            <div class="ui-block-b" >
-
-            </div>
-            <div class="ui-block-c" >
-              <input type="text" data-role="datebox" data-options='{"mode":"timebox"}' >
-            </div>
-      </div>
-    
-      </li>
-    </ul>
-
   </div><!-- /content -->
   
 </div><!-- /page -->
   
-<div data-role="page" id="page_blind" data-theme="b">
+  
+<div data-role="page" id="page_radiator_schedule" data-theme="b">
+
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:40px">
+    <div id="header" class="ui-grid-b" style="height:60px">
         <div class="ui-block-a" >
 
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all " style="margin-top:8px;width: 80px;height: 52px;" onclick="Cancel_changes_schedule('radiator');" >No text</a>
 
         </div>
         <div class="ui-block-b"  >
             <div id="title_page" >
-                <h3 style="margin-top:5px;">PERSIANA</h3>
+                <h3 class="header-title">AGENDA RADIADOR</h3>
             </div>
         </div>	
         <div class="ui-block-c" >
-          <a id="blind_button" href="#page_blind_schedule"  class="ui-btn ui-corner-all ui-btn-b" style="margin-left:18px;margin-top:2px;" onclick="Publish_config_command('get_schedule','')" >Agenda</a>         
+          <a  class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Publish_config_command('refresh_schedule','')" >Guardar</a>         
         </div>
 					
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" style ="height:150px;">
+  <div data-role="content" >
+  
+    <ul id="schedule_radiator" data-role="listview" data-inset="true">
+      
+    </ul>
+  
+  </div><!-- /content -->
+  
+</div><!-- /page -->
+
+  <div data-role="page" id="page_edit_radiator_schedule" data-theme="b">
+    <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:60px">
+        <div class="ui-block-a" >
+          <a  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;margin-top:2px;" href="#page_radiator_schedule">Cancelar</a> 
+
+        </div>
+        <div class="ui-block-b"  >
+            <div id="title_page" >
+                <h3 class="header-title">EDITAR</h3>
+            </div>
+        </div>	
+        <div class="ui-block-c" >
+         <a  href="#page_radiator_schedule" class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Save_edit_radiator()" >Guardar</a>
+        </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+  
+    <div data-role="content" data-theme="a" > 
+      <ul id="list_edittask_radiator_content" data-role="listview" data-inset="true">
+        <div class="ui-grid-a" style="margin: 15px;">
+          <div class="ui-block-a" >
+            <div class="ui-grid-b" >
+              <div class="ui-block-a" style="width:44%;">
+                <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
+    -->
+                    <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
+
+                        <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 30px;"/>
+                    </div>
+              </div>
+              <div class="ui-block-b" style="width:10%;">
+                <label style="font-size: 40px;margin-top: 75px;" >.</label>
+  
+              </div>
+              <div class="ui-block-c"  >
+                <div class="ui-field-contain" style="width: 80px;margin:0px 2px 0px 2px;">
+
+                    <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 30px;"/>
+                </div>
+                  
+              </div>
+            </div>
+          </div>
+          <div class="ui-block-b" style="margin-top:32px;padding-left: 30px;">
+              <input id="input-edittask-time-rad" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+          </div>
+        </div>
+      </ul>
+      <ul id ="list_edittask_radiator_buttons" data-role="listview" data-split-theme="a" data-inset="true">
+        <div  class="ui-grid-b">
+          <div class="ui-block-a" >
+      
+          </div>
+            <div class="ui-block-b" >
+            <a  class="ui-btn ui-corner-all ui-btn-b ui-icon-delete ui-btn-icon-left header-but" style="margin-left:2px;margin-top:2px;" onclick="Publish_config_command('remove_schedule','')" >Eliminar</a> 
+          </div>
+          <div class="ui-block-c" >
+        
+          </div>
+        </div>
+      </ul>
+    
+  </div><!-- /content -->
+</div><!-- /page -->
+<div data-role="page" id="page_blind" data-theme="b">
+
+  <div data-role="header" >   
+
+    <div id="header" class="ui-grid-b" style="height:60px">
+        <div class="ui-block-a" >
+
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:8px;width: 80px;height: 52px;">No text</a>
+
+        </div>
+        <div class="ui-block-b"  >
+            <div id="title_page" >
+                <h3 class="header-title" >PERSIANA</h3>
+            </div>
+        </div>	
+        <div class="ui-block-c" >
+          <a id="blind_button" href="#page_blind_schedule"  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;" onclick="Create_list_schedule_blind();" >Agenda</a>         
+        </div>
+					
+    </div><!-- /grid-b -->
+  </div>
+	
+  <div data-role="content" >
     
     <ul data-role="listview" data-inset="true">
       <li>
@@ -438,6 +590,38 @@ height: 45px;
         </div>
       </li>
     </ul>
+    <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 18px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
+      <li style="font-size: 22px;">
+        <div class="ui-grid-a">
+          <div class="ui-block-a" >
+            <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
+-->
+                <div class="ui-field-contain" style="width: 150px;margin:0px 2px 0px 2px;">
+                    
+                    <input type="text" data-role="spinbox" name="spin" id="input-position-blind-adj" data-options='{"type":"vertical"}'  min="1" max="5" step="1" style="font-size: 30px;"/>
+                </div>
+          </div>
+
+            <div class="ui-block-b" >
+              <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+              <li style="font-size: 22px;">
+
+              <input id="input-endtime-blind-adj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px" >
+
+            </li>
+            <li style="font-size: 22px;">
+         <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+
+            
+            </li>
+            </ul>
+           </div>
+      </div>
+    
+      </li>
+      
+    </ul>
 
 
   </div><!-- /content -->
@@ -466,10 +650,10 @@ height: 45px;
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:40px">
+    <div id="header" class="ui-grid-b" style="height:60px">
         <div class="ui-block-a" >
 
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:6px;">No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all " style="margin-top:8px;width: 80px;height: 52px;" onclick="Cancel_changes_schedule('blind');">No text</a>
 
         </div>
         <div class="ui-block-b"  >
@@ -478,7 +662,7 @@ height: 45px;
             </div>
         </div>	
         <div class="ui-block-c" >
-          <a id="blind_button" href="#page_blind_schedule"  class="ui-btn ui-corner-all ui-btn-a" style="margin-left:18px;margin-top:2px;" onclick="Publish_config_command('save_schedule','')" >Guardar</a>         
+          <a   class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Publish_config_command('save_schedule','')" >Guardar</a>         
         </div>
 					
     </div><!-- /grid-b -->
@@ -514,8 +698,6 @@ height: 45px;
       </ul>
       <ul id ="list_edittask_blind_buttons" data-role="listview" data-split-theme="a" data-inset="true">
       </ul>
-
-    </div>
     
   </div><!-- /content -->
 </div><!-- /page -->
@@ -533,23 +715,25 @@ array_window:[
 {id: 0, window_closed: false, door_closed: false, outside_temp: 0, error: 0}
   ],
 array_blind: [
- {id: 0, up: false, down: false, push_up: false, push_down: false, position: 0, error: 0}
+ {id: 0, up: false, down: false, push_up: false, push_down: false, position: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 array_rad:[
-{id: 0, auto_mode: false, relay_closed: false, valve_closed: false, boiler_on: false,
-  current_temp: 0, setpoint_temp: 0, water_temp: 0, error: 0}
+{id: 0, auto_mode: true, relay_closed: false, valve_closed: false, boiler_on: false,
+  current_temp: 0, setpoint_temp: 0, water_temp: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 array_rel:[
-{id: 0, relay_closed: false, error: 0}
+{id: 0, relay_closed: false, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 error: 0
   
   };
-
-var schedule=null;
-var temp_schedule=null;
+var schedule={task:[]};
+var temp_schedule={task:[]};
 var flip_radiator_manual_change=false;
 var flip_radiator_manual_open_change=false;
+
+var index_editing_task_radiator=null;
+var index_editing_task_blind=null;
   
 function start_ros(){
 
@@ -596,6 +780,8 @@ Subscribe();
   
 
 Publish_config_command('get_next_tasks','');
+  
+Publish_config_command('get_schedule','');
 }
  
 function Subscribe(){
@@ -666,7 +852,7 @@ listener_status_room.subscribe(function(msg) {
   
   var obj = jQuery.parseJSON(msg.data);
     
-    console.log( 'obj='+msg.data);
+    //console.log( 'obj='+msg.data);
     if (obj.type=='config' && obj.roomid==ID_ROOM){
       
       if (obj.action=='set_next_tasks'){
@@ -714,19 +900,41 @@ listener_status_room.subscribe(function(msg) {
 
             }
             $("#next_"+index+"_time_rad").html(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
-            var T=parseFloat(radiator_tasks[0].value/10.0);
-            $("#next_"+index+"_temp_rad").html(T.toFixed(1));
+            var T=parseFloat(radiator_tasks[i].value/10.0);
+            $("#next_"+index+"_temp_rad").html(T.toFixed(1)+' ºC');
 
           }
           else{
 
-            $("#next_"+index+"_time_rad").html("--:--");
+            $("#next_"+index+"_time_rad").html("--:-- ");
 
-            $("#next_"+index+"_temp_rad").html("--.-");
+            $("#next_"+index+"_temp_rad").html("--.- ºC");
 
           }
           
         }
+        
+console.log('global_room_status='+global_room_status.array_rad[0].current_schedule.type);
+        if(global_room_status.array_rad[0].current_schedule.type=='temporary'){
+          var timedefault=["0","0","0","0"]
+            var time=global_room_status.array_rad[0].current_schedule.end_time.toString(10).split('');
+
+            for(t=time.length-1;t>-1;t--){
+
+              timedefault[t]=time[t];
+            }
+          var T=global_room_status.array_rad[0].current_schedule.end_time/10.0;
+
+          $("#adj_temp_time_rad").html(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
+          //$("#grid_adj_temp_rad").css('style','display:block');
+              $("#grid_adj_temp_rad").show();
+        }else{
+          
+          $("#grid_adj_temp_rad").hide(); //.css('style','display:none');
+        }
+        
+        $("#list_status_rad").listview('refresh');
+        
         
         // blind
             for (i=0;i<2;i++){
@@ -754,12 +962,16 @@ console.log( 'obj='+blind_tasks[i].timealert);
 
           }
           
-        }    
+        }
+        
+        
+        $("#list_status_blind").listview('refresh');
       }
       
       else if (obj.action=='current_schedule'){
         
         schedule=obj.value;
+        temp_schedule=schedule;
         console.log( 'current_schedule='+schedule.length);
         
       }
@@ -799,33 +1011,94 @@ $('.clockpicker').clockpicker();
 
 $(document).on("pageshow","#page_main",function(){
 
+//temp_schedule=schedule;
 
+});
+  
+  
+$(document).on("pageshow","#page_radiator",function(){
 
+  if(global_room_status.array_rad[0].current_schedule.type=='temporary'){
+    var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
+    $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
+    $("#flip-temporary-temp").val("on").flipswitch('refresh');
+  }
+  else {//if(global_room_status.array_rad[0].current_schedule.type=='auto'){
+    
+    var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
+    $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
+    
+    $("#flip-temporary-temp").val("off").flipswitch('refresh');
+  }
+ 
+
+  if(global_room_status.array_rad[0].auto_mode==true){
+    
+    $("#flip-radiator-manual").val("auto").flipswitch('refresh');
+    //flip_radiator_manual_change=true;
+  }
+  else if(global_room_status.array_rad[0].auto_mode==false){
+    
+    $("#flip-radiator-manual").val("manual").flipswitch('refresh');
+    //flip_radiator_manual_change=true;
+  }
+  
+  
+  //$('#input-temp-rad-tempadj').val=global_room_status.array_rad[0].setpoint_temp;
+  //$('#input-temp-radiator').val=global_room_status.array_rad[0].setpoint_temp;
+
+  
 });
 
 $(document).on("pageshow","#page_blind_schedule",function(){
-  
 
-    $('#schedule_blind').empty().listview('refresh');
+    $('#schedule_blind').listview('refresh');
 
-  
-  
-
-    Create_list_schedule_blind();
-  
-  
-  
+    //Create_list_schedule_blind();
 
 });
 
+  $(document).on("pageshow","#page_radiator_schedule",function(){
 
+    //$('#schedule_radiator').empty().listview('refresh');
+    
+    $('#schedule_radiator').listview('refresh');
+
+    //Create_list_schedule_radiator();
+
+});
+  
+
+$("#flip-temporary-temp").on("change", function(e) {
+  
+  var value = this.value;
+  if(value=='on'){
+    //global_room_status.array_rad[0].current_schedule.type=='temporary'
+    var setpoint=$("#input-temp-rad-tempadj").val()*10 ;
+    var time=$("#input-endtime-rad-tempadj").val() ;
+    var temp_time=time.split(':');
+    time=parseInt(temp_time[0]+''+temp_time[1]);
+    console.log('setpoint='+setpoint);
+    console.log('time='+time);
+    var json_value={type:"temporary",value: setpoint, end_time:time}
+  
+    Publish_command('radiator','radiator_adj_temp',json_value);
+  }
+  else{
+    //global_room_status.array_rad[0].current_schedule.type=='auto'
+    Publish_command('radiator','cancel_radiator_adj_temp',0);
+    
+  }
+});
+  
 $("#flip-radiator-manual").on("change", function(e) {
   
-console.log('flip-radiator-manual:: '+flip_radiator_manual_change);
+//console.log('flip-radiator-manual::flip_radiator_manual_change= '+flip_radiator_manual_change);
   if(flip_radiator_manual_change==false){
       var value = this.value;
       console.log('value:: '+value);
-      Publish_config_command('radiator_manual',value);
+      Publish_command('radiator','mode',value);
+     
   }
   else{
     flip_radiator_manual_change=false;
@@ -838,21 +1111,100 @@ console.log('flip-radiator-manual:: '+flip_radiator_manual_open_change);
   if(flip_radiator_manual_open_change==false){
       var value = this.value;
       console.log('value:: '+value);
-      Publish_config_command('radiator_manual',value);
+      Publish_command('radiator','manual_cmd',value);
+      
+    
   }
   else{
     flip_radiator_manual_open_change=false;
   }
 });
   
+
+  
+function  Create_list_schedule_radiator(){
+
+  
+console.log('Create_list_schedule_radiator');
+  
+    //temp_schedule=schedule;
+  
+	for (var i=0;i<schedule.length;i++){
+	var item=schedule[i];
+    
+    var selected_on=""
+    if (schedule[i].enable == 'true'){
+      
+      selected_on='selected=""';
+     
+    }
+    var timedefault=["0","0","0","0"]
+    var time=schedule[i].timealert.toString(10).split('');
+
+    for(t=time.length-1;t>-1;t--){
+
+      timedefault[t]=time[t];
+
+    }
+    var item_time= timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3];
+      
+      if(item.action[0].device=="radiator"){
+        var setpoint=item.action[0].value/10;
+        setpoint=setpoint.toFixed(1);
+
+        $('#schedule_radiator').append(
+              $('<li>').attr("id","task_"+i).append(
+                $('<div>').attr('class',' ui-grid-a').attr("style","padding-left:20px;").append(
+                      $('<div>').attr('class',' ui-block-a').attr("style","width:70%;").append(
+                        
+                        $('<a>').attr("href","#page_edit_radiator_schedule").attr("class","list-schedule").bind('vclick',function(){
+                          
+                            
+                         var id = $(this).parent().parent().parent();
+                         Edit_event_radiator(id);
+                        }).append(
+                          $('<div>').attr('class',' ui-grid-a').append(
+                            $('<div>').attr('class',' ui-block-a').append(
+                              $('<h2>').attr("id","timealert").text(item_time)
+                            ),
+                            $('<div>').attr('class',' ui-block-b').append(
+                              $('<h2>').attr("id","setpoint").text(setpoint)
+                            )
+                          )
+                        )
+                      ),
+                      $('<div>').attr('class',' ui-block-b').attr("style","width:28%;").append(
+                        
+                  //'<input type="checkbox" data-role="flipswitch" name="flip-checkbox-4" id="flip-checkbox-4" '+enable+' data-mini="true">'
+'<select id="flip-radiator-'+i+'" name="flip-select" data-role="flipswitch" data-mini="true"><option value="off">Off</option><option '+selected_on+' value="on">On</option></select>'
+                
+                 //$('<input>').attr('type',' checkbox').attr('id',' flip').attr('name',' flip').attr('data-role',' flipswitch').attr('data-mini',' true')
+                     
+                 //$('<select>').attr('id',' flip').attr('name',' flip-select').attr('data-role',' flipswitch').attr('data-mini',' true')
+                    )
+               )
+            )
+          );
+          
+        
+
+	     //$('#list_events').append(lista.children()).enhanceWithin().listview('refresh');
+      }
+	} 
+  $('#schedule_radiator').enhanceWithin().listview('refresh');
+  
+  
+  
+  
+}
 function Create_list_schedule_blind(){
 
 console.log('Create_list_schedule_blind');
   
-    temp_schedule=schedule;
+    //temp_schedule=schedule;
 	for (var i=0;i<schedule.length;i++){
 	var item=schedule[i];
-    
+
     var selected_on=""
     if (schedule[i].enable == 'true'){
       
@@ -912,7 +1264,6 @@ console.log('Create_list_schedule_blind');
       }
 	} 
   $('#schedule_blind').enhanceWithin().listview('refresh');
-  
   
  
 }
@@ -977,7 +1328,7 @@ $('#list_edittask_blind_content').enhanceWithin().listview('refresh');
 
 }
 
-function NEw_event_blind(){
+function New_event_blind(){
   
 }
 function Push_button_edit_blind(cmd,id){
@@ -1009,6 +1360,91 @@ function Push_button_edit_blind(cmd,id){
   
   
 }
+  
+  
+function Edit_event_radiator(id){
+  var nameid=id.attr('id').split('_');
+  var index=parseInt(nameid[1]);
+  index_editing_task_radiator=index;
+
+  
+  
+  var time=temp_schedule[index].timealert.toString(10).split('');
+  var timedefault=["0","0","0","0"]
+
+  for(t=time.length-1;t>-1;t--){
+
+    timedefault[t]=time[t];
+
+  }
+
+  var setpoint=temp_schedule[index].action[0].value.toString(10).split('');
+  var setpoint_int=parseInt(setpoint[0]+''+setpoint[1]);
+  var setpoint_dec=parseInt(setpoint[2]);
+
+  
+  
+  $('#input-edittask-temp-rad-int').val(setpoint_int);
+  $('#input-edittask-temp-rad-dec').val(setpoint_dec);
+  $('#input-edittask-time-rad').val(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
+  
+  
+}
+  
+  
+function Save_edit_radiator(){
+  
+    //global_room_status.array_rad[0].current_schedule.type=='temporary'
+    var setpoint=parseInt($("#input-edittask-temp-rad-int").val()+''+$("#input-edittask-temp-rad-dec").val()) ;
+    var time=$("#input-edittask-time-rad").val() ;
+    var temp_time=time.split(':');
+    var int_time=parseInt(temp_time[0]+''+temp_time[1]);
+
+  
+  
+    temp_schedule[index_editing_task_radiator].timealert=int_time;
+    temp_schedule[index_editing_task_radiator].action[0].value=setpoint;
+  
+  var nameid=$('#schedule_radiator').find('#task_'+index_editing_task_radiator);
+  
+  var timealert=nameid.children().find('#timealert').html(time);
+  var timealert=nameid.children().find('#setpoint').html($("#input-edittask-temp-rad-int").val()+'.'+$("#input-edittask-temp-rad-dec").val());
+
+ 
+
+}
+  
+function Save_new_schedule_radiator(){
+  /*
+  var nameid=$('#schedule_radiator').find('#task_'+index_editing_task_radiator);
+  
+  temp_schedule[index_editing_task_radiator].enable=int_time;
+  
+  var timealert=nameid.children().find('#timealert').html(time);
+  var timealert=nameid.children().find('#setpoint').html($("#input-edittask-temp-rad-int").val()+'.'+$("#input-edittask-temp-rad-dec").val());
+
+ 
+*/
+}
+
+function Cancel_changes_schedule(device){
+ console.log(temp_schedule);
+  console.log('schedule');
+  console.log(schedule);
+  temp_schedule=schedule;
+  console.log(temp_schedule);
+  
+  if (device=='radiator'){
+    $('#schedule_radiator').empty().listview('refresh');
+    console.log('Cancel_changes_schedule:schedule_radiator empty');
+  }else{
+    $('#schedule_blind').empty().listview('refresh');
+    console.log('Cancel_changes_schedule:schedule_radiator empty');
+    
+  }
+  
+}
+  
 function Publish_command(dev,com,value){
   
 

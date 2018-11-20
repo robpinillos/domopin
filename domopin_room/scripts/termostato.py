@@ -204,16 +204,16 @@ def Actualizar_valores(datacmd,datavalue):
         elif datacmd=='temp_agua':
 			TAGUA=int(datavalue)
 			TERMOSTATO[1]=TAGUA
-
-        elif datacmd=='radiator_manual':
+            
+        elif datacmd=='mode':
 			if datavalue=='auto':
 				TERMOSTATO[6]=1
 				
 			elif datavalue=='manual':
 			
 				TERMOSTATO[6]=0
-				
-			elif datavalue=='close':
+        elif datacmd=='manual_cmd':				
+			if datavalue=='close':
 			
 				MANUAL_CERRAR=1
 				

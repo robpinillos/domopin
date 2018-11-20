@@ -12,7 +12,7 @@ ANT_PERSIANA=[0,0,0,0,0,0]
 
 SENSORES=[0,0]                  # [0] vENTANA;[1] PUERTA
 
-
+AUX_SUBIR=True
 
 #########################
 # COMUNICACION#

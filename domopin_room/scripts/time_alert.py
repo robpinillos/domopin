@@ -17,7 +17,7 @@ import operator
 
 class TimeAlarm:
 
-    def __init__(self,update_delay=30, file_name='../conf/schedule.json'):
+    def __init__(self,update_delay=30, file_name='../conf/schedule.json',roomid=1):
         self.tz_utc = tz.gettz('UTC')
 
         self.path_file = file_name
@@ -25,6 +25,8 @@ class TimeAlarm:
         self.update_delay = update_delay
 
         self.update_worker = Thread(target=self.waiting_run)
+        
+        self.roomid=roomid
         
         self.list_tasks=[]
         self.schedule=[]
@@ -62,7 +64,51 @@ class TimeAlarm:
 #        return list_pending      
         return 1
             
+    def adj_temp(self, device,command,current_value,adj_end_time):
+        
+        list_to_remove=[]
+        list_aux=[]
+        
+        if len(self.list_tasks) > 0:
+            for i in range(len(self.list_tasks)):
+                
+                if self.list_tasks[i]['action'][0]['device'] == device:
+                    
+                    print 'timealert=',self.list_tasks[i]['timealert'],',adj_end_time=',adj_end_time
+                    
+                    if int(self.list_tasks[i]['timealert'])< int(adj_end_time):
+                        list_to_remove.append(i)
+                        
+            print 'list_to_remove'
+            print list_to_remove
+            print 'len(list_to_remove)=',len(list_to_remove)
+                        
+            if len(list_to_remove)==0: #insert current task in the list at the end of adjustment
             
+                new_task={ "timealert": adj_end_time, "enable": "true", "type":"action","action": [{"roomid": self.roomid,"device":device, "id": 1,"command":command , "value":current_value }]}
+                
+                self.list_tasks.append(new_task)
+                
+                self.list_tasks.sort(key=operator.itemgetter('timealert'))
+                
+            elif len(list_to_remove)==1:
+                
+                self.list_tasks[list_to_remove[0]]['timealert']=adj_end_time
+                
+                self.list_tasks.sort(key=operator.itemgetter('timealert'))
+                
+        else:
+            
+            new_task={ "timealert": adj_end_time, "enable": "true", "type":"action","action": [{"roomid": self.roomid,"device":device, "id": 1,"command":command , "value":current_value }]}
+                
+            self.list_tasks.append(new_task)
+            
+            
+        self.update_next_task()
+                    
+                        
+        
+                        
     def waiting_run(self):
         
 
@@ -173,7 +219,7 @@ class TimeAlarm:
         for i,ievent in  reversed(list(enumerate(events))):
             print i,ievent
             
-            if timenow < int(ievent['timealert']):
+            if timenow <= int(ievent['timealert']):
                 
                 self.list_tasks.insert(0, ievent)
                 print "insert"

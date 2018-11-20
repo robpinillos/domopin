@@ -130,7 +130,7 @@
 					],
 					durationLabel: ["Days", "Hours", "Minutes", "Seconds"],
 					durationDays: ["Day", "Days"],
-					timeFormat: 24,
+					timeFormat: 12,
 					headerFormat: "%A, %B %-d, %Y",
 					tooltip: "Open Date Picker",
 					nextMonth: "Next Month",
@@ -3838,7 +3838,7 @@
  */
 jQuery.extend(jQuery.mobile.datebox.prototype.options.lang, { "es-ES": {
 	"setDateButtonLabel": "Guardar Fecha",
-	"setTimeButtonLabel": "Guardar Hora",
+	"setTimeButtonLabel": "Guardar",
 	"setDurationButtonLabel": "Guardar Duración",
 	"calTodayButtonLabel": "Hoy",
 	"titleDateDialogLabel": "Elija fecha",
@@ -3934,7 +3934,7 @@ jQuery.extend(jQuery.mobile.datebox.prototype.options.lang, { "es-ES": {
 		"AM",
 		"PM"
 	],
-	"timeOutput": "%l:%M %p",
+	"timeOutput": "%k:%M",
 	"durationFormat": "%Dd %DA, %Dl:%DM:%DS",
 	"calDateListLabel": "Otras fechas",
 	"calHeaderFormat": "%B %Y",

@@ -7,3 +7,4 @@ int32 current_temp
 int32 setpoint_temp
 int32 water_temp
 int32 error
+CurrentSchedule current_schedule
