@@ -21,12 +21,12 @@ tmux new-window -t $SESSION:5 -n 'interface'
 #tmux send-keys "htop" C-m
 
 tmux select-window -t $SESSION:0
-#tmux send-keys "roscore" Enter
-tmux send-keys "roslaunch domopin_central multimaster.launch" Enter
+tmux send-keys "roscore" Enter
+#tmux send-keys "roslaunch domopin_central multimaster.launch" Enter
 
 tmux select-window -t $SESSION:1
 #tmux send-keys "roscd roscd domopin_central" C-m
-#tmux send-keys "sleep 5; roslaunch domopin_central domopin.launch" Enter
+tmux send-keys "sleep 5; roslaunch domopin_central domopin.launch" Enter
 
 tmux select-window -t $SESSION:2
 #tmux send-keys "roscd roscd domopin_room" C-m

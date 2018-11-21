@@ -16,12 +16,12 @@ from array import *
 
 import threading
 
-import persiana_sim as blind
-import radiador_sim as radiator
+#import persiana_sim as blind
+#import radiador_sim as radiator
 import relay_sim as relay
 
-#import persiana as blind
-#import termostato as radiator
+import persiana as blind
+import termostato as radiator
 
 import time_alert 
 
@@ -181,7 +181,7 @@ def parse_command(data):
                         
                         radiator.Actualizar_valores(iaction['command'],iaction['value'])
                     
-                    if iaction['command']=='radiator_adj_temp':
+                    elif iaction['command']=='radiator_adj_temp':
                 
                         
                         timealert.adj_temp('radiator','setpoint',current_radiator_schedule.value,iaction['value']['end_time']) #timealert.adj_temp(device,command,current_setpoint,adj_end_time)
@@ -204,25 +204,24 @@ def parse_command(data):
                     elif iaction['command']=='cancel_radiator_adj_temp':
                         
                         timealert.update_cal()
-                            
+    
                         current_radiator_schedule.type="default"
                         #current_radiator_schedule.value=data['value']['value']
                         #current_radiator_schedule.end_time=data['value']['end_time']
-                        
-                        
+
+
                         publish_room_state()
-                        
+
                         time.sleep(0.2)
                         value=timealert.list_tasks
-                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
-                  
+                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}
+
+
                         pub_command.publish(json.dumps(cmd))
-                    
-                    
-            
-                    
-                    
-                    
+					
+                    else:
+                        radiator.Actualizar_valores(iaction['command'],iaction['value'])
+						
     elif data['type']=='config': 
         
         if data['roomid']==room_config['roomid']:
@@ -357,6 +356,7 @@ if __name__ == "__main__":
 
     current_radiator_schedule=CurrentSchedule()
     current_radiator_schedule.type="default"
+    current_radiator_schedule.value=100
     current_blind_schedule=CurrentSchedule()
     current_blind_schedule.type="default"
     current_relay_schedule=CurrentSchedule()

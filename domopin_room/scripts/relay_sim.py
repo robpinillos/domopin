@@ -27,10 +27,10 @@ def Actualizar_valores(datacmd):
     print "RELAY::Recibido comando :",datacmd
 
     if datacmd=='open':
-        ACCION=0
+        ACCION=1
 
     elif datacmd=='close':
-        ACCION=1
+        ACCION=0
         
         
     
@@ -63,15 +63,18 @@ def Bucle_principal():
     print 'Bucle_principal'
     while EJECUTANDO:
         
-		if ACCION==0:
-			ESTADO[0]=0
+        if (MANUAL_CERRAR==1):
+            if(AUX_TRA==True):
+ 
+                if ACCION==0:
+		    ESTADO[0]=0
 		
 		elif ACCION==1:
-			ESTADO[0]=1
+		    ESTADO[0]=1
 			
 		ACCION=-1
 		
-		time.sleep(2.0)
+	time.sleep(2.0)
     
     print "Cerrado"
     sys.exit(0)

@@ -109,6 +109,6 @@ def Bucle_principal():
             CALDERA[1]+=5
             
         elif CALDERA[0]==0:
-            CALDERA[1]=180
+            CALDERA[1]=300
     
         time.sleep(2.0)

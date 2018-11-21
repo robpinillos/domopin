@@ -197,29 +197,31 @@ def Actualizar_valores(datacmd,datavalue):
         global TERMOSTATO
         global MANUAL_CERRAR
         
-        ##print "Hab:",datacmd,"=",datavalue
+        #print "Hab:",datacmd,"=",datavalue
         if datacmd=='setpoint':
-			TERMOSTATO[2]=datavalue
+	    TERMOSTATO[2]=datavalue
 			
         elif datacmd=='temp_agua':
-			TAGUA=int(datavalue)
-			TERMOSTATO[1]=TAGUA
+	    TAGUA=int(datavalue)
+	    TERMOSTATO[1]=TAGUA
             
         elif datacmd=='mode':
-			if datavalue=='auto':
-				TERMOSTATO[6]=1
+	    if datavalue=='auto':
+                TERMOSTATO[6]=1
 				
-			elif datavalue=='manual':
+	    elif datavalue=='manual':
 			
-				TERMOSTATO[6]=0
-        elif datacmd=='manual_cmd':				
-			if datavalue=='close':
+                TERMOSTATO[6]=0
+                
+        elif datacmd=='manual_cmd':
+            
+	    if datavalue=='close':
 			
-				MANUAL_CERRAR=1
+		MANUAL_CERRAR=1
 				
-			elif datavalue=='open':
+	    elif datavalue=='open':
 				
-				MANUAL_CERRAR=0
+		MANUAL_CERRAR=0
               
 
 # Programa principal
@@ -232,9 +234,9 @@ def Inicio(configuracion_hab):
         global EJECUTANDO
 
 
-        print "Persiana Inicio"
+        print "Termostato Inicio"
         TERMOSTATO[0]=0
-        TERMOSTATO[2]=0
+        TERMOSTATO[2]=100
         TERMOSTATO[6]=1
         
         EJECUTANDO=True
@@ -242,10 +244,11 @@ def Inicio(configuracion_hab):
 
 
 def Cerrar_programa():
-        global EJECUTANDO
-        EJECUTANDO=False
-        print "Cerrando radiador.py"
-        return
+    
+    global EJECUTANDO
+    EJECUTANDO=False
+    print "Cerrando radiador.py"
+    return
 
 #
 #########################

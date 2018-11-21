@@ -111,6 +111,7 @@ for i in range(N_EST_PER):
 # COMUNICACION#
 global configuracion_hab
 global EJECUTANDO
+MANUAL_UP=0
 
 def Publicar_estado_actual_persiana():
 
@@ -121,15 +122,16 @@ def Actualizar_estado_habitacion(estado):
 
     #global estado_habitacion
     estado_habitacion=estado
-    print 'puerta abierta=',estado_habitacion.array_window[0].door_opened
-    print 'ventana abierta=',estado_habitacion.array_window[0].window_opened
+    #print 'puerta cerrada=',estado_habitacion.array_window[0].door_closed
+    #print 'ventana cerrada=',estado_habitacion.array_window[0].window_closed
     #SENSORES=[0,0]                  # [0] vENTANA;[1] PUERTA
-    SENSORES[0]=estado_habitacion.array_window[0].window_opened
-    SENSORES[1]=estado_habitacion.array_window[0].door_opened
+    SENSORES[0]=estado_habitacion.array_window[0].window_closed
+    SENSORES[1]=estado_habitacion.array_window[0].door_closed
 
 
 def Actualizar_valores(datacmd,datavalue):
         global POS_DESEADA_WEB
+        global MANUAL_UP
     
 #    print "RADIADOR::Recibido comando :",datacmd,"=",datavalue
         if datacmd=='setposition':
@@ -150,8 +152,14 @@ def Actualizar_valores(datacmd,datavalue):
                 POS_DESEADA_WEB=int(pos_deseada[sentido])
                 print 'POS_DESEADA_WEB_INICIAL=',POS_DESEADA_WEB
 
-        elif datacmd=='push_up':
-                PERSIANA[3]=1
+        elif datacmd=='manual':
+            
+            if datavalue=='up':
+                
+            
+                MANUAL_UP=1
+            elif datavalue=='down':
+                MANUAL_UP=-1
         
 
 
@@ -214,14 +222,16 @@ def Leer_entradas():
 	global POS_DESEADA
 	global POS_DESEADA_WEB
 	global AUX_SUBIR
+	global MANUAL_UP
 
 	MyEntradasA=bus.read_byte_data(DEVICE,GPIOA)
 	MyEntradasB=bus.read_byte_data(DEVICE,GPIOB)
     
 	# Leer P. Subir Persiana
 	
-        if MyEntradasB & 0b00100000 == 0b00100000:    # Pulsado
+        if MyEntradasB & 0b00100000 == 0b00100000 or MANUAL_UP==1:    # Pulsado
                 PERSIANA[3]=1
+                MANUAL_UP=0
         else:                   # NO Pulsado
                 PERSIANA[3]=0
 	FSPS,AFSPS=FlancoDeSubida(bool(PERSIANA[3]),AFSPS)	# Flanco Subida Pul. subir
@@ -229,8 +239,9 @@ def Leer_entradas():
 
 	# Leer P. Bajar
 
-        if MyEntradasB & 0b00010000 == 0b00010000:    # Pulsado
+        if MyEntradasB & 0b00010000 == 0b00010000 or MANUAL_UP==-1:    # Pulsado
                 PERSIANA[4]=1
+                MANUAL_UP=0
         else:                   # no Pulsado
                 PERSIANA[4]=0
 	FSPB,AFSPB=FlancoDeSubida(bool(PERSIANA[4]),AFSPB)	# Flanco Subida Pul. Bajar
