@@ -1,25 +1,64 @@
 {
   "task": [
-		{ "timealert": 1530, "enable": "true", "type":"action", "id": 0,"action": [
-			{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":1 }
-			]
-		},		{ "timealert": 2020,"enable": "false", "type":"action", "id": 1, "action": [
-			{"roomid": 2,"device":"blind", "id": 1,"command":"position" , "value":4 }
-			]
-		},
-		{ "timealert": 1825,"enable": "true", "type":"action", "id": 2,"action": [
-			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":180 }
-			]
-		},
-		{ "timealert": 1437,"enable": "true","type":"action", "id": 3, "action": [
-			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":240 }
-			]
-		}
-,
-		{ "timealert": 2359,"enable": "true", "type":"action", "id": 4, "action": [
-			{"roomid": 2,"device":"radiator", "id": 1,"command":"setpoint" , "value":340 }
-			]
-		}
-	]
+    {
+      "action": [
+        {
+          "device": "blind", 
+          "roomid": 2, 
+          "command": "position", 
+          "id": 1, 
+          "value": 1
+        }
+      ], 
+      "enable": "true", 
+      "type": "action", 
+      "id": 0, 
+      "timealert": 1530
+    }, 
+    {
+      "action": [
+        {
+          "device": "radiator", 
+          "roomid": 2, 
+          "command": "setpoint", 
+          "id": 1, 
+          "value": 240
+        }
+      ], 
+      "enable": "true", 
+      "type": "action", 
+      "id": 1, 
+      "timealert": 1625
+    }, 
+    {
+      "action": [
+        {
+          "device": "blind", 
+          "roomid": 2, 
+          "command": "position", 
+          "id": 1, 
+          "value": 4
+        }
+      ], 
+      "enable": "false", 
+      "type": "action", 
+      "id": 2, 
+      "timealert": 2020
+    }, 
+    {
+      "action": [
+        {
+          "device": "radiator", 
+          "roomid": 2, 
+          "command": "setpoint", 
+          "id": 1, 
+          "value": 340
+        }
+      ], 
+      "enable": "true", 
+      "type": "action", 
+      "id": 3, 
+      "timealert": 2359
+    }
+  ]
 }
-

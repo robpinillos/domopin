@@ -3,6 +3,7 @@ bool up
 bool down
 bool push_up
 bool push_down
-int32 position
+int32 position_name
+int32 position_value
 int32 error
 CurrentSchedule current_schedule

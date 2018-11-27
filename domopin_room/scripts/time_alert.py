@@ -213,6 +213,10 @@ class TimeAlarm:
             
         events.sort(key=operator.itemgetter('timealert'))
         
+        # add id
+        for i in range(len(events)):
+            events[i]['id']=i
+        
         self.schedule=events
 
 
@@ -246,6 +250,28 @@ class TimeAlarm:
 
         print self.list_tasks
 
+
+    def save_schedule(self,new_tasks):
+        
+        
+        new_tasks.sort(key=operator.itemgetter('timealert'))
+        for i in range(len(new_tasks)):
+            new_tasks[i]['id']=i
+        
+        new_schedule={"task":new_tasks}
+        jsonData=json.dumps(new_schedule,indent=2)
+
+        fh = open(self.path_file,"w")
+        fh.write(jsonData)
+        fh.close()
+        
+        print 'Saved self.path_file'
+        
+        self.update_cal()
+        
+
+        
+        
 #if __name__ == '__main__':
 #    
 #    timealert=TimeAlarm(5, '../conf/schedule.json')

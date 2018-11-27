@@ -16,12 +16,12 @@ from array import *
 
 import threading
 
-#import persiana_sim as blind
-#import radiador_sim as radiator
+import persiana_sim as blind
+import radiador_sim as radiator
 import relay_sim as relay
 
-import persiana as blind
-import termostato as radiator
+#import persiana as blind
+#import termostato as radiator
 
 import time_alert 
 
@@ -44,6 +44,25 @@ def load_json(path):
     return data
     
 
+def callback_service(req):
+    
+    
+    jreq = json.loads(req.json_req)
+    
+    if jreq['type']=='save_schedule':
+        
+        timealert.save_schedule(jreq['value'])
+        print 'saved'
+        schedule=timealert.schedule
+        list_tasks=timealert.list_tasks
+        
+        print 'list_tasks'
+                    
+        ret={"current_schedule": schedule, "list_tasks":list_tasks}
+        
+        return json.dumps(ret)
+    
+    
 def callback_central_status(msg):
     #action=Action()
 
@@ -79,7 +98,8 @@ def publish_room_state():
     current_blind_status.id=1
     current_blind_status.up=bool(datablind[0])
     current_blind_status.down=bool(datablind[1] )
-    current_blind_status.position=int(datablind[2] )
+    current_blind_status.position_value=int(datablind[2])
+    current_blind_status.position_name=status_blind_position(current_blind_status.position_value)
     current_blind_status.push_up=bool(datablind[3]) 
     current_blind_status.push_down=bool(datablind[4]) 
     current_blind_status.error=int(datablind[5])
@@ -98,7 +118,7 @@ def publish_room_state():
     current_radiator_status.id=1
     current_radiator_status.auto_mode=bool(dataradiator[6])
     current_radiator_status.relay_closed=bool(dataradiator[3])
-    current_radiator_status.valve_closed=bool(dataradiator[4])
+    current_radiator_status.valve_opened=bool(dataradiator[4])
     current_radiator_status.boiler_on=bool(dataradiator[7])
     current_radiator_status.current_temp=int(dataradiator[0])
     current_radiator_status.setpoint_temp=int(dataradiator[2])
@@ -113,6 +133,7 @@ def publish_room_state():
     current_window_status=WindowStatus()
     current_window_status.id=1
     current_window_status.outside_temp=int(0)
+    current_window_status.humidity=int(0)
     current_window_status.window_closed=bool(datawindow[0])
     current_window_status.door_closed=bool(datawindow[1])
     current_window_status.error=0
@@ -166,8 +187,58 @@ def parse_command(data):
      
                 if  iaction['device']=='blind':
                     
+                    if iaction['command']=='setposition':
+                
                         
-                    blind.Actualizar_valores(iaction['command'],iaction['value'])
+                        current_blind_schedule.type="schedule"
+                        current_blind_schedule.value=int(iaction['value'])
+                        current_blind_schedule.end_time=0
+                        
+                        blind.Actualizar_valores(iaction['command'],iaction['value'])
+                    
+                    elif iaction['command']=='position_adj_temp':
+                
+                        
+                        timealert.adj_temp('blind','setposition',current_blind_schedule.value,iaction['value']['end_time']) #timealert.adj_temp(device,command,current_setpoint,adj_end_time)
+                        
+                        
+                        current_blind_schedule.type="temporary"
+                        current_blind_schedule.value=int(iaction['value']['value'])
+                        current_blind_schedule.end_time=iaction['value']['end_time']
+                        
+                        blind.Actualizar_valores('setposition',current_blind_schedule.value)
+                        
+                        publish_room_state()
+                        
+                        time.sleep(0.2)
+                        value=timealert.list_tasks
+                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+                  
+                        pub_command.publish(json.dumps(cmd))
+
+
+                    elif iaction['command']=='cancel_position_adj_temp':
+                        
+                        timealert.update_cal()
+    
+                        current_blind_schedule.type="default"
+                        #current_radiator_schedule.value=data['value']['value']
+                        #current_radiator_schedule.end_time=data['value']['end_time']
+
+
+                        publish_room_state()
+
+                        time.sleep(0.2)
+                        value=timealert.list_tasks
+                        cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}
+
+
+                        pub_command.publish(json.dumps(cmd))
+					
+                    else:
+                                         
+                        
+                        blind.Actualizar_valores(iaction['command'],iaction['value'])
     
     
                 elif  iaction['device']=='radiator':
@@ -187,7 +258,7 @@ def parse_command(data):
                         timealert.adj_temp('radiator','setpoint',current_radiator_schedule.value,iaction['value']['end_time']) #timealert.adj_temp(device,command,current_setpoint,adj_end_time)
                         
                         current_radiator_schedule.type="temporary"
-                        current_radiator_schedule.value=iaction['value']['value']
+                        current_radiator_schedule.value=int(iaction['value']['value'])
                         current_radiator_schedule.end_time=iaction['value']['end_time']
                         
                         radiator.Actualizar_valores('setpoint',current_radiator_schedule.value)
@@ -263,7 +334,27 @@ def parse_command(data):
                   
                 pub_command.publish(json.dumps(cmd))
 
-
+def status_blind_position(value):
+    
+    min_val=100000
+    min_name=-1
+    
+    for pos in room_config['device']['blind'][0]['positions']:
+        
+        
+        
+        if abs( int(pos['value'][0]) -value) < min_val:
+            min_val=abs(int(pos['value'][0]) -value)
+            min_name=pos['name']
+            
+        if abs(int(pos['value'][1]) -value) < min_val:
+            
+            min_val=abs(int(pos['value'][1]) -value)
+            min_name=pos['name']
+            
+    return int(min_name)
+        
+   
 def get_next_tasks(device):
     
     
@@ -286,6 +377,15 @@ def update():
             print 'ALARM'
             print 'task_command=',task_alarm
             parse_command(task_alarm)
+            
+            
+            publish_room_state()
+            
+            value=timealert.list_tasks
+            time.sleep(0.2) 
+            cmd={"type":"config","roomid": room_config['roomid'],"action":"set_next_tasks","value": value}  
+                  
+            pub_command.publish(json.dumps(cmd))
             
         
 
@@ -323,6 +423,8 @@ if __name__ == "__main__":
     
     rospy.Subscriber("domopin/command", String, callback_command)
     rospy.Subscriber("domopin/central_status", BoilerStatus, callback_central_status)
+    
+    srv_command = rospy.Service('domopin/srv_command_'+str(room_config['roomid']),ServCommand,callback_service)
         
     ## BLIND
     if len(room_config['device']['blind'])>0: 

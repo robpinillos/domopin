@@ -141,7 +141,7 @@ height: 45px;
   } 
   #page_home ul li {
     
-    font-size: 28px;
+    font-size: 32px;
   }
  
 
@@ -160,10 +160,16 @@ height: 45px;
 <!-- Home -->
 
 <div data-role="page" id="page_home" data-theme="b">
-  
+
  <div data-role="header" >   
 
-              <div class="clock" style="padding-top:5px;">
+    <div id="header" class="ui-grid-b"  >
+        <div class="ui-block-a" style="width: 35%" >
+          <a id="rad_button" href="#page_radiator"  class="ui-btn ui-corner-all ui-shadow ui-btn-b header-but "  >Radiador</a>
+        </div>
+        <div class="ui-block-b" style="width: 30%" >
+            <div id="title_page" style="margin-top:8px">
+              <div class="clock">
                 <div id="Date"></div>
 
                 <ul>
@@ -175,26 +181,38 @@ height: 45px;
                 </ul>
 
               </div>
+            </div>
+        </div>
+				
+        <div class="ui-block-c" style="width: 30%">
+						
+            
+                <a id="blind_button" href="#page_blind"  class="ui-btn ui-corner-all ui-shadow ui-btn-b header-but" style="margin-left:2px;"  >Persiana</a>
+
+            
+
+      </div>
+					
+    </div><!-- /grid-b -->
   </div>
-  <div data-role="content" data-theme="b" style="height: 226px;">
+	
+  <div data-role="content" data-theme="b" style="height: 200px;">
 
     <div class="ui-grid-b"  >
         <div class="ui-block-a" style="width:36%">
-            <ul id="list_status_rad" data-role="listview" data-inset="true" >
-              <li data-icon="false">
-                <a href="#page_radiator" style="padding-left:10px" >
-                <div class="ui-grid-a"  >
-                  <div class="ui-block-a" style="width: 40%;">
+            <ul id="list_status_rad" data-role="listview" data-inset="true">
+              <li >
+                <div class="ui-grid-a" style="height:70px" >
+                  <div class="ui-block-a" >
                     <img src="./images/termometro.png" alt="temp" style="margin-top: 10px;margin-left: 10px;" /> 
                   </div>
                   <div class="ui-block-b" >
                     <div id="t_setpoint" class="icon-" style="font-size: 40px;">--.-</div>
                   </div>
                 </div>
-                </a>
               </li>
-              <li style="height:30px">
-                <div id="grid_adj_temp_rad" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 24px;" >
+              <li>
+                <div id="grid_adj_temp_rad" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 30px;" >
                   <div class="ui-block-a" >
                     Aj. temp. > 
                   </div>
@@ -204,8 +222,6 @@ height: 45px;
                 </div>
                 
               </li>
-            </ul>
-              <ul id="list_status_rad" data-role="listview" data-inset="true">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -228,8 +244,25 @@ height: 45px;
                 </div>
                 
               </li>
+            </ul>
+        </div>
+          <div class="ui-block-b"  style="width:30%">
+            <ul data-role="listview" data-inset="true">
+              <li>
+                <div id="t_int" style="font-size:70px;text-align: center;">--.-</div>
+              </li>
               <li >
-                <div class="ui-grid-a" style="height:38px;padding-left: 30px;padding-right: 30px;" >
+                <div class="ui-grid-a" style="height:40px;padding-left:10px;" >
+                  <div class="ui-block-a" >
+                      <img src="./images/puerta.png" alt="temp" /> 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="door_st" class="icon-" style="font-size:18px;margin-top: 10px;"></div>
+                  </div>
+              </div>
+              </li>
+              <li >
+                <div class="ui-grid-a" style="height:40px;padding-left:10px;" >
                   <div class="ui-block-a" >
                       <img src="./images/ventana.png" alt="temp" /> 
                   </div>
@@ -240,42 +273,10 @@ height: 45px;
               </li>
             </ul>
         </div>
-          <div class="ui-block-b"  style="width:30%">
-            <ul data-role="listview" data-inset="true">
-              
-
-              <li>
-                <div id="t_int" style="font-size:70px;text-align: center;">--.-</div>
-              </li>
-              <li>
-                <div class="ui-grid-a"  >
-                  <div class="ui-block-a" style="width:40%;">
-                      <label style="font-family: sans-serif">T ext.</label> 
-                  </div>
-                  <div class="ui-block-b" >
-                    <div id="t_ext" style="font-size:50px;text-align: center;">--.-</div>
-                  </div>
-              </div>
-                
-              </li>
-              <li >
-                <div class="ui-grid-a" style="height:40px;padding-left:10px;" >
-                  <div class="ui-block-a" style="font-size:18px;margin-top: 10px;">
-                      Humedad
-                  </div>
-                  <div class="ui-block-b" >
-                    <div id="humidity_st" class="icon-" style="font-size:18px;margin-top: 10px;"></div>
-                  </div>
-              </div>
-              </li>
-
-            </ul>
-        </div>
        <div class="ui-block-c" >
             <ul id="list_status_blind" data-role="listview" data-inset="true">
-              <li data-icon="false">
-                <a href="#page_blind">
-                 <div class="ui-grid-a" style="height:52px;padding-left: 10px;padding-top: 2px;" >
+              <li >
+                 <div class="ui-grid-a" style="height:50px;padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
                     <img id="status_blind_position" src="./images/persiana_0.png" class="img-but" style="padding-left: 20px;"/>
                   </div>
@@ -285,22 +286,8 @@ height: 45px;
                     
                   </div>
                 </div>
-                </a>
                   
               </li>
-              <li style="height:30px;">
-                <div id="grid_adj_temp_blind" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 22px;" >
-                  <div class="ui-block-a" >
-                    Aj. temp. > 
-                  </div>
-                  <div class="ui-block-b" >
-                    <div id="adj_temp_time_blind" class="icon-">--.-</div>
-                  </div>
-                </div>
-                
-              </li>
-            </ul>
-              <ul id="list_status_rad" data-role="listview" data-inset="true">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -325,22 +312,12 @@ height: 45px;
                   </div>
                 </div>
               </li>
-              <li >
-                <div class="ui-grid-a" style="height:36px;padding-left: 30px;padding-right: 30px;" >
-                  <div class="ui-block-a" >
-                      <img src="./images/puerta.png" alt="temp" /> 
-                  </div>
-                  <div class="ui-block-b" >
-                    <div id="door_st" class="icon-" style="font-size:18px;margin-top: 10px;"></div>
-                  </div>
-              </div>
-              </li>
             </ul>
         </div>
     </div>
     </div><!-- /content -->
   
-    <div data-role="footer" style="height:30px;padding: 6px;"> 
+    <div data-role="footer" style="height:40px;padding: 6px;"> 
     <div class="ui-grid-e" style="height:100%;">
         <div class="ui-block-a" >
           <img id="comm_st" src="./images/central_comm.png" class="img-mini" alt="valve" />
@@ -704,7 +681,7 @@ height: 45px;
           </div>
 
             <div class="ui-block-b" style="font-size: 20px;text-align: center;">
-              <select id="flip-temporary-blind-position" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+              <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
             </div>
 
         </div>
@@ -781,30 +758,29 @@ height: 45px;
     <div data-role="content" data-theme="a" > 
       <ul id="list_edittask_blind_content" data-role="listview" data-inset="true">
         <div class="ui-grid-a" style="margin: 15px;">
-          <div class="ui-block-a" style="margin-top:32px;padding-left: 30px;">
-              <input id="input-edittask-time-blind" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
-          </div>
-          <div class="ui-block-b" >
+          <div class="ui-block-a" >
             
-              <ul data-role="listview" data-inset="true" style="width: 110px;margin:0px 20px 0px 30px;">
-                  <li style="margin:0px 2px 4px 2px;">
-                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('plus','img-edittask-position-blind');"></a>
+              <ul data-role="listview" data-inset="true" style="width: 110px;margin:0px 2px 0px 2px;">
+                  <li >
+                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 50px;margin-left: 5px;" onclick="Manual_selection_blind_position('plus','img-blind-position-temp-adj');"></a>
                   </li>
                   <li data-icon="false">
                     
-                    <a class=" ui-corner-all " style="min-height: 40px;">
-                        <img id="img-edittask-position-blind" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 30px;margin-top: 2px;"/>
+                    <a class=" ui-corner-all " onclick="Command_manual_blind_position('img-blind-position-temp-adj');">
+                        <img id="img-blind-position-temp-adj" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 30px;margin-top: 10px;"/>
                     </a>
                     
                   </li>
-                  <li style="margin:4px 2px 0px 0px;">
-                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('minus','img-edittask-position-blind');"></a>
+                  <li >
+                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 50px;margin-left: 5px;" onclick="Manual_selection_blind_position('minus','img-blind-position-temp-adj');"></a>
                   </li>
 
               </ul>
 
           </div>
-
+          <div class="ui-block-b" style="margin-top:32px;padding-left: 30px;">
+              <input id="input-edittask-time-blind" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+          </div>
         </div>
       </ul>
       <ul id ="list_edittask_blind_buttons" data-role="listview" data-split-theme="a" data-inset="true">
@@ -835,7 +811,7 @@ var global_room_status=
 roomid: 2,
 connected_central: true,
 array_window:[
-{id: 0, window_closed: false, door_closed: false, outside_temp: 0, humidity:0, error: 0}
+{id: 0, window_closed: false, door_closed: false, outside_temp: 0, error: 0}
   ],
 array_blind: [
  {id: 0, up: false, down: false, push_up: false, push_down: false,position_name:'', position_value: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
@@ -858,9 +834,6 @@ var temp_schedule=[];
 
 var flip_radiator_manual_change=false;
 var flip_radiator_manual_open_change=false;
-
-var flip_temporary_blind_auto_change=false;
-var flip_temporary_rad_auto_change=false;
 
 var id_editing=null;
 
@@ -1025,15 +998,6 @@ listener_status_room.subscribe(function(msg) {
         
         $("#window_st").html("Abierta");
       }
-      if (msg.array_window[0].outside_temp != global_room_status.array_window[0].outside_temp ){
-        var Tint=parseFloat(msg.array_window[0].outside_temp/10.0);
-        $("#t_ext").html(Tint.toFixed(1));
-      }
-        if (msg.array_window[0].humidity != global_room_status.array_window[0].humidity ){
-        var Tint=parseFloat(msg.array_window[0].humidity/10.0);
-        $("#humidity_st").html(Tint.toFixed(1)+' %');
-      }
-    
    global_room_status=msg; 
   }
         
@@ -1101,52 +1065,21 @@ $(document).on("pageshow","#page_main",function(){
 
 });
   
-
-$(document).on("pageshow","#page_blind",function(){
-
-  console.log('pageshow:page_blind  0');
-  var val=$("#flip-temporary-blind-position").val();
-  console.log('val='+val);
-  console.log('global_room_status.array_rad[0].current_schedule.type='+global_room_status.array_rad[0].current_schedule.type);
-  if(global_room_status.array_blind[0].current_schedule.type=='temporary' && val=="off"){
-
-    flip_temporary_blind_auto_change=true;
-    $("#flip-temporary-blind-position").val("on").flipswitch('refresh');
-    
-  }
-  else if(global_room_status.array_blind[0].current_schedule.type!='temporary' && val=="on"){
-    
-    flip_temporary_blind_auto_change=true;
-    $("#flip-temporary-blind-position").val("off").flipswitch('refresh');
-    
-  }
   
-console.log('pageshow:page_blind  1');
-});
 $(document).on("pageshow","#page_radiator",function(){
-  
-  var val=$("#flip-temporary-temp").val();
 
-  if(global_room_status.array_rad[0].current_schedule.type=='temporary' && val=="off"){
+  if(global_room_status.array_rad[0].current_schedule.type=='temporary'){
     var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
     $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
-    
-    flip_temporary_rad_auto_change=true;
     $("#flip-temporary-temp").val("on").flipswitch('refresh');
-    
-    
   }
-  else if(global_room_status.array_rad[0].current_schedule.type!='temporary' && val=="on"){
+  else {//if(global_room_status.array_rad[0].current_schedule.type=='auto'){
     
     var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
     $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
     
-    flip_temporary_rad_auto_change=true;
     $("#flip-temporary-temp").val("off").flipswitch('refresh');
-    
-    
   }
-  
  
 
   if(global_room_status.array_rad[0].auto_mode==true){
@@ -1170,27 +1103,25 @@ $(document).on("pageshow","#page_radiator",function(){
 $(document).on("pageshow","#page_blind_schedule",function(){
 
     $('#schedule_blind').listview('refresh');
-    /*$('#schedule_blind').empty().listview('refresh');
-    
-    Create_list_schedule_blind();
-*/
+
+    //Create_list_schedule_blind();
+
 });
 
   $(document).on("pageshow","#page_radiator_schedule",function(){
 
-    
+    //$('#schedule_radiator').empty().listview('refresh');
     
     $('#schedule_radiator').listview('refresh');
-    /*$('#schedule_radiator').empty().listview('refresh');
-    Create_list_schedule_radiator();
-*/
+
+    //Create_list_schedule_radiator();
+
 });
   
 
 $("#flip-temporary-temp").on("change", function(e) {
   
   var value = this.value;
-  if(flip_temporary_rad_auto_change== false){
   if(value=='on'){
     //global_room_status.array_rad[0].current_schedule.type=='temporary'
     var setpoint=$("#input-temp-rad-tempadj").val()*10 ;
@@ -1208,44 +1139,7 @@ $("#flip-temporary-temp").on("change", function(e) {
     Publish_command('radiator','cancel_radiator_adj_temp',0);
     
   }
-    
-  }else{
-    
-    flip_temporary_rad_auto_change=false;
-  }
 });
-
-  $("#flip-temporary-blind-position").on("change", function(e) {
-  
-  console.log('flip_temporary_blind_auto_change='+flip_temporary_blind_auto_change);
-  if(flip_temporary_blind_auto_change==false){
-    var value = this.value;
-    if(value=='on'){
-      //global_room_status.array_rad[0].current_schedule.type=='temporary'
-
-      var temp_position=$('#img-blind-position-temp-adj').attr("src").split('_');
-      var position=temp_position[1][0];
-      var time=$("#input-endtime-blind-adj").val() ;
-      var temp_time=time.split(':');
-      time=parseInt(temp_time[0]+''+temp_time[1]);
-      console.log('position='+position);
-      console.log('time='+time);
-      var json_value={type:"temporary",value: position, end_time:time}
-
-      Publish_command('blind','position_adj_temp',json_value);
-    }
-    else{
-      //global_room_status.array_rad[0].current_schedule.type=='auto'
-      Publish_command('blind','cancel_position_adj_temp',0);
-
-    }
-  }else{
-    
-    flip_temporary_blind_auto_change=false;
-  }
-});
-  
-  
   
 $("#flip-radiator-manual").on("change", function(e) {
   
@@ -1400,27 +1294,6 @@ console.log( 'obj='+blind_tasks[i].timealert);
           }
           
         }
-        if(global_room_status.array_blind[0].current_schedule.type=='temporary'){
-          var timedefault=["0","0","0","0"]
-            var time=global_room_status.array_blind[0].current_schedule.end_time.toString(10).split('');
-
-            for(t=time.length-1;t>-1;t--){
-
-              timedefault[t]=time[t];
-            }
-          var T=global_room_status.array_blind[0].current_schedule.end_time/10.0;
-
-          $("#adj_temp_time_blind").html(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
-          //$("#grid_adj_temp_rad").css('style','display:block');
-              $("#grid_adj_temp_blind").show();
-        }else{
-          
-          console.log('grid_adj_temp_blind hide');
-          
-          $("#grid_adj_temp_blind").hide(); //.css('style','display:none');
-        }
-        
-   
         
         
         $("#list_status_blind").listview('refresh');
@@ -1511,13 +1384,11 @@ console.log('Create_list_schedule_blind');
     //temp_schedule=schedule;
 	for (var i=0;i<temp_schedule.length;i++){
 	var item=temp_schedule[i];
-      
 
     var selected_on=""
     if (temp_schedule[i].enable == 'true'){
       
       selected_on='selected=""';
-      
      
     }
     var timedefault=["0","0","0","0"]
@@ -1606,9 +1477,8 @@ function Edit_event_blind(id){
   }
 
     var position=temp_schedule[index].action[0].value;
-  
-  $('#img-blind-position-edit').attr("src","./images/persiana_"+position+".png");
 
+  $('#input-edittask-position-blind').val(position);
   $('#input-edittask-time-blind').val(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
   
   
@@ -1618,13 +1488,11 @@ function Edit_event_blind(id){
   
 function Save_edit_blind(){
   
-  var temp_position=$('#img-edittask-position-blind').attr("src").split('_');
-  var position=temp_position[1][0];
+
+    var position=parseInt($("#input-edittask-position-blind").val());
     var time=$("#input-edittask-time-blind").val() ;
     var temp_time=time.split(':');
     var int_time=parseInt(temp_time[0]+''+temp_time[1]);
-  
-  console.log('position='+position);
 
    if (new_task==true){ //new
        
@@ -1682,21 +1550,52 @@ function Save_edit_blind(){
     $('#schedule_blind').empty().listview('refresh');
     Create_list_schedule_blind();
 
-
+  /*
+  var nameid=$('#schedule_radiator').find('#task_'+id_editing);
+  
+  var timealert=nameid.children().find('#timealert').html(time);
+  var timealert=nameid.children().find('#setpoint').html($("#input-edittask-temp-rad-int").val()+'.'+$("#input-edittask-temp-rad-dec").val());
+*/
+ 
 
 }
 function New_edit_blind(){
   
   $('#remove-button-blind').hide();
   new_task=true;
-
   
-  $('#img-blind-position-edit').attr("src","./images/persiana_0.png");
-  
+  $('#input-edittask-position-blind').val(0);
   
 }
 
+  function Remove_task_blind(){
+  
 
+    var index=-1;
+  
+  for (i=0;i<temp_schedule.length;i++){
+    if(temp_schedule[i].id==id_editing){
+      index=i;
+      
+    }
+    
+  }
+  temp_schedule.splice(index, 1);
+    
+    
+    $('#schedule_blind').empty().listview('refresh');
+    Create_list_schedule_blind();
+
+  /*
+  var nameid=$('#schedule_radiator').find('#task_'+id_editing);
+  
+  var timealert=nameid.children().find('#timealert').html(time);
+  var timealert=nameid.children().find('#setpoint').html($("#input-edittask-temp-rad-int").val()+'.'+$("#input-edittask-temp-rad-dec").val());
+*/
+ 
+
+}
+  
   
 function Edit_event_radiator(id){
   
@@ -1737,6 +1636,7 @@ function Edit_event_radiator(id){
   $('#input-edittask-time-rad').val(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
   
   
+
 }
   
   
@@ -1838,8 +1738,8 @@ function Save_new_schedule(device){
       var task_id=parseInt(nameid[1]);
      
      var flip=$("#flip-"+device+"-"+task_id).val();
-     var enable="true";
-     if(flip=='off')enable="false";
+     var enable=true;
+     if(flip=='off')enable=false;
      
      var index=-1;
      for (i=0;i<temp_schedule.length;i++){
@@ -1883,7 +1783,6 @@ function Save_new_schedule(device){
       Create_list_schedule_blind();
     }
     
-    
     var tasks=obj.list_tasks.slice();
 
     Create_list_next_tasks(tasks);
@@ -1896,11 +1795,8 @@ function Cancel_changes_schedule(device){
 
   temp_schedule=schedule.slice();
   
-  $('#schedule_'+device).empty().listview('refresh');
-  //$('#schedule_blind').empty().listview('refresh');
-  
-  console.log('Cancel_changes_schedule:temp_schedule');
-  console.log(temp_schedule);
+  $('#schedule_radiator').empty().listview('refresh');
+  $('#schedule_blind').empty().listview('refresh');
   
 }
   

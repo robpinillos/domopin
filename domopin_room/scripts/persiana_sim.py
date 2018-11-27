@@ -49,7 +49,7 @@ def Actualizar_valores(datacmd,datavalue):
         print configuracion_hab['device']['blind'][0]['positions']
         pos_deseada=[]
         for pose in configuracion_hab['device']['blind'][0]['positions']:
-            if pose['name']==datavalue:
+            if pose['name']==str(datavalue):
                 pos_deseada=pose['value']
 
         #parsear de position_1 > int

@@ -7,7 +7,8 @@ import sys
 
 ESTADO=[0,0] # [0] ESTAADO {0=abierto,1=cerrado};[1] Error 
 ACCION=-1
-global EJECUTANDO
+MANUAL_CERRAR=1
+
 
 
 
@@ -64,9 +65,7 @@ def Bucle_principal():
     while EJECUTANDO:
         
         if (MANUAL_CERRAR==1):
-            if(AUX_TRA==True):
- 
-                if ACCION==0:
+		if ACCION==0:
 		    ESTADO[0]=0
 		
 		elif ACCION==1:

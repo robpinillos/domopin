@@ -57,7 +57,7 @@ SPA=False                       # Sensor Puerta Abierta
 
 
 FSPS=False			# Flanco de subida Pulsador Subir
-AFSPS=False			# Auxiliar Flanco d eSubida Pulsador Subir
+AFSPS=False			# Auxiliar Flanco de Subida Pulsador Subir
 
 FSPB=False			# Flanco de Subida Pulsador Bajar
 AFSPB=False			# Auxiliar Flnaco Subida Pulsador Bajar 
@@ -139,7 +139,7 @@ def Actualizar_valores(datacmd,datavalue):
                 blind=configuracion_hab['device']['blind'][0]['positions']
                 pos_deseada=[]
                 for pose in blind:
-                    if pose['name']==datavalue:
+                    if pose['name']==str(datavalue):
                         pos_deseada=pose['value']
                 #parsear de position_1 > int
                 sentido=0
