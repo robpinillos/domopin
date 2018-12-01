@@ -5,7 +5,7 @@ import sys
 
 
 
-ESTADO=[0,0] # [0] ESTAADO {0=abierto,1=cerrado};[1] Error 
+ESTADO=[1,0,0] # [0] MODO {0=manual, 1=auto} ,[1] ESTAADO {0=abierto,1=cerrado};[2] Error 
 ACCION=-1
 MANUAL_CERRAR=1
 
@@ -23,17 +23,31 @@ def Publicar_estado_actual():
     return ESTADO
 
 
-def Actualizar_valores(datacmd):
-    
-    print "RELAY::Recibido comando :",datacmd
+def Actualizar_valores(datacmd,datavalue):
 
-    if datacmd=='open':
-        ACCION=1
+    global ESTADO
+    global ACCION
 
-    elif datacmd=='close':
-        ACCION=0
+    print "RELAY::Recibido comando :",datacmd,':',datavalue
+
+    if datacmd=='setrelay':
+        if datavalue=='off':
+            ACCION=0
+
+        elif datavalue=='on':
+            ACCION=1
         
+    elif datacmd=='mode':
         
+        if datavalue=='auto':
+        
+            ESTADO[0]=1
+            
+        elif datavalue=='manual':
+        
+            ESTADO[0]=0
+
+   
     
 # Programa principal
 
@@ -65,13 +79,16 @@ def Bucle_principal():
     while EJECUTANDO:
         
         if (MANUAL_CERRAR==1):
-		if ACCION==0:
-		    ESTADO[0]=0
-		
-		elif ACCION==1:
-		    ESTADO[0]=1
+            
+            if ACCION==0: #abrir
+                ESTADO[1]=0
+                ACCION=-1
+            
+            elif ACCION==1: #cerrar
+                ESTADO[1]=1
+                ACCION=-1
 			
-		ACCION=-1
+		
 		
 	time.sleep(2.0)
     

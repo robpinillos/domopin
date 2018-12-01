@@ -57,7 +57,7 @@ body{
 }
 .ui-content{
 font-family: -webkit-pictograph;
-height: 245px;
+height: 370px;
 padding: 2px 2px;
 }
 .ui-header .ui-title, .ui-footer .ui-title{
@@ -79,7 +79,9 @@ height: 30px;
 }
 
 .img-mini{
-height: 25px;
+height: 36px;
+margin-top: 20px;
+margin-left: 20px;
 }
 
  .button-blind {
@@ -119,16 +121,27 @@ height: 45px;
   #header{
   
     height: 60px;
+    padding-left: 4%;
   }
+
+  
 .header-but {
   
   width: 110px;
-  height: 30px;
-  margin-top: 5px;
-  padding-top: 6px;
+  height: 50px;
+  margin-top: 8px;
+  line-height: 45px;
+ 
   
   
   }
+  .home-btn{
+
+    margin-top:8px;
+    width: 90px;
+    height: 80px;
+  }
+  
   .ui-header .ui-btn{
     font-size:x-large;
   }
@@ -137,6 +150,7 @@ height: 45px;
     
     margin-top:12px;
     text-align: center;
+    font-size: 28px;
     
   } 
   #page_home ul li {
@@ -161,9 +175,30 @@ height: 45px;
 
 <div data-role="page" id="page_home" data-theme="b">
   
- <div data-role="header" >   
+ <div data-role="header" >
+    <div class="ui-grid-b" >
+      <div class="ui-block-a" >
+          <div class="ui-grid-a" >
+              <div class="ui-block-a" >
+                <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
+  
+              </div>
+              <div class="ui-block-b" >
+                <div class="ui-grid-a" style="margin-top:20px" >
+                  <div class="ui-block-a" >
+        
+                    <img src="./images/temp_agua.png" alt="temp" /> 
+                  </div>
+                  <div class="ui-block-b" >
+                    <div id="t_water"  style="font-size:20px">--.-</div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="ui-block-b" >  
 
-              <div class="clock" style="padding-top:5px;">
+              <div class="clock" style="padding-top:15px;">
                 <div id="Date"></div>
 
                 <ul>
@@ -175,8 +210,23 @@ height: 45px;
                 </ul>
 
               </div>
+        </div>
+        <div class="ui-block-c" >
+            <div class="ui-grid-a" >
+                <div class="ui-block-a" >
+                  
+                      
+                </div>
+                <div class="ui-block-b" >
+                 <img id="comm_st" src="./images/central_comm.png" class="img-mini" alt="valve" />
+                  
+                </div>
+                      
+            </div>
+        </div>
+    </div>
   </div>
-  <div data-role="content" data-theme="b" style="height: 226px;">
+  <div data-role="content" data-theme="b" style="height: 320px;">
 
     <div class="ui-grid-b"  >
         <div class="ui-block-a" style="width:36%">
@@ -193,19 +243,27 @@ height: 45px;
                 </div>
                 </a>
               </li>
-              <li style="height:30px">
-                <div id="grid_adj_temp_rad" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 24px;" >
-                  <div class="ui-block-a" >
-                    Aj. temp. > 
+              
+              <li style="height:40px">
+                <div class="ui-grid-a"  >
+                  <div class="ui-block-a" style="width: 25%;">
+                      <img id="rad_mode_st" src="./images/icons_32/auto.png" style="height:25px;margin-top:5px;margin-left:15px;"  />
                   </div>
-                  <div class="ui-block-b" >
-                    <div id="adj_temp_time_rad" class="icon-">--.-</div>
+                  <div class="ui-block-b" style="width: 75%;">
+                    <div id="grid_adj_temp_rad" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 24px;" >
+                      <div class="ui-block-a" style="width: 60%;">
+                        Aj. temp. > 
+                      </div>
+                      <div class="ui-block-b" style="width: 30%;">
+                        <div id="adj_temp_time_rad" class="icon-">--.-</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+              </div>
                 
               </li>
             </ul>
-              <ul id="list_status_rad" data-role="listview" data-inset="true">
+              <ul id="list_status_rad" data-role="listview" data-inset="true" style="margin-top:10px;">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -245,7 +303,7 @@ height: 45px;
               
 
               <li>
-                <div id="t_int" style="font-size:70px;text-align: center;">--.-</div>
+                <div id="t_int" style="font-size:100px;text-align: center;">--.-</div>
               </li>
               <li>
                 <div class="ui-grid-a"  >
@@ -281,26 +339,33 @@ height: 45px;
                   </div>
                   <div class="ui-block-b" >
                     
-                      <img id="status_blind_push" src="" class="img-mini" />
+                      <img id="status_blind_push" src="./images/flecha_estado_arriba.gif" class="img-mini" />
                     
                   </div>
                 </div>
                 </a>
                   
               </li>
-              <li style="height:30px;">
-                <div id="grid_adj_temp_blind" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 22px;" >
-                  <div class="ui-block-a" >
-                    Aj. temp. > 
+              <li style="height:40px;">
+                <div class="ui-grid-a"  >
+                  <div class="ui-block-a" style="width: 25%;">
+                      <img id="blind_mode_st" src="./images/icons_32/auto.png" style="height:25px;margin-top:5px;margin-left:15px;"  />
                   </div>
-                  <div class="ui-block-b" >
-                    <div id="adj_temp_time_blind" class="icon-">--.-</div>
+                  <div class="ui-block-b" style="width: 75%;">
+                    <div id="grid_adj_temp_blind" class="ui-grid-a" style="padding-left: 10px;padding-top:2px;display:none;color:red;font-size: 22px;" >
+                      <div class="ui-block-a" style="width: 60%;">
+                        Aj. temp. > 
+                      </div>
+                      <div class="ui-block-b" style="width: 30%;">
+                        <div id="adj_temp_time_blind" class="icon-">--.-</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
               </li>
             </ul>
-              <ul id="list_status_rad" data-role="listview" data-inset="true">
+              <ul id="list_status_rad" data-role="listview" data-inset="true" style="margin-top:10px;">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -340,37 +405,29 @@ height: 45px;
     </div>
     </div><!-- /content -->
   
-    <div data-role="footer" style="height:30px;padding: 6px;"> 
-    <div class="ui-grid-e" style="height:100%;">
-        <div class="ui-block-a" >
-          <img id="comm_st" src="./images/central_comm.png" class="img-mini" alt="valve" />
-          
-        </div>
-          <div class="ui-block-b" >
-            <img id="mode_st" src="./images/mode_auto.png" class="img-mini" alt="boiler" />
-          </div>
-        <div class="ui-block-c" >
-        
-          <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
+    <div data-role="footer" style="height:60px;padding: 6px;"> 
+    <div class="ui-grid-b" style="height:100%;">
 
-        </div>
-          <div class="ui-block-d" >
+      <div class="ui-block-a" >
             <img id="valve_st" src="./images/radiador_on.gif" class="img-mini" alt="valve" />
-          </div>
-          <div class="ui-block-e" >
-            <img id="relay_st" src="./images/off.png" class="img-mini" alt="relay" />
-          </div>
-           <div class="ui-block-f" >
-            <div class="ui-grid-a" style="height:60px" >
+      </div>
+      <div class="ui-block-b" >
+            <img id="relay_rad_st" src="./images/icons_32/off.png" class="img-mini" alt="relay" />
+      </div>
+      <div class="ui-block-c" >
+          <div class="ui-grid-a" style="border-color: black;border-style:solid;border-radius: 3px;" >
               <div class="ui-block-a" >
-
-                  <img src="./images/temp_agua.png" alt="temp" /> 
+                  <a href="#page_relay">
+                      <img id="relay_st" src="./images/icons_32/ambientador_on.png" style="height:45px;margin-top:0px;" alt="relay" />
+                    </a>
               </div>
-            <div class="ui-block-b" >
-              <div id="t_water" class="icon-">--.-</div>
-            </div>
-            </div>
-        </div>
+              <div class="ui-block-b" >
+                  <img id="relay_mode_st" src="./images/icons_32/auto.png" style="height:25px;margin-top:25px;"  />
+              </div>
+          </div>
+        
+      </div>
+
     </div>
   </div><!-- /footer -->
   
@@ -380,9 +437,9 @@ height: 45px;
 
  <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px" >
+    <div id="header" class="ui-grid-b" style="height:100px" >
         <div class="ui-block-a"  style="width: 35%" >
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:8px;width: 80px;height: 52px;">No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" >No text</a>
         </div>
         <div class="ui-block-b" style="width: 30%" >
             <div id="title_page">
@@ -402,21 +459,42 @@ height: 45px;
     
 
     <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 18px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
+    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
       <li style="font-size: 22px;">
-        <div class="ui-grid-a">
+        <div class="ui-grid-a" style="padding-top:2%;padding-left: 5%;padding-right: 5%;">
           <div class="ui-block-a" >
-            <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
--->
+<!-- 
                 <div class="ui-field-contain" style="width: 150px;margin:0px 2px 0px 2px;">
                     
                     <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj" data-options='{"type":"vertical"}'  min="14" max="30" step="0.1" style="font-size: 30px;"/>
                 </div>
+-->
+            <div class="ui-grid-b" >
+                <div class="ui-block-a" style="width:40%;">
+                  <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
+            -->
+                      <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
+
+                          <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 30px;"/>
+                      </div>
+                </div>
+                <div class="ui-block-b" style="width:5%;">
+                  <label style="font-size: 40px;margin-top: 75px;" >.</label>
+
+                </div>
+                <div class="ui-block-c"  >
+                  <div class="ui-field-contain" style="width: 80px;margin:0px 2px 0px 2px;">
+
+                      <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 30px;"/>
+                  </div>
+                    
+                </div>
+              </div>
           </div>
 
             <div class="ui-block-b" >
               <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-              <li style="font-size: 22px;">
+              <li style="font-size: 28px;">
 
               <input id="input-endtime-rad-tempadj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px" >
               <!--<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true" style="height:50px" >
@@ -427,7 +505,7 @@ height: 45px;
               </div>
               -->
             </li>
-            <li style="font-size: 22px;">
+            <li style="font-size: 28px;">
          <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
 
             
@@ -440,7 +518,7 @@ height: 45px;
       
     </ul>
       <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-    <li data-role="list-divider" style="height: 12px;padding-top:2px;font-size: 12px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
+    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
 
       <li style="font-size: 22px;">
         <div class="ui-grid-a" style="height:60px" >
@@ -467,17 +545,17 @@ height: 45px;
   </div><!-- /content -->
   
 </div><!-- /page -->
-  
-  
+
+
 <div data-role="page" id="page_radiator_schedule" data-theme="b">
 
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px">
+    <div id="header" class="ui-grid-b" style="height:100px">
         <div class="ui-block-a" >
 
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all " style="margin-top:8px;width: 80px;height: 52px;" onclick="Cancel_changes_schedule('radiator');" >No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" onclick="Cancel_changes_schedule('radiator');" >No text</a>
 
         </div>
         <div class="ui-block-b"  >
@@ -486,30 +564,30 @@ height: 45px;
             </div>
         </div>	
         <div class="ui-block-c" >
-          <a  class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Save_new_schedule('radiator');" >Guardar</a>         
+          <a  class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_new_schedule('radiator');" >Guardar</a>         
         </div>
 					
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" style="height:200px">
+  <div data-role="content" style="height:280px">
   
     <ul id="schedule_radiator" data-role="listview" data-inset="true">
       
     </ul>
   
   </div><!-- /content -->
-    <div data-role="footer" style="margin: 0 auto;"> 
+    <div data-role="footer" style="margin: 0 auto;border-style: none"> 
 
-      <a  href="#page_edit_radiator_schedule" class="ui-btn ui-corner-all ui-btn-a ui-btn-right ui-icon-plus ui-btn-icon-notext " style="margin:0px;width: 70px;height: 40px;"onclick="New_edit_radiator();" ></a> 
+      <a  href="#page_edit_radiator_schedule" class="ui-btn ui-corner-all ui-btn-a ui-btn-right ui-icon-plus ui-btn-icon-notext " style="right:20px;width: 90px;height: 70px;margin-top:0px;" onclick="New_edit_radiator();" ></a> 
 
   </div>
 </div><!-- /page -->
 
-  <div data-role="page" id="page_edit_radiator_schedule" data-theme="b">
+<div data-role="page" id="page_edit_radiator_schedule" data-theme="b">
     <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px">
+    <div id="header" class="ui-grid-b" style="height:100px">
         <div class="ui-block-a" >
           <a  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;margin-top:2px;" href="#page_radiator_schedule">Cancelar</a> 
 
@@ -520,7 +598,7 @@ height: 45px;
             </div>
         </div>	
         <div class="ui-block-c" >
-         <a  href="#page_radiator_schedule" class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Save_edit_radiator()" >Guardar</a>
+         <a  href="#page_radiator_schedule" class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_edit_radiator()" >Guardar</a>
         </div>
 					
     </div><!-- /grid-b -->
@@ -532,8 +610,7 @@ height: 45px;
           <div class="ui-block-a" >
             <div class="ui-grid-b" >
               <div class="ui-block-a" style="width:44%;">
-                <!--<input id="input-temp-rad-tempadj" type="number" style="height: 50px" min="14" step="0.1">
-    -->
+   
                     <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
 
                         <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 30px;"/>
@@ -577,10 +654,10 @@ height: 45px;
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px">
+    <div id="header" class="ui-grid-b" style="height:100px">
         <div class="ui-block-a" >
 
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all" style="margin-top:8px;width: 80px;height: 52px;">No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" >No text</a>
 
         </div>
         <div class="ui-block-b"  >
@@ -718,15 +795,15 @@ height: 45px;
   
 </div><!-- /page -->
 
-  <div data-role="page" id="page_blind_schedule" data-theme="b">
+<div data-role="page" id="page_blind_schedule" data-theme="b">
 
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px">
+    <div id="header" class="ui-grid-b" style="height:100px">
         <div class="ui-block-a" >
 
-          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all " style="margin-top:8px;width: 80px;height: 52px;" onclick="Cancel_changes_schedule('blind');" >No text</a>
+          <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" onclick="Cancel_changes_schedule('blind');" >No text</a>
 
         </div>
         <div class="ui-block-b"  >
@@ -735,33 +812,31 @@ height: 45px;
             </div>
         </div>	
         <div class="ui-block-c" >
-          <a  class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Save_new_schedule('blind');" >Guardar</a>         
+          <a  class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_new_schedule('blind');" >Guardar</a>         
         </div>
 					
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" style="height:200px">
+  <div data-role="content" style="height:290px">
     <ul id="schedule_blind" data-role="listview" data-inset="true">
       
     </ul>
     
   </div><!-- /content -->
   
-    <div data-role="footer" style="margin: 0 auto;"> 
+    <div data-role="footer" style="margin: 0 auto;border-style: none;"> 
 
-      <a  href="#page_edit_blind_schedule" class="ui-btn ui-corner-all ui-btn-a ui-btn-right ui-icon-plus ui-btn-icon-notext " style="margin:0px;width: 70px;height: 40px;"onclick="New_edit_blind();" ></a> 
+      <a  href="#page_edit_blind_schedule" class="ui-btn ui-corner-all ui-btn-a ui-btn-right ui-icon-plus ui-btn-icon-notext " style="right:20px;width: 90px;height:70px;margin-top:0px;" onclick="New_edit_blind();" ></a> 
 
   </div>
 
 </div><!-- /page -->
   
-  
-  
  <div data-role="page" id="page_edit_blind_schedule" data-theme="b">
     <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:60px">
+    <div id="header" class="ui-grid-b" style="height:100px">
         <div class="ui-block-a" >
           <a  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;margin-top:2px;" href="#page_blind_schedule">Cancelar</a> 
 
@@ -772,7 +847,7 @@ height: 45px;
             </div>
         </div>	
         <div class="ui-block-c" >
-         <a  href="#page_blind_schedule" class="ui-btn ui-corner-all ui-btn-a header-but" style="margin-left:2px;margin-top:2px;" onclick="Save_edit_blind()" >Guardar</a>
+         <a  href="#page_blind_schedule" class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_edit_blind()" >Guardar</a>
         </div>
 					
     </div><!-- /grid-b -->
@@ -823,6 +898,152 @@ height: 45px;
     
   </div><!-- /content -->
 </div><!-- /page -->
+
+<div data-role="page" id="page_relay" data-theme="b">
+
+  <div data-role="header" >   
+ 
+     <div id="header" class="ui-grid-b" style="height:100px" >
+         <div class="ui-block-a"  style="width: 25%" >
+           <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" >No text</a>
+         </div>
+         <div class="ui-block-b" style="width: 45%" >
+             <div id="title_page">
+                 <h3  class="header-title">AMBIENTADOR MANUAL</h3>
+             </div>
+         </div>
+         
+         <div class="ui-block-c" style="width: 25%">
+ 
+             <a href="#page_relay_schedule"  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;" onclick="Create_list_schedule_relay();"  >Agenda</a> 
+       </div>
+           
+     </div><!-- /grid-b -->
+   </div>
+   
+   <div data-role="content" >
+  
+    <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
+
+       <li style="font-size: 32px;">
+         <div class="ui-grid-a" style="height:120px;margin-left:5%;margin-right:5%;" >
+           <div class="ui-block-a" >
+   
+                 <select id="flip-relay-manual" name="flip-select" data-role="flipswitch" ><option value="auto">Auto</option><option value="manual">Manual</option></select>
+ 
+           </div>
+           <div class="ui-block-b" >
+             <div id="relay-manual-open" class="ui-grid-a" style="display:none;" >
+               <div class="ui-block-a" style="width: 25%">
+                  <label style="font-size:20px;font-family: -webkit-pictograph;" >
+                 RELE:
+                 </label>
+               </div>
+               <div class="ui-block-b" >
+             <select id="flip-relay-manual-open" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+               </div>
+             </div>
+           </div>
+         </div>
+       </li>
+     </ul>
+   </div><!-- /content -->
+   
+ </div><!-- /page -->
+   
+ <div data-role="page" id="page_relay_schedule" data-theme="b">
+ 
+ 
+   <div data-role="header" >   
+ 
+     <div id="header" class="ui-grid-b" style="height:100px">
+         <div class="ui-block-a" >
+ 
+           <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" onclick="Cancel_changes_schedule('relay');" >No text</a>
+ 
+         </div>
+         <div class="ui-block-b"  >
+             <div id="title_page" >
+                 <h3 class="header-title">AGENDA AMBIENTADOR</h3>
+             </div>
+         </div>	
+         <div class="ui-block-c" >
+           <a  class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_new_schedule('relay');" >Guardar</a>         
+         </div>
+           
+     </div><!-- /grid-b -->
+   </div>
+   
+   <div data-role="content" style="height:280px">
+   
+     <ul id="schedule_relay" data-role="listview" data-inset="true">
+       
+     </ul>
+   
+   </div><!-- /content -->
+     <div data-role="footer" style="margin: 0 auto;border-style: none"> 
+ 
+       <a  href="#page_edit_relay_schedule" class="ui-btn ui-corner-all ui-btn-a ui-btn-right ui-icon-plus ui-btn-icon-notext " style="right:20px;width: 90px;height: 70px;margin-top:0px;" onclick="New_edit_relay();" ></a> 
+ 
+   </div>
+ </div><!-- /page -->
+ 
+ <div data-role="page" id="page_edit_relay_schedule" data-theme="b">
+     <div data-role="header" >   
+ 
+     <div id="header" class="ui-grid-b" style="height:100px">
+         <div class="ui-block-a" >
+           <a  class="ui-btn ui-corner-all ui-btn-b header-but" style="margin-left:2px;margin-top:2px;" href="#page_relay_schedule">Cancelar</a> 
+ 
+         </div>
+         <div class="ui-block-b"  >
+             <div id="title_page" >
+                 <h3 class="header-title">EDITAR</h3>
+             </div>
+         </div>	
+         <div class="ui-block-c" >
+          <a  href="#page_relay_schedule" class="ui-btn ui-corner-all ui-btn-a header-but"  onclick="Save_edit_relay('relay');" >Guardar</a>
+         </div>
+           
+     </div><!-- /grid-b -->
+   </div>
+   
+     <div data-role="content" data-theme="a" > 
+       <ul id="list_edittask_relay_content" data-role="listview" data-inset="true">
+        <li  style="font-size: 32px;">
+         <div class="ui-grid-a" style="margin: 5%;">
+           <div class="ui-block-a" style="margin-top:2px;">
+
+ 
+                     <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
+                      
+                        <select id="input-edittask-flip-relay" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+                      </div>
+            </div>
+
+           
+           <div class="ui-block-b" style="padding-left: 30px;">
+               <input id="input-edittask-time-relay" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+           </div>
+         </div>
+        </li>
+       </ul>
+       <ul id ="list_edittask_relay_buttons" data-role="listview" data-split-theme="a" data-inset="true">
+         <div  class="ui-grid-b">
+           <div class="ui-block-a" >
+       
+           </div>
+             <div class="ui-block-b" >
+             <a id="remove-button-relay" href="#page_relay_schedule" class="ui-btn ui-corner-all ui-btn-b ui-icon-delete ui-btn-icon-left header-but" style="margin-left:2px;margin-top:2px;" onclick="Remove_task_relay();" >Eliminar</a> 
+           </div>
+           <div class="ui-block-c" >
+         
+           </div>
+         </div>
+       </ul>
+     
+   </div><!-- /content -->
+ </div><!-- /page -->
 <script type="text/javascript">
   
 
@@ -838,14 +1059,14 @@ array_window:[
 {id: 0, window_closed: false, door_closed: false, outside_temp: 0, humidity:0, error: 0}
   ],
 array_blind: [
- {id: 0, up: false, down: false, push_up: false, push_down: false,position_name:'', position_value: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
+ {id: 0, auto_mode: true, up: false, down: false, push_up: false, push_down: false,position_name:'', position_value: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 array_rad:[
 {id: 0, auto_mode: true, relay_closed: false, valve_opened: false, boiler_on: false,
   current_temp: 0, setpoint_temp: 0, water_temp: 0, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 array_rel:[
-{id: 0, relay_closed: false, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
+{id: 0, auto_mode: true, relay_closed: false, error: 0, current_schedule: {type:"auto",value: 0, end_time:0}}
   ],
 error: 0
   
@@ -858,6 +1079,8 @@ var temp_schedule=[];
 
 var flip_radiator_manual_change=false;
 var flip_radiator_manual_open_change=false;
+var flip_relay_manual_change=false;
+var flip_relay_manual_open_change=false;
 
 var flip_temporary_blind_auto_change=false;
 var flip_temporary_rad_auto_change=false;
@@ -957,18 +1180,18 @@ listener_status_room.subscribe(function(msg) {
       }     
     
       if (msg.array_rad[0].auto_mode ==true && global_room_status.array_rad[0].auto_mode ==false ){
-        $("#mode_st").attr("src","./images/mode_auto.png");
+        $("#rad_mode_st").attr("src","./images/mode_auto.png");
       }else if (msg.array_rad[0].auto_mode == false && global_room_status.array_rad[0].auto_mode ==true){
         
-        $("#mode_st").attr("src","./images/mode_manual.png");
+        $("#rad_mode_st").attr("src","./images/mode_manual.png");
       }
       
       //console.log('Tint='+Tint);
       if (msg.array_rad[0].relay_closed ==true && global_room_status.array_rad[0].relay_closed ==false ){
-        $("#relay_st").attr("src","./images/on.png");
-      }else if (msg.array_rad[0].relay_closed == false){
+        $("#relay_rad_st").attr("src","./images/icons_32/on.png");
+      }else if (msg.array_rad[0].relay_closed == false && global_room_status.array_rad[0].relay_closed ==true ){
         
-        $("#relay_st").attr("src","./images/off.png");
+        $("#relay_rad_st").attr("src","./images/icons_32/off.png");
       }
 
       if (msg.array_rad[0].valve_opened ==true){
@@ -1003,6 +1226,13 @@ listener_status_room.subscribe(function(msg) {
     
       $("#status_blin_position").attr("src","./images/position_"+msg.array_blind[0].position_name+".png");
     
+      if (msg.array_blind[0].auto_mode ==true && global_room_status.array_blind[0].auto_mode ==false ){
+        $("#blind_mode_st").attr("src","./images/mode_auto.png");
+      }else if (msg.array_blind[0].auto_mode == false && global_room_status.array_blind[0].auto_mode ==true){
+        
+        $("#blind_mode_st").attr("src","./images/mode_manual.png");
+      }
+
       if (msg.array_blind[0].up ==true && global_room_status.array_blind[0].up ==false){
         $("#status_blind_push").attr("src","./images/flecha_estado_arriba.gif");
       }else if (msg.array_blind[0].down ==true && global_room_status.array_blind[0].down ==false ){
@@ -1033,6 +1263,22 @@ listener_status_room.subscribe(function(msg) {
         var Tint=parseFloat(msg.array_window[0].humidity/10.0);
         $("#humidity_st").html(Tint.toFixed(1)+' %');
       }
+
+      //RELAY
+
+      if (msg.array_rel[0].auto_mode ==true && global_room_status.array_rel[0].auto_mode ==false ){
+        $("#relay_mode_st").attr("src","./images/mode_auto.png");
+      }else if (msg.array_rel[0].auto_mode == false && global_room_status.array_rel[0].auto_mode ==true){
+        
+        $("#relay_mode_st").attr("src","./images/mode_manual.png");
+      }
+      if (msg.array_rel[0].relay_closed ==true && global_room_status.array_rel[0].relay_closed ==false ){
+        $("#relay_st").attr("src","./images/icons_32/ambientador_on.png");
+      }else if (msg.array_rel[0].relay_closed == false && global_room_status.array_rel[0].relay_closed ==true ){
+        
+        $("#relay_st").attr("src","./images/icons_32/ambientador_off.png");
+      }
+      
     
    global_room_status=msg; 
   }
@@ -1121,32 +1367,40 @@ $(document).on("pageshow","#page_blind",function(){
     
   }
   
-console.log('pageshow:page_blind  1');
+
 });
+
 $(document).on("pageshow","#page_radiator",function(){
   
-  var val=$("#flip-temporary-temp").val();
+  console.log('pageshow:page_radiator 1');
 
+  var val=$("#flip-temporary-temp").val();
+  console.log('pageshow:page_radiator 2');
+  var setpoint=global_room_status.array_rad[0].setpoint_temp.toString(10).split('');
+  
+  console.log('pageshow:page_radiator setpoint='+setpoint);
+  var setpoint_int=parseInt(setpoint[0]+''+setpoint[1]);
+  var setpoint_dec=parseInt(setpoint[2]);
+
+  $('#input-temp-rad-tempadj-int').val(setpoint_int);
+  $('#input-temp-rad-tempadj-dec').val(setpoint_dec);
+
+console.log('pageshow:page_radiator 2');
   if(global_room_status.array_rad[0].current_schedule.type=='temporary' && val=="off"){
-    var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
-    $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
-    
+
+
     flip_temporary_rad_auto_change=true;
     $("#flip-temporary-temp").val("on").flipswitch('refresh');
-    
-    
+  
   }
-  else if(global_room_status.array_rad[0].current_schedule.type!='temporary' && val=="on"){
-    
-    var Tsetpoint=parseFloat(global_room_status.array_rad[0].setpoint_temp/10.0);
-    $('#input-temp-rad-tempadj').val(Tsetpoint.toFixed(1));
-    
+  else if (global_room_status.array_rad[0].current_schedule.type!='temporary' && val=="on"){
+  
     flip_temporary_rad_auto_change=true;
     $("#flip-temporary-temp").val("off").flipswitch('refresh');
-    
-    
+
   }
   
+ 
  
 
   if(global_room_status.array_rad[0].auto_mode==true){
@@ -1161,8 +1415,24 @@ $(document).on("pageshow","#page_radiator",function(){
   }
   
   
-  //$('#input-temp-rad-tempadj').val=global_room_status.array_rad[0].setpoint_temp;
-  //$('#input-temp-radiator').val=global_room_status.array_rad[0].setpoint_temp;
+});
+  $(document).on("pageshow","#page_relay",function(){
+
+  if(global_room_status.array_rel[0].auto_mode==true){
+    
+    console.log('pageshow:page_radiator 31');
+    $("#flip-relay-manual").val("auto").flipswitch('refresh');
+    console.log('pageshow:page_radiator 32');
+    
+  }
+  else if(global_room_status.array_rel[0].auto_mode==false){
+    
+    $("#flip-relay-manual").val("manual").flipswitch('refresh');
+    
+  }
+
+
+
 
   
 });
@@ -1193,7 +1463,10 @@ $("#flip-temporary-temp").on("change", function(e) {
   if(flip_temporary_rad_auto_change== false){
   if(value=='on'){
     //global_room_status.array_rad[0].current_schedule.type=='temporary'
-    var setpoint=$("#input-temp-rad-tempadj").val()*10 ;
+
+
+     
+    var setpoint=parseInt($("#input-temp-rad-tempadj-int").val()+''+$("#input-temp-rad-tempadj-dec").val());
     var time=$("#input-endtime-rad-tempadj").val() ;
     var temp_time=time.split(':');
     time=parseInt(temp_time[0]+''+temp_time[1]);
@@ -1249,20 +1522,30 @@ $("#flip-temporary-temp").on("change", function(e) {
   
 $("#flip-radiator-manual").on("change", function(e) {
   
-//console.log('flip-radiator-manual::flip_radiator_manual_change= '+flip_radiator_manual_change);
+ console.log('flip-radiator-manual::flip_radiator_manual_change= '+flip_radiator_manual_change);
   if(flip_radiator_manual_change==false){
       var value = this.value;
       console.log('value:: '+value);
       Publish_command('radiator','mode',value);
      
     if(value=='manual'){
+       
+       
+       var val=$("#flip-radiator-manual-open").val();
+      if (global_room_status.array_rad[0].relay_closed==true && val=='open'){
+       
+        
+        flip_radiator_manual_open_change=true;
+      
+       $("#flip-radiator-manual-open").val('close').flipswitch('refresh');
+      }
+      else if (global_room_status.array_rad[0].relay_closed==false && val=='close'){
+       
+       
        flip_radiator_manual_open_change=true;
-       var relay='open';
-       if (global_room_status.array_rad[0].relay_closed==true)relay='close';
-        console.log('flip-radiator-manual::relay='+relay);
-      
-       $("#flip-radiator-manual-open").val(relay).flipswitch('refresh');
-      
+     
+      $("#flip-radiator-manual-open").val('open').flipswitch('refresh');
+     }
        $("#radiator-manual-open").show();
     }
     if(value=='auto'){
@@ -1280,7 +1563,7 @@ $("#flip-radiator-manual-open").on("change", function(e) {
 
   if(flip_radiator_manual_open_change==false){
       var value = this.value;
-      console.log('value:: '+value);
+      
       Publish_command('radiator','manual_cmd',value);
       
     
@@ -1289,7 +1572,57 @@ $("#flip-radiator-manual-open").on("change", function(e) {
     flip_radiator_manual_open_change=false;
   }
 });
+
+ 
+ $("#flip-relay-manual").on("change", function(e) {
   
+  console.log('flip-relay-manual::flip_relay_manual_change= '+flip_relay_manual_change);
+    if(flip_relay_manual_change==false){
+        var value = this.value;
+        
+        Publish_command('relay','mode',value);
+       
+      if(value=='manual'){
+         
+         var val=$("#flip-relay-manual-open").val();
+         if (global_room_status.array_rel[0].relay_closed==true && val=='off'){
+           
+          
+          flip_relay_manual_open_change=true;
+         $("#flip-relay-manual-open").val('on').flipswitch('refresh');
+           }
+           else if (global_room_status.array_rel[0].relay_closed==false && val=='on'){
+           
+           
+           flip_relay_manual_open_change=true;
+          $("#flip-relay-manual-open").val('off').flipswitch('refresh');
+            }
+         $("#relay-manual-open").show();
+      }
+      if(value=='auto'){
+        
+         $("#relay-manual-open").hide();
+      }
+    }
+    else{
+      flip_relay_manual_change=false;
+    }
+  });
+  
+  $("#flip-relay-manual-open").on("change", function(e) {
+    
+  
+    if(flip_relay_manual_open_change==false){
+        var value = this.value;
+        
+        Publish_command('relay','setrelay',value);
+        
+      
+    }
+    else{
+      flip_relay_manual_open_change=false;
+    }
+  });
 
 function Create_list_next_tasks(tasks){
         
@@ -1577,6 +1910,78 @@ console.log('Create_list_schedule_blind');
  
 }
 
+function  Create_list_schedule_relay(){
+
+//$('#schedule_relay').empty().listview('refresh');
+
+
+  //temp_schedule=schedule;
+
+for (var i=0;i<temp_schedule.length;i++){
+var item=temp_schedule[i];
+  
+  var selected_on=""
+  if (temp_schedule[i].enable == 'true'){
+    
+    selected_on='selected=""';
+   
+  }
+  var timedefault=["0","0","0","0"]
+  var time=temp_schedule[i].timealert.toString(10).split('');
+
+  for(t=time.length-1;t>-1;t--){
+
+    timedefault[t]=time[t];
+
+  }
+  var item_time= timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3];
+    
+    if(item.action[0].device=="relay"){
+      var cmd_relay=item.action[0].value;
+
+      $('#schedule_relay').append(
+            $('<li>').attr("id","task_"+item.id).append(
+              $('<div>').attr('class',' ui-grid-a').attr("style","padding-left:20px;").append(
+                    $('<div>').attr('class',' ui-block-a').attr("style","width:70%;").append(
+                      
+                      $('<a>').attr("href","#page_edit_relay_schedule").attr("class","list-schedule").bind('vclick',function(){
+                        
+                          
+                       var id = $(this).parent().parent().parent();
+                       Edit_event_relay(id);
+                      }).append(
+                        $('<div>').attr('class',' ui-grid-a').append(
+                          $('<div>').attr('class',' ui-block-a').append(
+                            $('<h2>').attr("id","timealert").text(item_time)
+                          ),
+                          $('<div>').attr('class',' ui-block-b').append(
+                            $('<h2>').attr("id","cmd").text(cmd_relay)
+                          )
+                        )
+                      )
+                    ),
+                    $('<div>').attr('class',' ui-block-b').attr("style","width:28%;").append(
+                      
+                //'<input type="checkbox" data-role="flipswitch" name="flip-checkbox-4" id="flip-checkbox-4" '+enable+' data-mini="true">'
+'<select id="flip-relay-'+item.id+'" name="flip-select" data-role="flipswitch" data-mini="true"><option value="off">Off</option><option '+selected_on+' value="on">On</option></select>'
+              
+               //$('<input>').attr('type',' checkbox').attr('id',' flip').attr('name',' flip').attr('data-role',' flipswitch').attr('data-mini',' true')
+                   
+               //$('<select>').attr('id',' flip').attr('name',' flip-select').attr('data-role',' flipswitch').attr('data-mini',' true')
+                  )
+             )
+          )
+        );
+        
+      
+
+     //$('#list_events').append(lista.children()).enhanceWithin().listview('refresh');
+    }
+} 
+$('#schedule_relay').enhanceWithin().listview('refresh');
+
+
+}
 function Edit_event_blind(id){
   
   $('#remove-button-blind').show();
@@ -1726,7 +2131,7 @@ function Edit_event_radiator(id){
 
   }
 
-    var setpoint=temp_schedule[index].action[0].value.toString(10).split('');
+  var setpoint=temp_schedule[index].action[0].value.toString(10).split('');
   var setpoint_int=parseInt(setpoint[0]+''+setpoint[1]);
   var setpoint_dec=parseInt(setpoint[2]);
 
@@ -1829,7 +2234,127 @@ function Remove_task_radiator(){
  
 
 }
+
+
+function Edit_event_relay(id){
   
+
+  $('#remove-button-relay').show();
+  new_task=false;
+  
+  var nameid=id.attr('id').split('_');
+  var task_id=parseInt(nameid[1]);
+  var index=-1;
+  
+  for (i=0;i<temp_schedule.length;i++){
+    if(temp_schedule[i].id==task_id){
+      index=i;
+      
+    }
+    
+  }
+  
+  id_editing=task_id;
+
+  var time=temp_schedule[index].timealert.toString(10).split('');
+  var timedefault=["0","0","0","0"]
+
+  for(t=time.length-1;t>-1;t--){
+
+    timedefault[t]=time[t];
+
+  }
+
+  var val=temp_schedule[index].action[0].value;
+  console.log('Edit_event_relay:val='+val);
+
+  $('#input-edittask-flip-relay').val(val).flipswitch('refresh');
+  $('#input-edittask-time-relay').val(timedefault[0]+""+timedefault[1]+":"+timedefault[2]+""+timedefault[3]);
+  
+  
+}
+  
+  
+function Save_edit_relay(){
+  
+    //global_room_status.array_rad[0].current_schedule.type=='temporary'
+    var setrelay=$("#input-edittask-flip-relay").val();
+    var time=$("#input-edittask-time-relay").val() ;
+    var temp_time=time.split(':');
+    var int_time=parseInt(temp_time[0]+''+temp_time[1]);
+
+   if (new_task==true){ //new
+       
+       var task={ "id": new_index_task ,"timealert": int_time,"enable": "true", "type":"action", "action": [{"roomid": global_room_status.roomid,"device":"relay", "id": 1,"command":"setrelay" , "value":setrelay }]}
+      
+       new_index_task++;
+     
+     temp_schedule.push(task);
+
+  }else{  //edit
+    var index=-1;
+  
+  for (i=0;i<temp_schedule.length;i++){
+    if(temp_schedule[i].id==id_editing){
+      index=i;
+      
+    }
+    
+  }
+  
+    temp_schedule[index].timealert=int_time;
+    temp_schedule[index].action[0].value=setrelay;
+ 
+}
+      temp_schedule.sort(function(obj1, obj2) {
+	// Ascending: first age less than the previous
+	return obj1.timealert - obj2.timealert;
+    });
+    
+      console.log('temp_schedule=');
+
+    console.log(temp_schedule);
+     
+    $('#schedule_relay').empty().listview('refresh');
+    Create_list_schedule_relay();
+
+}
+  
+function New_edit_relay(){
+  
+  $('#remove-button-relay').hide();
+  new_task=true;
+  
+
+}
+  
+function Remove_task_relay(){
+  
+
+    var index=-1;
+  
+  for (i=0;i<temp_schedule.length;i++){
+    if(temp_schedule[i].id==id_editing){
+      index=i;
+      
+    }
+    
+  }
+  temp_schedule.splice(index, 1);
+    
+    
+    $('#schedule_relay').empty().listview('refresh');
+    Create_list_schedule_relay();
+
+  /*
+  var nameid=$('#schedule_radiator').find('#task_'+id_editing);
+  
+  var timealert=nameid.children().find('#timealert').html(time);
+  var timealert=nameid.children().find('#setpoint').html($("#input-edittask-temp-rad-int").val()+'.'+$("#input-edittask-temp-rad-dec").val());
+*/
+ 
+
+}
 function Save_new_schedule(device){
   
  

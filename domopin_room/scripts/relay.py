@@ -16,7 +16,7 @@ PinTEA.off()
 
 CRR=False			# Confirmar Rele Radiador
 
-ESTADO=[0,0] # [0] ESTAADO {0=abierto,1=cerrado};[1] Error 
+ESTADO=[1,0,0] # [0] MODO {0=manual, 1=auto} ,[1] ESTAADO {0=abierto,1=cerrado};[2] Error 
 ACCION=-1
 global EJECUTANDO
 

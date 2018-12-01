@@ -96,6 +96,7 @@ def publish_room_state():
 
     current_blind_status=BlindStatus()
     current_blind_status.id=1
+    current_blind_status.auto_mode=True
     current_blind_status.up=bool(datablind[0])
     current_blind_status.down=bool(datablind[1] )
     current_blind_status.position_value=int(datablind[2])
@@ -149,8 +150,9 @@ def publish_room_state():
         
     current_relay_status=RelayStatus()
     current_relay_status.id=1
-    current_relay_status.relay_closed=bool(datarelay[0])
-    current_relay_status.error=datarelay[1]
+    current_relay_status.auto_mode=bool(datarelay[0])
+    current_relay_status.relay_closed=bool(datarelay[1])
+    current_relay_status.error=datarelay[2]
     
     current_relay_status.current_schedule=current_relay_schedule
     
@@ -292,7 +294,11 @@ def parse_command(data):
 					
                     else:
                         radiator.Actualizar_valores(iaction['command'],iaction['value'])
-						
+
+                elif  iaction['device']=='relay':
+
+                    relay.Actualizar_valores(iaction['command'],iaction['value'])	
+
     elif data['type']=='config': 
         
         if data['roomid']==room_config['roomid']:

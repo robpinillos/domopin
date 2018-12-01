@@ -1,4 +1,5 @@
 int32 id
+bool auto_mode
 bool up
 bool down
 bool push_up

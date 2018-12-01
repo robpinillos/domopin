@@ -3,6 +3,21 @@
     {
       "action": [
         {
+          "device": "relay", 
+          "roomid": 2, 
+          "command": "setrelay", 
+          "id": 1, 
+          "value": "on"
+        }
+      ], 
+      "enable": "true", 
+      "type": "action", 
+      "id": 0, 
+      "timealert": 1448
+    }, 
+    {
+      "action": [
+        {
           "device": "blind", 
           "roomid": 2, 
           "command": "position", 
@@ -12,7 +27,7 @@
       ], 
       "enable": "true", 
       "type": "action", 
-      "id": 0, 
+      "id": 1, 
       "timealert": 1530
     }, 
     {
@@ -27,8 +42,23 @@
       ], 
       "enable": "true", 
       "type": "action", 
-      "id": 1, 
+      "id": 2, 
       "timealert": 1625
+    }, 
+    {
+      "action": [
+        {
+          "device": "relay", 
+          "command": "setrelay", 
+          "roomid": 2, 
+          "id": 1, 
+          "value": "off"
+        }
+      ], 
+      "enable": "true", 
+      "type": "action", 
+      "id": 3, 
+      "timealert": 1731
     }, 
     {
       "action": [
@@ -42,7 +72,7 @@
       ], 
       "enable": "false", 
       "type": "action", 
-      "id": 2, 
+      "id": 4, 
       "timealert": 2020
     }, 
     {
@@ -57,7 +87,7 @@
       ], 
       "enable": "true", 
       "type": "action", 
-      "id": 3, 
+      "id": 5, 
       "timealert": 2359
     }
   ]
