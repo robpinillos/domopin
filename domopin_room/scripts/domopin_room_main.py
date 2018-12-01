@@ -16,12 +16,12 @@ from array import *
 
 import threading
 
-import persiana_sim as blind
-import radiador_sim as radiator
+#import persiana_sim as blind
+#import radiador_sim as radiator
 import relay_sim as relay
 
-#import persiana as blind
-#import termostato as radiator
+import persiana as blind
+import termostato as radiator
 
 import time_alert 
 

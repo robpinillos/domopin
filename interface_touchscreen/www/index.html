@@ -155,7 +155,7 @@ height: 45px;
   } 
   #page_home ul li {
     
-    font-size: 28px;
+    font-size: 34px;
   }
  
 
@@ -226,10 +226,10 @@ height: 45px;
         </div>
     </div>
   </div>
-  <div data-role="content" data-theme="b" style="height: 320px;">
+  <div data-role="content" data-theme="b" style="height: 335px;">
 
     <div class="ui-grid-b"  >
-        <div class="ui-block-a" style="width:36%">
+        <div class="ui-block-a" style="width:30%;">
             <ul id="list_status_rad" data-role="listview" data-inset="true" >
               <li data-icon="false">
                 <a href="#page_radiator" style="padding-left:10px" >
@@ -238,7 +238,7 @@ height: 45px;
                     <img src="./images/termometro.png" alt="temp" style="margin-top: 10px;margin-left: 10px;" /> 
                   </div>
                   <div class="ui-block-b" >
-                    <div id="t_setpoint" class="icon-" style="font-size: 40px;">--.-</div>
+                    <div id="t_setpoint" class="icon-" style="font-size: 48px;">--.-</div>
                   </div>
                 </div>
                 </a>
@@ -298,12 +298,12 @@ height: 45px;
               </li>
             </ul>
         </div>
-          <div class="ui-block-b"  style="width:30%">
+          <div class="ui-block-b" style="width:39%;">
             <ul data-role="listview" data-inset="true">
               
 
               <li>
-                <div id="t_int" style="font-size:100px;text-align: center;">--.-</div>
+                <div id="t_int" style="font-size:150px;text-align: center;">--.-</div>
               </li>
               <li>
                 <div class="ui-grid-a"  >
@@ -311,7 +311,7 @@ height: 45px;
                       <label style="font-family: sans-serif">T ext.</label> 
                   </div>
                   <div class="ui-block-b" >
-                    <div id="t_ext" style="font-size:50px;text-align: center;">--.-</div>
+                    <div id="t_ext" style="font-size:60px;text-align: center;">10.2</div>
                   </div>
               </div>
                 
@@ -329,11 +329,11 @@ height: 45px;
 
             </ul>
         </div>
-       <div class="ui-block-c" >
+       <div class="ui-block-c" style="width:30%;">
             <ul id="list_status_blind" data-role="listview" data-inset="true">
               <li data-icon="false">
                 <a href="#page_blind">
-                 <div class="ui-grid-a" style="height:52px;padding-left: 10px;padding-top: 2px;" >
+                 <div class="ui-grid-a" style="height:52px;padding-left: 5px;padding-top: 2px;" >
                   <div class="ui-block-a" >
                     <img id="status_blind_position" src="./images/persiana_0.png" class="img-but" style="padding-left: 20px;"/>
                   </div>
@@ -365,7 +365,7 @@ height: 45px;
                 
               </li>
             </ul>
-              <ul id="list_status_rad" data-role="listview" data-inset="true" style="margin-top:10px;">
+              <ul id="list_status_blind" data-role="listview" data-inset="true" style="margin-top:10px;">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -1180,10 +1180,10 @@ listener_status_room.subscribe(function(msg) {
       }     
     
       if (msg.array_rad[0].auto_mode ==true && global_room_status.array_rad[0].auto_mode ==false ){
-        $("#rad_mode_st").attr("src","./images/mode_auto.png");
+        $("#rad_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_rad[0].auto_mode == false && global_room_status.array_rad[0].auto_mode ==true){
         
-        $("#rad_mode_st").attr("src","./images/mode_manual.png");
+        $("#rad_mode_st").attr("src","./images/icons_32/manual.png");
       }
       
       //console.log('Tint='+Tint);
@@ -1223,21 +1223,22 @@ listener_status_room.subscribe(function(msg) {
       } 
     
     //BLIND
-    
-      $("#status_blin_position").attr("src","./images/position_"+msg.array_blind[0].position_name+".png");
+    if (msg.array_blind[0].position_name !=global_room_status.array_blind[0].position_name){
+      $("#status_blind_position").attr("src","./images/persiana_"+msg.array_blind[0].position_name+".png");
+  }
     
       if (msg.array_blind[0].auto_mode ==true && global_room_status.array_blind[0].auto_mode ==false ){
-        $("#blind_mode_st").attr("src","./images/mode_auto.png");
+        $("#blind_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_blind[0].auto_mode == false && global_room_status.array_blind[0].auto_mode ==true){
         
-        $("#blind_mode_st").attr("src","./images/mode_manual.png");
+        $("#blind_mode_st").attr("src","./images/icons_32/manual.png");
       }
 
       if (msg.array_blind[0].up ==true && global_room_status.array_blind[0].up ==false){
         $("#status_blind_push").attr("src","./images/flecha_estado_arriba.gif");
       }else if (msg.array_blind[0].down ==true && global_room_status.array_blind[0].down ==false ){
         $("#status_blind_push").attr("src","./images/flecha_estado_abajo.gif");
-      }else{
+      }if (msg.array_blind[0].up ==false && msg.array_blind[0].down ==false){
         $("#status_blind_push").attr("src","");
       }     
       
@@ -1267,10 +1268,10 @@ listener_status_room.subscribe(function(msg) {
       //RELAY
 
       if (msg.array_rel[0].auto_mode ==true && global_room_status.array_rel[0].auto_mode ==false ){
-        $("#relay_mode_st").attr("src","./images/mode_auto.png");
+        $("#relay_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_rel[0].auto_mode == false && global_room_status.array_rel[0].auto_mode ==true){
         
-        $("#relay_mode_st").attr("src","./images/mode_manual.png");
+        $("#relay_mode_st").attr("src","./images/icons_32/manual.png");
       }
       if (msg.array_rel[0].relay_closed ==true && global_room_status.array_rel[0].relay_closed ==false ){
         $("#relay_st").attr("src","./images/icons_32/ambientador_on.png");
