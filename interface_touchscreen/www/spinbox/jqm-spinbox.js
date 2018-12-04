@@ -150,11 +150,13 @@
 			}
 			
 			w.d.up = $( "<div>", {
-				"class": "ui-btn ui-icon-plus ui-btn-icon-notext"
+				"class": "ui-btn ui-icon-plus ui-btn-icon-notext",
+				"style": "height:50px;"
 			}).html( "&nbsp;" );
 			
 			w.d.down = $( "<div>", {
-				"class": "ui-btn ui-icon-minus ui-btn-icon-notext"
+				"class": "ui-btn ui-icon-minus ui-btn-icon-notext",
+				"style": "height:50px;"
 			}).html( "&nbsp;" );
 			
 			if ( o.type !== "vertical" ) {

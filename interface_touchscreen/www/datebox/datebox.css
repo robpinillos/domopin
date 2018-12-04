@@ -14,7 +14,7 @@
  */
 
 .ui-datebox-container { 
-	width: 290px;
+	width: 400px;
 	-webkit-transform:translate3d(0,0,0);
 }
 .ui-popup-container .ui-datebox-gridrow { 
@@ -26,7 +26,7 @@
 	text-align: center;
 }
 .ui-datebox-collapse .ui-controlgroup-controls a { 
-	max-width: 40%;
+	max-width: 50%;
 }
 
 .ui-datebox-controls.ui-controlgroup-vertical {
@@ -45,7 +45,7 @@ div.ui-datebox-inline.ui-datebox-inline-has-input {
 	margin-left: auto;
 }
 div.ui-datebox-container.ui-datebox-inline {
-	width: 290px;
+	width: 390px;
 
 }
 .ui-datebox-inline .ui-controlgroup-controls {
@@ -116,7 +116,7 @@ div.ui-datebox-container.ui-datebox-inline {
 	vertical-align: middle;
 	text-align: center;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 24px;
 	zoom: 1;
 	*display: inline;
 }
@@ -166,19 +166,23 @@ div.ui-datebox-cbut.ui-btn.ui-corner-all.ui-icon-plus {
 	border-bottom-left-radius: 0;
 	-webkit-border-bottom-right-radius: 0;
 	-webkit-border-bottom-left-radius: 0;
-	height: 40px;
+	height: 60px;
 }
 div.ui-datebox-cbut.ui-btn.ui-corner-all.ui-icon-minus {
 	border-top-right-radius: 0;
 	border-top-left-radius: 0;
 	-webkit-border-top-right-radius: 0;
 	-webkit-border-top-left-radius: 0;
-	height: 40px;
+	height: 60px;
 }
 .ui-datebox-header h4 {
 	text-align: center;
 }
 
+.ui-datebox-header h1 {
+	text-align: center;
+font-size:20px;
+}
 /* 
  * Flip Mode Styles
  * 

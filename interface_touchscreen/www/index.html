@@ -57,7 +57,7 @@ body{
 }
 .ui-content{
 font-family: -webkit-pictograph;
-height: 370px;
+height: 380px;
 padding: 2px 2px;
 }
 .ui-header .ui-title, .ui-footer .ui-title{
@@ -99,7 +99,7 @@ margin-left: 20px;
 }
 
 .img-but{
-height: 45px;
+height: 55px;
   padding-top: 5px;
 }
   
@@ -155,10 +155,130 @@ height: 45px;
   } 
   #page_home ul li {
     
-    font-size: 34px;
+    font-size: 36px;
   }
  
+  #page_radiator_schedule ul li {
+    
+    font-size: 36px;
+  }
 
+  #page_radiator_schedule .ui-flipswitch.ui-shadow-inset.ui-bar-inherit.ui-corner-all{
+    font-size: 22px;
+margin-top:8px;
+margin-bottom: 1px;
+
+}
+
+  #page_blind_schedule ul li {
+    
+    font-size: 36px;
+  }
+
+  #page_blind_schedule .ui-flipswitch.ui-shadow-inset.ui-bar-inherit.ui-corner-all{
+    font-size: 22px;
+margin-top:8px;
+margin-bottom: 1px;
+
+}
+
+  #page_relay_schedule ul li {
+    
+    font-size: 36px;
+  }
+
+  #page_relay_schedule .ui-flipswitch.ui-shadow-inset.ui-bar-inherit.ui-corner-all{
+    font-size: 22px;
+margin-top:8px;
+margin-bottom: 1px;
+
+}
+/*   */
+
+/* FLIP */
+
+#page_radiator .ui-flipswitch.ui-shadow-inset.ui-bar-inherit.ui-corner-all{
+
+margin-top:8px;
+margin-bottom: 1px;
+
+}
+
+#page_radiator .ui-flipswitch-on.ui-btn.ui-shadow.ui-btn-inherit{
+
+height: 50px;
+font-size:32px;
+
+}
+
+#page_blind .ui-flipswitch.ui-shadow-inset.ui-bar-inherit.ui-corner-all{
+
+margin-top:8px;
+margin-bottom: 1px;
+
+}
+
+#page_blind .ui-flipswitch-on.ui-btn.ui-shadow.ui-btn-inherit{
+
+height: 50px;
+font-size:32px;
+
+}
+
+.btn-setpoint{
+
+height: 60px;
+}
+
+.ui-datebox-container .ui-title{
+font-size:30px;
+}
+
+.ui-datebox-container .ui-btn-left{
+font-size:40px;
+left: -45px;
+    top: -25px;
+}
+
+div.ui-datebox-cbut.ui-btn.ui-corner-all.ui-icon-plus {
+	height: 60px;
+}
+div.ui-datebox-cbut.ui-btn.ui-corner-all.ui-icon-minus {
+	height: 60px;
+}
+
+.ui-datebox-dboxin.ui-grid-a{
+  height: 60px;
+}
+.ui-datebox-dboxin div{
+
+  height: 50px;
+
+}
+.ui-datebox-dboxin.ui-grid-a input{
+  font-size: 32px;
+  padding-top: 2px;
+}
+
+.ui-datebox-container.ui-input-text {
+  font-size:36px;
+
+
+}
+div.ui-datebox-container.ui-datebox-inline {
+	width: 490px;
+
+}
+.ui-datebox-controls.ui-controlgroup-vertical{
+height: 100px;
+
+}
+.ui-datebox-controls a{  /* Save button*/
+height: 60px;
+line-height: 45px;
+font-size:30px;
+
+}
 </style>
 
 </head>
@@ -179,21 +299,7 @@ height: 45px;
     <div class="ui-grid-b" >
       <div class="ui-block-a" >
           <div class="ui-grid-a" >
-              <div class="ui-block-a" >
-                <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
-  
-              </div>
-              <div class="ui-block-b" >
-                <div class="ui-grid-a" style="margin-top:20px" >
-                  <div class="ui-block-a" >
-        
-                    <img src="./images/temp_agua.png" alt="temp" /> 
-                  </div>
-                  <div class="ui-block-b" >
-                    <div id="t_water"  style="font-size:20px">--.-</div>
-                  </div>
-                </div>
-              </div>
+
           </div>
         </div>
         <div class="ui-block-b" >  
@@ -226,19 +332,19 @@ height: 45px;
         </div>
     </div>
   </div>
-  <div data-role="content" data-theme="b" style="height: 335px;">
+  <div data-role="content" data-theme="b" style="height: 330px;">
 
     <div class="ui-grid-b"  >
-        <div class="ui-block-a" style="width:30%;">
+        <div class="ui-block-a" style="width:31%">
             <ul id="list_status_rad" data-role="listview" data-inset="true" >
               <li data-icon="false">
                 <a href="#page_radiator" style="padding-left:10px" >
                 <div class="ui-grid-a"  >
-                  <div class="ui-block-a" style="width: 40%;">
-                    <img src="./images/termometro.png" alt="temp" style="margin-top: 10px;margin-left: 10px;" /> 
+                  <div class="ui-block-a" style="width: 30%;">
+                    <img src="./images/termometro.png" alt="temp" style="margin-top: 10px;margin-left: 2px;" /> 
                   </div>
                   <div class="ui-block-b" >
-                    <div id="t_setpoint" class="icon-" style="font-size: 48px;">--.-</div>
+                    <div id="t_setpoint" class="icon-" style="font-size: 60px;">--.-</div>
                   </div>
                 </div>
                 </a>
@@ -265,7 +371,7 @@ height: 45px;
             </ul>
               <ul id="list_status_rad" data-role="listview" data-inset="true" style="margin-top:10px;">
               <li>
-                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 10px;" >
                   <div class="ui-block-a" >
                     <div id="next_1_time_rad" class="icon-">--.-</div> 
                   </div> 
@@ -276,7 +382,7 @@ height: 45px;
                 
               </li>
               <li>
-                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;">
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 10px;">
                   <div class="ui-block-a" >
                     <div id="next_2_time_rad" class="icon-">--:--</div> 
                   </div> 
@@ -298,12 +404,12 @@ height: 45px;
               </li>
             </ul>
         </div>
-          <div class="ui-block-b" style="width:39%;">
+          <div class="ui-block-b"  style="width:37%">
             <ul data-role="listview" data-inset="true">
               
 
               <li>
-                <div id="t_int" style="font-size:150px;text-align: center;">--.-</div>
+                <div id="t_int" style="font-size:140px;text-align: center;">--.-</div>
               </li>
               <li>
                 <div class="ui-grid-a"  >
@@ -311,7 +417,7 @@ height: 45px;
                       <label style="font-family: sans-serif">T ext.</label> 
                   </div>
                   <div class="ui-block-b" >
-                    <div id="t_ext" style="font-size:60px;text-align: center;">10.2</div>
+                    <div id="t_ext" style="font-size:60px;text-align: center;">18.0</div>
                   </div>
               </div>
                 
@@ -329,13 +435,13 @@ height: 45px;
 
             </ul>
         </div>
-       <div class="ui-block-c" style="width:30%;">
+       <div class="ui-block-c" style="width:31%">
             <ul id="list_status_blind" data-role="listview" data-inset="true">
               <li data-icon="false">
                 <a href="#page_blind">
-                 <div class="ui-grid-a" style="height:52px;padding-left: 5px;padding-top: 2px;" >
+                 <div class="ui-grid-a" style="height:76px;padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
-                    <img id="status_blind_position" src="./images/persiana_0.png" class="img-but" style="padding-left: 20px;"/>
+                    <img id="status_blind_position" src="./images/persiana_0.png" class="img-but" style="padding-left: 10px;"/>
                   </div>
                   <div class="ui-block-b" >
                     
@@ -365,7 +471,7 @@ height: 45px;
                 
               </li>
             </ul>
-              <ul id="list_status_blind" data-role="listview" data-inset="true" style="margin-top:10px;">
+              <ul id="list_status_rad" data-role="listview" data-inset="true" style="margin-top:10px;">
               <li>
                 <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
                   <div class="ui-block-a" >
@@ -373,19 +479,19 @@ height: 45px;
                   </div>
                   <div class="ui-block-b" >
                     
-                      <img id="next_1_pose_blind" src="" class="img-mini" />
+                      <img id="next_1_pose_blind" src="" class="img-mini" style="margin-top: 4px;"/>
                     
                   </div>
                 </div>
               </li>
               <li>
-                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;" >
+                <div class="ui-grid-a" style="padding-left: 10px;padding-top: 2px;"  >
                   <div class="ui-block-a" >
                     <div id="next_2_time_blind" >--:--</div> 
                   </div>
                   <div class="ui-block-b" >
                     
-                      <img id="next_2_pose_blind" src="" class="img-mini" />
+                      <img id="next_2_pose_blind" src="" class="img-mini" style="margin-top: 4px;"/>
                     
                   </div>
                 </div>
@@ -406,15 +512,29 @@ height: 45px;
     </div><!-- /content -->
   
     <div data-role="footer" style="height:60px;padding: 6px;"> 
-    <div class="ui-grid-b" style="height:100%;">
-
+    <div class="ui-grid-d" style="height:100%;">
       <div class="ui-block-a" >
-            <img id="valve_st" src="./images/radiador_on.gif" class="img-mini" alt="valve" />
+        <img id="boiler_st" src="./images/fuego_off.png" class="img-mini" alt="boiler" />
+
       </div>
       <div class="ui-block-b" >
-            <img id="relay_rad_st" src="./images/icons_32/off.png" class="img-mini" alt="relay" />
+        <div class="ui-grid-a" style="margin-top:20px" >
+          <div class="ui-block-a" style="width:30%;">
+
+            <img src="./images/temp_agua.png" alt="temp" /> 
+          </div>
+          <div class="ui-block-b" >
+            <div id="t_water"  style="font-size:20px">--.-</div>
+          </div>
+        </div>
       </div>
       <div class="ui-block-c" >
+            <img id="valve_st" src="./images/radiador_on.gif" class="img-mini" alt="valve" />
+      </div>
+      <div class="ui-block-d" >
+            <img id="relay_rad_st" src="./images/icons_32/off.png" class="img-mini" alt="relay" />
+      </div>
+      <div class="ui-block-e" >
           <div class="ui-grid-a" style="border-color: black;border-style:solid;border-radius: 3px;" >
               <div class="ui-block-a" >
                   <a href="#page_relay">
@@ -437,7 +557,7 @@ height: 45px;
 
  <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:100px" >
+    <div id="header" class="ui-grid-b" style="height:90px" >
         <div class="ui-block-a"  style="width: 35%" >
           <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" >No text</a>
         </div>
@@ -459,9 +579,9 @@ height: 45px;
     
 
     <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
+    <li data-role="list-divider" style="height: 12px;padding-top:0px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
       <li style="font-size: 22px;">
-        <div class="ui-grid-a" style="padding-top:2%;padding-left: 5%;padding-right: 5%;">
+        <div class="ui-grid-a" style="padding-top:1%;padding-left: 5%;padding-right: 5%;">
           <div class="ui-block-a" >
 <!-- 
                 <div class="ui-field-contain" style="width: 150px;margin:0px 2px 0px 2px;">
@@ -475,28 +595,28 @@ height: 45px;
             -->
                       <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
 
-                          <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 30px;"/>
+                          <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 42px;padding-top:2px;padding-bottom: 2px;"/>
                       </div>
                 </div>
                 <div class="ui-block-b" style="width:5%;">
-                  <label style="font-size: 40px;margin-top: 75px;" >.</label>
+                  <label style="font-size: 60px;margin-top: 90px;" >.</label>
 
                 </div>
                 <div class="ui-block-c"  >
-                  <div class="ui-field-contain" style="width: 80px;margin:0px 2px 0px 2px;">
+                  <div class="ui-field-contain" style="width: 90px;margin:0px 2px 0px 2px;">
 
-                      <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 30px;"/>
+                      <input type="text" data-role="spinbox" name="spin" id="input-temp-rad-tempadj-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 42px;padding-top:2px;padding-bottom: 2px;"/>
                   </div>
                     
                 </div>
-              </div>
-          </div>
+            </div>
+        </div>
 
             <div class="ui-block-b" >
               <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-              <li style="font-size: 28px;">
+              <li style="font-size: 32px;">
 
-              <input id="input-endtime-rad-tempadj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px" >
+              <input id="input-endtime-rad-tempadj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M","themeButton":"b","themeSetButton":"b"}' style="height:50px" >
               <!--<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true" style="height:50px" >
               <input type="text" class="form-control" value="13:14">
               <span class="input-group-addon">
@@ -505,8 +625,8 @@ height: 45px;
               </div>
               -->
             </li>
-            <li style="font-size: 28px;">
-         <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+            <li style="font-size: 32px;padding-left:30px">
+         <select id="flip-temporary-temp" name="flip-select" data-role="flipswitch" ><option value="off">OFF</option><option value="on">ON</option></select>
 
             
             </li>
@@ -518,24 +638,24 @@ height: 45px;
       
     </ul>
       <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
-    <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
+    <li data-role="list-divider" style="height: 12px;padding-top:0px;font-size: 20px;text-align: center;font-family: -webkit-pictograph;">MODO MANUAL:</li>
 
-      <li style="font-size: 22px;">
-        <div class="ui-grid-a" style="height:60px" >
-          <div class="ui-block-a" >
+      <li style="font-size: 32px;">
+        <div class="ui-grid-a" style="height:80px;padding-left: 5%;padding-right: 5%;" >
+          <div class="ui-block-a" style="width:45%;">
   
-                <select id="flip-radiator-manual" name="flip-select" data-role="flipswitch" ><option value="auto">Auto</option><option value="manual">Manual</option></select>
+                <select id="flip-radiator-manual" name="flip-select" data-role="flipswitch" ><option value="auto">AUTO</option><option value="manual">MANUAL</option></select>
 
           </div>
           <div class="ui-block-b" >
-            <div id="radiator-manual-open" class="ui-grid-a" style="height:60px;display:none;" >
-              <div class="ui-block-a" >
+            <div id="radiator-manual-open" class="ui-grid-a" style="display:none;" >
+              <div class="ui-block-a" style="width:30%;>
                  <label style="font-size:20px;font-family: -webkit-pictograph;" >
                 RELE:
                 </label>
               </div>
               <div class="ui-block-b" >
-            <select id="flip-radiator-manual-open" name="flip-select" data-role="flipswitch" ><option value="close">CERRADO</option><option value="open">ABIERTO</option></select>
+            <select id="flip-radiator-manual-open" name="flip-select" data-role="flipswitch" style="margin-top:2px;margin-bottom:2px;" ><option value="close">CERRADO</option><option value="open">ABIERTO</option></select>
               </div>
             </div>
           </div>
@@ -604,33 +724,34 @@ height: 45px;
     </div><!-- /grid-b -->
   </div>
   
-    <div data-role="content" data-theme="a" > 
-      <ul id="list_edittask_radiator_content" data-role="listview" data-inset="true">
+    <div data-role="content" data-theme="a" style="height: 370px;"> 
+      <ul id="list_edittask_radiator_content" data-role="listview" data-inset="true" >
         <div class="ui-grid-a" style="margin: 15px;">
           <div class="ui-block-a" >
-            <div class="ui-grid-b" >
-              <div class="ui-block-a" style="width:44%;">
-   
-                    <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;">
 
-                        <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 30px;"/>
+            <div class="ui-grid-b" >
+              <div class="ui-block-a" style="width:44%;" >
+   
+                    <div class="ui-field-contain" style="width: 130px;margin:0px 2px 0px 2px;" >
+
+                        <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-int" data-options='{"type":"vertical"}'  min="14" max="30" step="1" style="font-size: 42px;padding-top:2px;padding-bottom: 2px;"/>
                     </div>
               </div>
               <div class="ui-block-b" style="width:10%;">
-                <label style="font-size: 40px;margin-top: 75px;" >.</label>
+                <label style="font-size: 60px;margin-top: 90px;" >.</label>
   
               </div>
               <div class="ui-block-c"  >
-                <div class="ui-field-contain" style="width: 80px;margin:0px 2px 0px 2px;">
+                <div class="ui-field-contain" style="width: 90px;margin:0px 2px 0px 2px;">
 
-                    <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 30px;"/>
+                    <input type="text" data-role="spinbox" name="spin" id="input-edittask-temp-rad-dec" data-options='{"type":"vertical"}'  min="0" max="9" step="1" style="font-size: 42px;padding-top:2px;padding-bottom: 2px;"/>
                 </div>
                   
               </div>
             </div>
           </div>
           <div class="ui-block-b" style="margin-top:32px;padding-left: 30px;">
-              <input id="input-edittask-time-rad" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+              <input id="input-edittask-time-rad" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M","themeButton":"b","themeSetButton":"b"}' style="height:50px;font-size: 32px;" >
           </div>
         </div>
       </ul>
@@ -654,7 +775,7 @@ height: 45px;
 
   <div data-role="header" >   
 
-    <div id="header" class="ui-grid-b" style="height:100px">
+    <div id="header" class="ui-grid-b" style="height:90px">
         <div class="ui-block-a" >
 
           <a href="#page_home" class="ui-btn ui-icon-home ui-btn-icon-notext ui-corner-all home-btn" >No text</a>
@@ -677,21 +798,21 @@ height: 45px;
     <ul data-role="listview" data-inset="true">
       
       <li>
-        <div class="ui-grid-a">
+        <div class="ui-grid-a" style="margin-top:5px;">
           <div class="ui-block-a" >
-              <ul data-role="listview" data-inset="true" style="width: 110px;margin:0px 20px 0px 30px;">
+              <ul data-role="listview" data-inset="true" style="width: 130px;margin:0px 20px 0px 30px;">
                   <li style="margin:0px 2px 4px 2px;">
-                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('plus','img-blind-position-temp-adj');"></a>
+                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 60px;" onclick="Manual_selection_blind_position('plus','img-blind-position-temp-adj');"></a>
                   </li>
                   <li data-icon="false">
                     
-                    <a class=" ui-corner-all " onclick="Command_manual_blind_position('img-blind-position-temp-adj');" style="min-height: 40px;">
-                        <img id="img-blind-position-temp-adj" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 30px;margin-top: 2px;"/>
+                    <a class=" ui-corner-all " onclick="Command_manual_blind_position('img-blind-position-temp-adj');" style="min-height: 60px;">
+                        <img id="img-blind-position-temp-adj" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 36px;margin-top: 15px;"/>
                     </a>
                     
                   </li>
                   <li style="margin:4px 2px 0px 0px;">
-                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('minus','img-blind-position-temp-adj');"></a>
+                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 60px;" onclick="Manual_selection_blind_position('minus','img-blind-position-temp-adj');"></a>
                   </li>
 
               </ul>
@@ -699,18 +820,18 @@ height: 45px;
           </div>
 
             <div class="ui-block-b" >
-              <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" style="padding-right: 80px;">
+              <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" style="padding-right: 80px;padding-top:30px;">
             <li data-icon="false" style="margin:0px 2px 4px 2px;">
               
              <a class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','up')">
-            <img src="./images/arriba.png" class=" ui-corner-all img-but" style="margin-left: 50px;margin-top: 8px;"/>
+            <img src="./images/arriba.png" class=" ui-corner-all img-but" style="margin-left: 90px;margin-top: 8px;"/>
             </a>
           
             </li>
             <li data-icon="false" style="margin:0px 2px 4px 2px;">
               
              <a class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','down')">
-            <img src="./images/abajo.png" class=" ui-corner-all img-but" style="margin-left: 50px;margin-top: 8px;"/>
+            <img src="./images/abajo.png" class=" ui-corner-all img-but" style="margin-left: 90px;margin-top: 8px;"/>
             </a>
           
             </li>
@@ -721,67 +842,19 @@ height: 45px;
       
         
       </li>
-  <!--
-      <li style="padding-left: 0px;">
-        <div class="ui-grid-d" >
-          <div class="ui-block-a" >
-            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','1')">
-            <img src="./images/persiana_1.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-          <div class="ui-block-b" >
-            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','2')">
-            <img src="./images/persiana_2.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-          <div class="ui-block-c" >
-            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','3')">
-            <img src="./images/persiana_3.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-          <div class="ui-block-d" >
-            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','4')">
-            <img src="./images/persiana_4.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-          <div class="ui-block-e" >
-            <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','setposition','5')">
-            <img src="./images/persiana_5.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-        </div>
-      </li>
 
-      <li style="padding-left: 0px;">
-        <div class="ui-grid-b" >
-          <div class="ui-block-a" >
-             <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','up')">
-            <img src="./images/flecha_arriba.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-          <div class="ui-block-b" >
-
-          </div>
-          <div class="ui-block-c" >
-             <button class=" ui-corner-all button-blind" onclick="Publish_command('blind','manual','down')">
-            <img src="./images/flecha_abajo.png" class=" ui-corner-all img-but" />
-            </button>
-          </div>
-        </div>
-      </li>
--->
     </ul>
     <ul data-role="listview" data-inset="true" data-theme="b" data-divider-theme="a" >
     <li data-role="list-divider" style="height: 15px;padding-top:2px;font-size: 18px;text-align: center;font-family: -webkit-pictograph;">AJUSTE TEMPORAL:</li>
-      <li style="font-size: 22px;">
-        <div class="ui-grid-a" style="text-align: center;height: 60px;">
-          <div class="ui-block-a" style="font-size: 20px;padding-left: 20px;padding-right: 20px;">
-            <input id="input-endtime-blind-adj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:40px" >
+      <li style="font-size: 36px;">
+        <div class="ui-grid-a" style="text-align: center;">
+          <div class="ui-block-a" style="font-size: 36px;padding-left: 20px;padding-right: 20px;">
+            <input id="input-endtime-blind-adj" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M","themeButton":"b","themeSetButton":"b"}' style="height:40px" >
 
           </div>
 
-            <div class="ui-block-b" style="font-size: 20px;text-align: center;">
-              <select id="flip-temporary-blind-position" name="flip-select" data-role="flipswitch" ><option value="off">Off</option><option value="on">On</option></select>
+            <div class="ui-block-b" style="text-align: center;margin-top:10px;">
+              <select id="flip-temporary-blind-position" name="flip-select" data-role="flipswitch" ><option value="off">OFF</option><option value="on">ON</option></select>
             </div>
 
         </div>
@@ -853,27 +926,27 @@ height: 45px;
     </div><!-- /grid-b -->
   </div>
   
-    <div data-role="content" data-theme="a" > 
+    <div data-role="content" data-theme="a" style="height:371px;"> 
       <ul id="list_edittask_blind_content" data-role="listview" data-inset="true">
         <div class="ui-grid-a" style="margin: 15px;">
           <div class="ui-block-a" style="margin-top:32px;padding-left: 30px;">
-              <input id="input-edittask-time-blind" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+              <input id="input-edittask-time-blind" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M","themeButton":"b","themeSetButton":"b"}' style="height:50px;font-size: 32px;" >
           </div>
           <div class="ui-block-b" >
             
-              <ul data-role="listview" data-inset="true" style="width: 110px;margin:0px 20px 0px 30px;">
+              <ul data-role="listview" data-inset="true" style="width: 140px;margin:0px 20px 0px 70px;">
                   <li style="margin:0px 2px 4px 2px;">
-                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('plus','img-edittask-position-blind');"></a>
+                      <a class="ui-btn ui-icon-carat-u ui-btn-icon-notext " style="width: 100%;height: 60px;" onclick="Manual_selection_blind_position('plus','img-edittask-position-blind');"></a>
                   </li>
                   <li data-icon="false">
                     
-                    <a class=" ui-corner-all " style="min-height: 40px;">
-                        <img id="img-edittask-position-blind" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 30px;margin-top: 2px;"/>
+                    <a class=" ui-corner-all " style="min-height: 60px;">
+                        <img id="img-edittask-position-blind" src="./images/persiana_0.png" class=" ui-corner-all " style="margin-left: 40px;margin-top: 15px;"/>
                     </a>
                     
                   </li>
                   <li style="margin:4px 2px 0px 0px;">
-                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 40px;margin-left: 5px;" onclick="Manual_selection_blind_position('minus','img-edittask-position-blind');"></a>
+                     <a class="ui-btn ui-icon-carat-d ui-btn-icon-notext" style="width: 100%;height: 60px;" onclick="Manual_selection_blind_position('minus','img-edittask-position-blind');"></a>
                   </li>
 
               </ul>
@@ -1023,7 +1096,7 @@ height: 45px;
 
            
            <div class="ui-block-b" style="padding-left: 30px;">
-               <input id="input-edittask-time-relay" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M"}' style="height:50px;font-size: 32px;" >
+               <input id="input-edittask-time-relay" type="text" data-role="datebox" data-options='{"mode":"timebox","timeFormat":"24","timeOutput":"%k:%M","themeButton":"b","themeSetButton":"b"}' style="height:50px;font-size: 32px;" >
            </div>
          </div>
         </li>
@@ -1180,10 +1253,10 @@ listener_status_room.subscribe(function(msg) {
       }     
     
       if (msg.array_rad[0].auto_mode ==true && global_room_status.array_rad[0].auto_mode ==false ){
-        $("#rad_mode_st").attr("src","./images/icons_32/auto.png");
+        $("#rad_mode_st").attr("src","./images/mode_auto.png");
       }else if (msg.array_rad[0].auto_mode == false && global_room_status.array_rad[0].auto_mode ==true){
         
-        $("#rad_mode_st").attr("src","./images/icons_32/manual.png");
+        $("#rad_mode_st").attr("src","./images/mode_manual.png");
       }
       
       //console.log('Tint='+Tint);
@@ -1223,22 +1296,21 @@ listener_status_room.subscribe(function(msg) {
       } 
     
     //BLIND
-    if (msg.array_blind[0].position_name !=global_room_status.array_blind[0].position_name){
-      $("#status_blind_position").attr("src","./images/persiana_"+msg.array_blind[0].position_name+".png");
-  }
+    
+      $("#status_blin_position").attr("src","./images/position_"+msg.array_blind[0].position_name+".png");
     
       if (msg.array_blind[0].auto_mode ==true && global_room_status.array_blind[0].auto_mode ==false ){
-        $("#blind_mode_st").attr("src","./images/icons_32/auto.png");
+        $("#blind_mode_st").attr("src","./images/mode_auto.png");
       }else if (msg.array_blind[0].auto_mode == false && global_room_status.array_blind[0].auto_mode ==true){
         
-        $("#blind_mode_st").attr("src","./images/icons_32/manual.png");
+        $("#blind_mode_st").attr("src","./images/mode_manual.png");
       }
 
       if (msg.array_blind[0].up ==true && global_room_status.array_blind[0].up ==false){
         $("#status_blind_push").attr("src","./images/flecha_estado_arriba.gif");
       }else if (msg.array_blind[0].down ==true && global_room_status.array_blind[0].down ==false ){
         $("#status_blind_push").attr("src","./images/flecha_estado_abajo.gif");
-      }if (msg.array_blind[0].up ==false && msg.array_blind[0].down ==false){
+      }else{
         $("#status_blind_push").attr("src","");
       }     
       
@@ -1268,10 +1340,10 @@ listener_status_room.subscribe(function(msg) {
       //RELAY
 
       if (msg.array_rel[0].auto_mode ==true && global_room_status.array_rel[0].auto_mode ==false ){
-        $("#relay_mode_st").attr("src","./images/icons_32/auto.png");
+        $("#relay_mode_st").attr("src","./images/mode_auto.png");
       }else if (msg.array_rel[0].auto_mode == false && global_room_status.array_rel[0].auto_mode ==true){
         
-        $("#relay_mode_st").attr("src","./images/icons_32/manual.png");
+        $("#relay_mode_st").attr("src","./images/mode_manual.png");
       }
       if (msg.array_rel[0].relay_closed ==true && global_room_status.array_rel[0].relay_closed ==false ){
         $("#relay_st").attr("src","./images/icons_32/ambientador_on.png");
@@ -1373,20 +1445,19 @@ $(document).on("pageshow","#page_blind",function(){
 
 $(document).on("pageshow","#page_radiator",function(){
   
-  console.log('pageshow:page_radiator 1');
-
+ 
   var val=$("#flip-temporary-temp").val();
-  console.log('pageshow:page_radiator 2');
+
   var setpoint=global_room_status.array_rad[0].setpoint_temp.toString(10).split('');
   
-  console.log('pageshow:page_radiator setpoint='+setpoint);
+ 
   var setpoint_int=parseInt(setpoint[0]+''+setpoint[1]);
   var setpoint_dec=parseInt(setpoint[2]);
 
   $('#input-temp-rad-tempadj-int').val(setpoint_int);
   $('#input-temp-rad-tempadj-dec').val(setpoint_dec);
 
-console.log('pageshow:page_radiator 2');
+
   if(global_room_status.array_rad[0].current_schedule.type=='temporary' && val=="off"){
 
 
