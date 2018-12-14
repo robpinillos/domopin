@@ -64,16 +64,16 @@
       "action": [
         {
           "device": "blind", 
+          "command": "setpoint", 
           "roomid": 2, 
-          "command": "position", 
           "id": 1, 
-          "value": 4
+          "value": "0"
         }
       ], 
-      "enable": "false", 
+      "enable": "true", 
       "type": "action", 
       "id": 4, 
-      "timealert": 2020
+      "timealert": 2215
     }, 
     {
       "action": [
@@ -85,7 +85,7 @@
           "value": 340
         }
       ], 
-      "enable": "false", 
+      "enable": "true", 
       "type": "action", 
       "id": 5, 
       "timealert": 2359

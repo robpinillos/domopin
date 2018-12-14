@@ -1418,6 +1418,11 @@ return temp_data
 
 $('.clockpicker').clockpicker();
 
+
+
+
+
+
 $(document).on("pageshow","#page_main",function(){
 
 //temp_schedule=schedule;
@@ -2150,7 +2155,7 @@ function Save_edit_blind(){
     var index=-1;
   
   for (i=0;i<temp_schedule.length;i++){
-    if(temp_schedule[i].id==id_editing_task_blind){
+    if(temp_schedule[i].id==id_editing){
       index=i;
       
     }
@@ -2166,6 +2171,12 @@ function Save_edit_blind(){
 
 
 }
+
+
+
+
+
+
 function New_edit_blind(){
   
   $('#remove-button-blind').hide();
@@ -2432,6 +2443,16 @@ function Remove_task_relay(){
 
 }
 function Save_new_schedule(device){
+
+
+    $.mobile.loading( "show", {
+            text: "guardando",
+            textVisible: true,
+            
+            textonly: false
+            
+    });
+
   
  
    $("#schedule_"+device+" li").each(function(n) {
@@ -2474,11 +2495,13 @@ function Save_new_schedule(device){
     schedule=obj.current_schedule.slice();
     temp_schedule=obj.current_schedule.slice();
     
-     if (device=='radiator'){
+    if (device=='radiator'){
+
        $('#schedule_radiator').empty().listview('refresh');
        Create_list_schedule_radiator();
 
     }else{
+
       $('#schedule_blind').empty().listview('refresh');
 
       Create_list_schedule_blind();
@@ -2488,6 +2511,8 @@ function Save_new_schedule(device){
     var tasks=obj.list_tasks.slice();
 
     Create_list_next_tasks(tasks);
+
+    $.mobile.loading( "hide" ).delay(100);
     
   });
   
