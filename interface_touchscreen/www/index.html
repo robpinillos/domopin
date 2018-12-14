@@ -409,7 +409,7 @@ font-size:30px;
               
 
               <li>
-                <div id="t_int" style="font-size:140px;text-align: center;">--.-</div>
+                <div id="t_int" style="font-size:140px;text-align: center;color:green;">--.-</div>
               </li>
               <li>
                 <div class="ui-grid-a"  >
@@ -891,7 +891,7 @@ font-size:30px;
     </div><!-- /grid-b -->
   </div>
 	
-  <div data-role="content" style="height:290px">
+  <div data-role="content" style="height:280px">
     <ul id="schedule_blind" data-role="listview" data-inset="true">
       
     </ul>
@@ -1253,10 +1253,10 @@ listener_status_room.subscribe(function(msg) {
       }     
     
       if (msg.array_rad[0].auto_mode ==true && global_room_status.array_rad[0].auto_mode ==false ){
-        $("#rad_mode_st").attr("src","./images/mode_auto.png");
+        $("#rad_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_rad[0].auto_mode == false && global_room_status.array_rad[0].auto_mode ==true){
         
-        $("#rad_mode_st").attr("src","./images/mode_manual.png");
+        $("#rad_mode_st").attr("src","./images/icons_32/mano.png");
       }
       
       //console.log('Tint='+Tint);
@@ -1296,22 +1296,26 @@ listener_status_room.subscribe(function(msg) {
       } 
     
     //BLIND
-    
-      $("#status_blin_position").attr("src","./images/position_"+msg.array_blind[0].position_name+".png");
+    if (msg.array_blind[0].position_name !=global_room_status.array_blind[0].position_name ){
+    console.log('msg.array_blind[0].position_name='+msg.array_blind[0].position_name);
+      $("#status_blind_position").attr("src","./images/persiana_"+msg.array_blind[0].position_name+".png");
+     }
     
       if (msg.array_blind[0].auto_mode ==true && global_room_status.array_blind[0].auto_mode ==false ){
-        $("#blind_mode_st").attr("src","./images/mode_auto.png");
+        $("#blind_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_blind[0].auto_mode == false && global_room_status.array_blind[0].auto_mode ==true){
         
-        $("#blind_mode_st").attr("src","./images/mode_manual.png");
+        $("#blind_mode_st").attr("src","./images/icons_32/mano.png");
       }
 
       if (msg.array_blind[0].up ==true && global_room_status.array_blind[0].up ==false){
         $("#status_blind_push").attr("src","./images/flecha_estado_arriba.gif");
       }else if (msg.array_blind[0].down ==true && global_room_status.array_blind[0].down ==false ){
         $("#status_blind_push").attr("src","./images/flecha_estado_abajo.gif");
-      }else{
+      }else if(msg.array_blind[0].up ==false  && msg.array_blind[0].down ==false ){
+		 
         $("#status_blind_push").attr("src","");
+		
       }     
       
     // WINDOW
@@ -1340,10 +1344,10 @@ listener_status_room.subscribe(function(msg) {
       //RELAY
 
       if (msg.array_rel[0].auto_mode ==true && global_room_status.array_rel[0].auto_mode ==false ){
-        $("#relay_mode_st").attr("src","./images/mode_auto.png");
+        $("#relay_mode_st").attr("src","./images/icons_32/auto.png");
       }else if (msg.array_rel[0].auto_mode == false && global_room_status.array_rel[0].auto_mode ==true){
         
-        $("#relay_mode_st").attr("src","./images/mode_manual.png");
+        $("#relay_mode_st").attr("src","./images/icons_32/mano.png");
       }
       if (msg.array_rel[0].relay_closed ==true && global_room_status.array_rel[0].relay_closed ==false ){
         $("#relay_st").attr("src","./images/icons_32/ambientador_on.png");
