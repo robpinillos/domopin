@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Comment=Domopin 
+Name=Start_Domopin
+Exec=lxterminal -e '/home/pi/Projects/catkin_ws/src/domopin/start_domopin_tmux.sh'
+Icon=/home/pi/Pictures/play_icon.png
+Terminal=false
+Categories=Utility
+StartupNotify=true
