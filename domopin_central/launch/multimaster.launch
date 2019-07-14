@@ -19,7 +19,8 @@ export ROS_MASTER_URI="http://192.168.1.34:11311/"
  <node pkg="master_discovery_fkie" type="master_discovery" name="mmaster_disc_node" respawn="true" args="_mcast_group:=224.0.0.251" />
 
  <node pkg="master_sync_fkie" type="master_sync" name="mmaster_sync_node"  respawn="true">
- <!--      <rosparam param="sync_topics">['/openhab_updates','/openhab_command','/openhab_set']</rosparam>  -->
+      <rosparam param="ignore_nodes">[/rosbridge_websocket, /rosapi, /domopin_room_1]</rosparam> 
+        
   </node>
 
 </launch>

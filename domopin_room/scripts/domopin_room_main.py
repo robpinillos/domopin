@@ -17,11 +17,11 @@ from array import *
 import threading
 
 import persiana_sim as blind
-import radiador_sim as radiator
+#import radiador_sim as radiator
 import relay_sim as relay
 
 #import persiana as blind
-#import termostato as radiator
+import termostato as radiator
 
 import time_alert 
 
@@ -32,7 +32,7 @@ global current_blind_schedule
 global current_relay_schedule
 
 
-stepDelay = 0.5  # Number of seconds between each sequence step
+stepDelay = 0.5                    # Number of seconds between each sequence step
 
 
 def load_json(path):

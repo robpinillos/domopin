@@ -21,23 +21,23 @@ tmux new-window -t $SESSION:5 -n 'interface'
 #tmux send-keys "htop" C-m
 
 tmux select-window -t $SESSION:0
-tmux send-keys "roscore" Enter
-#tmux send-keys "roslaunch domopin_central multimaster.launch" Enter
+#tmux send-keys "roscore" Enter
+tmux send-keys "roslaunch domopin_central multimaster.launch" Enter
 
 tmux select-window -t $SESSION:1
 #tmux send-keys "roscd roscd domopin_central" C-m
-tmux send-keys "sleep 8; roslaunch domopin_central domopin.launch" Enter
+#tmux send-keys "sleep 8; roslaunch domopin_central domopin.launch" Enter
 
 tmux select-window -t $SESSION:2
 #tmux send-keys "roscd roscd domopin_room" C-m
-tmux send-keys " sleep 8; roslaunch domopin_room domopin_room.launch" Enter
+tmux send-keys " sleep 50; roslaunch domopin_room domopin_room.launch" Enter
 
 tmux select-window -t $SESSION:3
-tmux send-keys " sleep 8; roslaunch rosbridge_server rosbridge_websocket.launch" Enter
+tmux send-keys " sleep 70; roslaunch rosbridge_server rosbridge_websocket.launch" Enter
 
 tmux select-window -t $SESSION:4
 tmux send-keys "roscd interface_touchscreen/www" C-m
-tmux send-keys "python -m SimpleHTTPServer" Enter
+tmux send-keys "sleep 70; python -m SimpleHTTPServer" Enter
 
 tmux select-window -t $SESSION:5
 #tmux send-keys "sleep 10; DISPLAY=:0 chromium-browser -kiosk" Enter

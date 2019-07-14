@@ -222,18 +222,16 @@ class TimeAlarm:
 
         for i,ievent in  reversed(list(enumerate(events))):
             print i,ievent
-            print 'enable=',ievent['enable']
-            if ievent['enable'] == "true":
-                print 'ENABLE'
-                if timenow <= int(ievent['timealert']):
-                    
-                    self.list_tasks.insert(0, ievent)
-                    print "insert"
-                    #print self.list_tasks
-                else:
-                    self.previous_task=ievent
-                    
-                    break
+            
+            if timenow <= int(ievent['timealert']):
+                
+                self.list_tasks.insert(0, ievent)
+                print "insert"
+                #print self.list_tasks
+            else:
+                self.previous_task=ievent
+                
+                break
             
 
             
